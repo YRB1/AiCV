@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Sign In — ApplyFlow AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#000000;
+  --bg2:#060606;
+  --surface:#0d0d0d;
+  --surface2:#141414;
+  --border:rgba(255,255,255,0.08);
+  --border2:rgba(255,255,255,0.16);
+  --text:#f0f0f0;
+  --text2:#787878;
+  --text3:#444444;
+  --indigo:#e0e0e0;
+  --grad:linear-gradient(135deg,#ffffff,#888888);
+  --font-head:'Bricolage Grotesque',sans-serif;
+  --font-body:'Inter',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  font-size:15px;
+  line-height:1.6;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+
+/* GLASS BG */
+.bg-glass{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 60% at 10% 15%, rgba(255,255,255,0.06) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 70% at 90% 80%, rgba(200,200,200,0.04) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 50% at 60% 5%,  rgba(255,255,255,0.03) 0%, transparent 60%);
+}
+.bg-glass::after{
+  content:'';position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size:256px;opacity:.5;mix-blend-mode:screen;
+}
+
+/* BLOBS */
+.blob{position:fixed;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0;animation:blobFloat 14s ease-in-out infinite}
+.blob1{width:500px;height:500px;background:rgba(255,255,255,0.035);top:-150px;right:-100px}
+.blob2{width:400px;height:400px;background:rgba(200,200,200,0.025);bottom:-100px;left:-80px;animation-delay:-7s}
+@keyframes blobFloat{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-15px) scale(1.04)}}
+
+/* NAV */
+nav{
+  position:relative;z-index:10;
+  padding:0 32px;
+  border-bottom:1px solid var(--border);
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+}
+.nav-inner{max-width:1180px;margin:0 auto;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{
+  font-family:var(--font-head);font-size:20px;font-weight:800;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  display:flex;align-items:center;gap:8px;
+}
+.logo-icon{
+  width:32px;height:32px;background:var(--grad);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;-webkit-text-fill-color:initial;
+}
+.logo-icon svg{width:18px;height:18px;fill:white}
+.nav-right{font-size:14px;color:var(--text2)}
+.nav-right a{color:var(--text);font-weight:500;margin-left:6px;transition:opacity .2s}
+.nav-right a:hover{opacity:.7}
+
+/* MAIN */
+main{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  padding:60px 24px;position:relative;z-index:1;
+}
+.auth-card{
+  width:100%;max-width:420px;
+  background:rgba(13,13,13,0.7);
+  border:1px solid var(--border2);
+  border-radius:24px;
+  padding:44px 40px;
+  backdrop-filter:blur(24px) saturate(150%);
+  -webkit-backdrop-filter:blur(24px) saturate(150%);
+  box-shadow:0 32px 80px rgba(0,0,0,0.7),0 0 0 1px rgba(255,255,255,0.05);
+  animation:cardIn .5s ease both;
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+.auth-brand{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--font-head);font-size:22px;font-weight:800;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:8px;
+}
+.auth-brand .logo-icon{flex-shrink:0}
+.auth-title{font-family:var(--font-head);font-size:26px;font-weight:800;margin-bottom:6px;color:var(--text)}
+.auth-sub{font-size:14px;color:var(--text2);margin-bottom:32px}
+.auth-sub a{color:var(--indigo);transition:opacity .2s}
+.auth-sub a:hover{opacity:.7}
+
+/* SOCIAL BUTTONS */
+.social-auth{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.social-btn-auth{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  padding:11px;border-radius:10px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--border2);
+  font-size:14px;font-weight:500;color:var(--text);
+  cursor:pointer;transition:all .2s;
+  font-family:var(--font-body);
+  width:100%;
+}
+.social-btn-auth:hover{background:rgba(255,255,255,0.09);border-color:rgba(255,255,255,0.25);transform:translateY(-1px)}
+.social-btn-auth svg{width:18px;height:18px;flex-shrink:0}
+
+/* DIVIDER */
+.divider{
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:24px;
+}
+.divider-line{flex:1;height:1px;background:var(--border2)}
+.divider-text{font-size:12px;color:var(--text3);white-space:nowrap}
+
+/* FORM */
+.field{margin-bottom:16px}
+.field-label{
+  display:block;font-size:13px;font-weight:500;color:var(--text2);
+  margin-bottom:6px;
+}
+.field-input{
+  width:100%;padding:11px 14px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--border2);
+  border-radius:10px;
+  font-size:14px;color:var(--text);
+  font-family:var(--font-body);
+  outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+.field-input::placeholder{color:var(--text3)}
+.field-input:focus{
+  border-color:rgba(255,255,255,0.35);
+  box-shadow:0 0 0 3px rgba(255,255,255,0.06);
+}
+.field-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.forgot{font-size:13px;color:var(--text2);transition:color .2s}
+.forgot:hover{color:var(--text)}
+
+/* PASSWORD TOGGLE */
+.password-wrap{position:relative}
+.password-wrap .field-input{padding-right:44px}
+.pw-toggle{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;color:var(--text3);
+  padding:4px;transition:color .2s;
+}
+.pw-toggle:hover{color:var(--text2)}
+.pw-toggle svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8}
+
+/* REMEMBER */
+.remember{
+  display:flex;align-items:center;gap:8px;
+  font-size:13px;color:var(--text2);
+  margin-bottom:20px;cursor:pointer;
+  user-select:none;
+}
+.remember input{display:none}
+.check-box{
+  width:16px;height:16px;border-radius:4px;
+  border:1px solid var(--border2);
+  background:rgba(255,255,255,0.04);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:all .2s;
+}
+.remember input:checked ~ .check-box{background:rgba(255,255,255,0.85);border-color:rgba(255,255,255,0.85)}
+.check-box svg{width:10px;height:10px;fill:none;stroke:#000;stroke-width:2.5;opacity:0;transition:opacity .15s}
+.remember input:checked ~ .check-box svg{opacity:1}
+
+/* SUBMIT */
+.btn-submit{
+  width:100%;padding:13px;border-radius:11px;
+  font-size:15px;font-weight:600;
+  font-family:var(--font-body);
+  background:var(--grad);color:#000;
+  border:none;cursor:pointer;
+  transition:all .25s;
+  box-shadow:0 0 30px rgba(255,255,255,0.12);
+  position:relative;overflow:hidden;
+}
+.btn-submit::after{
+  content:'';position:absolute;inset:0;
+  background:rgba(0,0,0,0.12);
+  opacity:0;transition:opacity .2s;
+}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(255,255,255,0.18)}
+.btn-submit:hover::after{opacity:1}
+.btn-submit:active{transform:translateY(0)}
+
+/* FOOTER TEXT */
+.auth-footer{margin-top:24px;text-align:center;font-size:13px;color:var(--text3)}
+.auth-footer a{color:var(--indigo);transition:opacity .2s}
+.auth-footer a:hover{opacity:.7}
+
+/* TERMS */
+.terms{margin-top:20px;text-align:center;font-size:11px;color:var(--text3);line-height:1.5}
+.terms a{color:var(--text3);text-decoration:underline;text-underline-offset:2px}
+
+/* PAGE FOOTER */
+footer.mini{
+  position:relative;z-index:1;
+  text-align:center;padding:24px;
+  font-size:13px;color:var(--text3);
+  border-top:1px solid var(--border);
+}
+/* loading state on social buttons */
+.social-btn-auth:disabled{opacity:.6;cursor:not-allowed;transform:none!important}
+</style>
+</head>
+<body>
+
+<div class="bg-glass"></div>
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 18 18"><path d="M9 1l2.5 5.5L17 7.5l-4 4 1 5.5L9 14l-5 3 1-5.5-4-4 5.5-1L9 1z"/></svg>
+      </div>
+      ApplyFlow AI
+    </a>
+    <div class="nav-right">
+      No account? <a href="signup.html">Sign up free</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="auth-card">
+    <div class="auth-title">Welcome back</div>
+    <p class="auth-sub">New here? <a href="signup.html">Create a free account</a></p>
+
+    <div id="oauthError" style="display:none;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:10px 14px;font-size:13px;color:#f87171;margin-bottom:16px;line-height:1.4"></div>
+
+    <div class="social-auth">
+      <button class="social-btn-auth" id="googleLoginBtn" type="button" onclick="signInWithGoogle()">
+  <svg viewBox="0 0 24 24">
+    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+  </svg>
+  Continue with Google
+</button>
+      <button class="social-btn-auth" id="githubLoginBtn" type="button" onclick="signInWithGitHub()">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.28-.01-1.03-.02-2.03-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22 0 1.6-.01 2.9-.01 3.29 0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        Continue with GitHub
+      </button>
+    </div>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span class="divider-text">or sign in with email</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <form onsubmit="handleSignIn(event)">
+      <div class="field">
+        <label class="field-label" for="email">Email address</label>
+        <input class="field-input" type="email" id="email" placeholder="you@example.com" autocomplete="email" required/>
+      </div>
+      <div class="field">
+        <div class="field-row">
+          <label class="field-label" for="password" style="margin-bottom:0">Password</label>
+          <a href="#" class="forgot">Forgot password?</a>
+        </div>
+        <div class="password-wrap">
+          <input class="field-input" type="password" id="password" placeholder="Enter your password" autocomplete="current-password" required/>
+          <button type="button" class="pw-toggle" onclick="togglePw('password',this)" aria-label="Show password">
+            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <label class="remember">
+        <input type="checkbox" id="rememberMe"/>
+        <div class="check-box">
+          <svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        Keep me signed in
+      </label>
+
+      <button type="submit" class="btn-submit" id="submitBtn">Sign In</button>
+    </form>
+
+    <div class="auth-footer">
+      Don't have an account? <a href="signup.html">Sign up free — no card needed</a>
+    </div>
+
+    <div class="terms">
+      By signing in you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+    </div>
+  </div>
+</main>
+
+<footer class="mini">
+  © 2025 ApplyFlow AI Ltd · <a href="index.html" style="color:inherit;text-decoration:underline;text-underline-offset:3px">Back to home</a>
+</footer>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+// OAUTH CONFIGURATION  —  paste your credentials here
+// ─────────────────────────────────────────────────────────────────────────────
+// Google Client ID:
+//   1. Go to https://console.cloud.google.com
+//   2. APIs & Services → Credentials → Create Credentials → OAuth 2.0 Client ID
+//   3. Application type: Web application
+//   4. Add Authorized JavaScript origins: http://localhost and your live domain
+const GOOGLE_CLIENT_ID = '444719321507-qfmikmom9gom8qhp62t1hchb6qqvib6k.apps.googleusercontent.com';
+
+// GitHub Client ID:
+//   1. Go to https://github.com/settings/developers → OAuth Apps → New OAuth App
+//   2. Set Authorization callback URL to this page's full URL
+//   3. Paste the Client ID below (the secret stays server-side)
+const GITHUB_CLIENT_ID = 'Ov23liZSdH6Rb7AaLd1u';
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ── GOOGLE OAUTH ──────────────────────────────────────────────────────────────
+let googleTokenClient = null;
+
+function initGoogle() {
+  if (typeof google === 'undefined' || !google.accounts) return;
+  googleTokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: GOOGLE_CLIENT_ID,
+    scope: 'openid email profile',
+    callback: async (response) => {
+      if (response.error) { showOAuthError('Google error: ' + response.error); return; }
+      try {
+        const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+          headers: { Authorization: 'Bearer ' + response.access_token }
+        });
+        const user = await res.json();
+        handleOAuthSuccess('google', { name: user.name, email: user.email, picture: user.picture });
+      } catch (e) {
+        showOAuthError('Could not fetch Google profile.');
+      }
+    }
+  });
+}
+
+function signInWithGoogle() {
+  if (GOOGLE_CLIENT_ID.startsWith('YOUR_')) {
+    showSetupModal('Google');
+    return;
+  }
+  if (!googleTokenClient) {
+    showOAuthError('Google Sign-In is still loading — try again in a moment.');
+    return;
+  }
+  setOAuthLoading('google', true);
+  googleTokenClient.requestAccessToken();
+}
+
+// ── GITHUB OAUTH ──────────────────────────────────────────────────────────────
+function signInWithGitHub() {
+  if (GITHUB_CLIENT_ID.startsWith('YOUR_')) {
+    showSetupModal('GitHub');
+    return;
+  }
+  const state = crypto.getRandomValues(new Uint8Array(12)).reduce((s,b)=>s+b.toString(16).padStart(2,'0'),'');
+  sessionStorage.setItem('gh_oauth_state', state);
+  const params = new URLSearchParams({
+    client_id: GITHUB_CLIENT_ID,
+    scope: 'user:email',
+    state,
+    redirect_uri: location.href.split('?')[0]
+  });
+  location.href = 'https://github.com/login/oauth/authorize?' + params;
+}
+
+function checkGitHubCallback() {
+  const params = new URLSearchParams(location.search);
+  const code = params.get('code');
+  const state = params.get('state');
+  if (!code) return;
+  history.replaceState({}, '', location.pathname);
+  if (state !== sessionStorage.getItem('gh_oauth_state')) {
+    showOAuthError('GitHub auth failed: invalid state. Please try again.');
+    return;
+  }
+  sessionStorage.removeItem('gh_oauth_state');
+  // The code must be exchanged server-side (client secret cannot be exposed).
+  // Send `code` to your backend endpoint, which calls:
+  //   POST https://github.com/login/oauth/access_token
+  // then GET https://api.github.com/user
+  handleOAuthSuccess('github', {
+    name: 'GitHub User',
+    email: '',
+    note: 'Code received! Send it to your backend to complete sign-in.'
+  });
+}
+
+// ── SUCCESS STATE ─────────────────────────────────────────────────────────────
+function handleOAuthSuccess(provider, user) {
+  localStorage.setItem('af_user', JSON.stringify({
+    name: user.name || 'User',
+    email: user.email || '',
+    picture: user.picture || '',
+    provider
+  }));
+  const card = document.querySelector('.auth-card');
+  const first = user.name ? user.name.split(' ')[0] : 'back';
+  card.innerHTML = `
+    <div style="text-align:center;padding:12px 0">
+      <div style="font-size:52px;margin-bottom:16px">✓</div>
+      <h2 style="font-family:var(--font-head);font-size:24px;font-weight:800;margin-bottom:8px">Welcome, ${first}!</h2>
+      ${user.email ? `<p style="font-size:14px;color:var(--text2);margin-bottom:4px">${user.email}</p>` : ''}
+      <p style="font-size:13px;color:var(--text3);margin-top:12px">Redirecting you now…</p>
+    </div>`;
+  setTimeout(() => { window.location.href = 'index.html'; }, 1200);
+}
+
+// ── UI HELPERS ────────────────────────────────────────────────────────────────
+function setOAuthLoading(provider, loading) {
+  const btn = document.getElementById(provider + 'LoginBtn');
+  if (!btn) return;
+  btn.disabled = loading;
+  btn.style.opacity = loading ? '0.6' : '1';
+}
+
+function showOAuthError(msg) {
+  setOAuthLoading('google', false);
+  const bar = document.getElementById('oauthError');
+  if (!bar) return;
+  bar.textContent = msg;
+  bar.style.display = 'block';
+  setTimeout(() => bar.style.display = 'none', 6000);
+}
+
+function showSetupModal(provider) {
+  const steps = provider === 'Google'
+    ? '1. Visit console.cloud.google.com\n2. APIs & Services → Credentials → OAuth 2.0 Client ID\n3. Set Application type: Web application\n4. Add your domain to Authorized JavaScript origins\n5. Paste the Client ID into GOOGLE_CLIENT_ID at the top of this file\'s script'
+    : '1. Visit github.com/settings/developers → OAuth Apps\n2. Create a new OAuth App\n3. Set callback URL to this page\'s URL\n4. Paste the Client ID into GITHUB_CLIENT_ID at the top of this file\'s script\n5. Keep the Client Secret server-side only';
+  alert(`To enable ${provider} sign-in, add your credentials:\n\n${steps}`);
+}
+
+// ── SHARED FORM HELPERS ───────────────────────────────────────────────────────
+function togglePw(id, btn) {
+  const inp = document.getElementById(id);
+  const isText = inp.type === 'text';
+  inp.type = isText ? 'password' : 'text';
+  btn.innerHTML = isText
+    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+}
+
+function handleSignIn(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = 'Signing in…';
+  btn.disabled = true;
+  // Wire to your backend auth endpoint here
+  setTimeout(() => { btn.textContent = 'Sign In'; btn.disabled = false; }, 1200);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  initGoogle();
+  checkGitHubCallback();
+});
+</script>
+
+</body>
+</html>
