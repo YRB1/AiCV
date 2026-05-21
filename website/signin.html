@@ -3,29 +3,46 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Sign In — ApplyFlow AI</title>
+<title>Sign In — LehrstellenSniper</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#000000;
-  --bg2:#060606;
-  --surface:#0d0d0d;
-  --surface2:#141414;
-  --border:rgba(255,255,255,0.08);
-  --border2:rgba(255,255,255,0.16);
-  --text:#f0f0f0;
-  --text2:#787878;
-  --text3:#444444;
-  --indigo:#e0e0e0;
-  --grad:linear-gradient(135deg,#ffffff,#888888);
+  --bg:#060609;
+  --bg2:#0a0a10;
+  --surface:#0f0f18;
+  --surface2:#15151f;
+  --border:rgba(100,130,255,0.12);
+  --border2:rgba(100,130,255,0.22);
+  --text:#f0f0fa;
+  --text2:#8888aa;
+  --text3:#4a4a66;
+  --indigo:#a0b0ff;
+  --grad:linear-gradient(135deg,#7b9fff,#3a5ce0);
   --font-head:'Bricolage Grotesque',sans-serif;
   --font-body:'Inter',sans-serif;
 }
 html{scroll-behavior:smooth}
+
+/* ── SCROLLBAR ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:rgba(6,6,9,0.8)}
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,rgba(123,159,255,0.45),rgba(58,92,224,0.3));
+  border-radius:10px;
+  border:1px solid rgba(123,159,255,0.15);
+  box-shadow:0 0 8px rgba(91,127,255,0.2),inset 0 1px 0 rgba(255,255,255,0.1);
+}
+::-webkit-scrollbar-thumb:hover{
+  background:linear-gradient(180deg,rgba(123,159,255,0.7),rgba(58,92,224,0.5));
+  box-shadow:0 0 12px rgba(91,127,255,0.4),inset 0 1px 0 rgba(255,255,255,0.15);
+}
+::-webkit-scrollbar-corner{background:transparent}
+*{scrollbar-width:thin;scrollbar-color:rgba(91,127,255,0.35) rgba(6,6,9,0.8)}
+
 body{
   background:var(--bg);
   color:var(--text);
@@ -197,10 +214,10 @@ main{
   width:100%;padding:13px;border-radius:11px;
   font-size:15px;font-weight:600;
   font-family:var(--font-body);
-  background:var(--grad);color:#000;
+  background:var(--grad);color:#fff;
   border:none;cursor:pointer;
   transition:all .25s;
-  box-shadow:0 0 30px rgba(255,255,255,0.12);
+  box-shadow:0 0 30px rgba(91,127,255,0.25);
   position:relative;overflow:hidden;
 }
 .btn-submit::after{
@@ -208,7 +225,7 @@ main{
   background:rgba(0,0,0,0.12);
   opacity:0;transition:opacity .2s;
 }
-.btn-submit:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(255,255,255,0.18)}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(91,127,255,0.45)}
 .btn-submit:hover::after{opacity:1}
 .btn-submit:active{transform:translateY(0)}
 
@@ -244,7 +261,7 @@ footer.mini{
       <div class="logo-icon">
         <svg viewBox="0 0 18 18"><path d="M9 1l2.5 5.5L17 7.5l-4 4 1 5.5L9 14l-5 3 1-5.5-4-4 5.5-1L9 1z"/></svg>
       </div>
-      ApplyFlow AI
+      LehrstellenSniper
     </a>
     <div class="nav-right">
       No account? <a href="signup.html">Sign up free</a>
@@ -321,120 +338,89 @@ footer.mini{
 </main>
 
 <footer class="mini">
-  © 2025 ApplyFlow AI Ltd · <a href="index.html" style="color:inherit;text-decoration:underline;text-underline-offset:3px">Back to home</a>
+  © 2025 LehrstellenSniper Ltd · <a href="index.html" style="color:inherit;text-decoration:underline;text-underline-offset:3px">Back to home</a>
 </footer>
 
 <script>
 // ─────────────────────────────────────────────────────────────────────────────
-// OAUTH CONFIGURATION  —  paste your credentials here
+// CONFIGURATION — fill in your Supabase project details
+// From: Supabase dashboard → Settings → API
 // ─────────────────────────────────────────────────────────────────────────────
-// Google Client ID:
-//   1. Go to https://console.cloud.google.com
-//   2. APIs & Services → Credentials → Create Credentials → OAuth 2.0 Client ID
-//   3. Application type: Web application
-//   4. Add Authorized JavaScript origins: http://localhost and your live domain
-const GOOGLE_CLIENT_ID = '444719321507-qfmikmom9gom8qhp62t1hchb6qqvib6k.apps.googleusercontent.com';
+const SUPABASE_URL  = 'https://ezemajigiyatijrrflxq.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_r_7GUrtx_cWPqnrRpZT7fQ_gve-rK_s';
 
-// GitHub Client ID:
-//   1. Go to https://github.com/settings/developers → OAuth Apps → New OAuth App
-//   2. Set Authorization callback URL to this page's full URL
-//   3. Paste the Client ID below (the secret stays server-side)
-const GITHUB_CLIENT_ID = 'Ov23liZSdH6Rb7AaLd1u';
+// URL of your Next.js app (the tool) — users land here after sign-in
+const APP_URL = 'http://localhost:3000';
 // ─────────────────────────────────────────────────────────────────────────────
 
-// ── GOOGLE OAUTH ──────────────────────────────────────────────────────────────
-let googleTokenClient = null;
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-function initGoogle() {
-  if (typeof google === 'undefined' || !google.accounts) return;
-  googleTokenClient = google.accounts.oauth2.initTokenClient({
-    client_id: GOOGLE_CLIENT_ID,
-    scope: 'openid email profile',
-    callback: async (response) => {
-      if (response.error) { showOAuthError('Google error: ' + response.error); return; }
-      try {
-        const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-          headers: { Authorization: 'Bearer ' + response.access_token }
-        });
-        const user = await res.json();
-        handleOAuthSuccess('google', { name: user.name, email: user.email, picture: user.picture });
-      } catch (e) {
-        showOAuthError('Could not fetch Google profile.');
-      }
-    }
-  });
-}
-
-function signInWithGoogle() {
-  if (GOOGLE_CLIENT_ID.startsWith('YOUR_')) {
-    showSetupModal('Google');
-    return;
-  }
-  if (!googleTokenClient) {
-    showOAuthError('Google Sign-In is still loading — try again in a moment.');
-    return;
-  }
+// ── OAUTH (Google / GitHub via Supabase) ──────────────────────────────────────
+async function signInWithGoogle() {
   setOAuthLoading('google', true);
-  googleTokenClient.requestAccessToken();
+  const { error } = await _supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: APP_URL + '/dashboard' }
+  });
+  if (error) { showOAuthError('Google sign-in failed: ' + error.message); setOAuthLoading('google', false); }
 }
 
-// ── GITHUB OAUTH ──────────────────────────────────────────────────────────────
-function signInWithGitHub() {
-  if (GITHUB_CLIENT_ID.startsWith('YOUR_')) {
-    showSetupModal('GitHub');
-    return;
-  }
-  const state = crypto.getRandomValues(new Uint8Array(12)).reduce((s,b)=>s+b.toString(16).padStart(2,'0'),'');
-  sessionStorage.setItem('gh_oauth_state', state);
-  const params = new URLSearchParams({
-    client_id: GITHUB_CLIENT_ID,
-    scope: 'user:email',
-    state,
-    redirect_uri: location.href.split('?')[0]
+async function signInWithGitHub() {
+  setOAuthLoading('github', true);
+  const { error } = await _supabase.auth.signInWithOAuth({
+    provider: 'github',
+    options: { redirectTo: APP_URL + '/dashboard' }
   });
-  location.href = 'https://github.com/login/oauth/authorize?' + params;
+  if (error) { showOAuthError('GitHub sign-in failed: ' + error.message); setOAuthLoading('github', false); }
 }
 
-function checkGitHubCallback() {
-  const params = new URLSearchParams(location.search);
-  const code = params.get('code');
-  const state = params.get('state');
-  if (!code) return;
-  history.replaceState({}, '', location.pathname);
-  if (state !== sessionStorage.getItem('gh_oauth_state')) {
-    showOAuthError('GitHub auth failed: invalid state. Please try again.');
+// ── EMAIL / PASSWORD SIGN-IN ──────────────────────────────────────────────────
+async function handleSignIn(e) {
+  e.preventDefault();
+  const email    = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const btn      = document.getElementById('submitBtn');
+
+  btn.textContent = 'Signing in…';
+  btn.disabled = true;
+
+  const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
+
+  if (error) {
+    showOAuthError(error.message || 'Sign-in failed');
+    btn.textContent = 'Sign In';
+    btn.disabled = false;
     return;
   }
-  sessionStorage.removeItem('gh_oauth_state');
-  // The code must be exchanged server-side (client secret cannot be exposed).
-  // Send `code` to your backend endpoint, which calls:
-  //   POST https://github.com/login/oauth/access_token
-  // then GET https://api.github.com/user
-  handleOAuthSuccess('github', {
-    name: 'GitHub User',
-    email: '',
-    note: 'Code received! Send it to your backend to complete sign-in.'
-  });
+
+  showSuccess(data.user?.email);
+  setTimeout(() => { window.location.href = APP_URL + '/dashboard'; }, 1000);
 }
+
+// ── FORGOT PASSWORD ───────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('.forgot')?.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    if (!email) { showOAuthError('Enter your email address above first.'); return; }
+    const { error } = await _supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: APP_URL + '/reset-password'
+    });
+    if (error) { showOAuthError(error.message); return; }
+    showOAuthError('Password reset email sent — check your inbox.');
+  });
+});
 
 // ── SUCCESS STATE ─────────────────────────────────────────────────────────────
-function handleOAuthSuccess(provider, user) {
-  localStorage.setItem('af_user', JSON.stringify({
-    name: user.name || 'User',
-    email: user.email || '',
-    picture: user.picture || '',
-    provider
-  }));
+function showSuccess(email) {
   const card = document.querySelector('.auth-card');
-  const first = user.name ? user.name.split(' ')[0] : 'back';
   card.innerHTML = `
     <div style="text-align:center;padding:12px 0">
       <div style="font-size:52px;margin-bottom:16px">✓</div>
-      <h2 style="font-family:var(--font-head);font-size:24px;font-weight:800;margin-bottom:8px">Welcome, ${first}!</h2>
-      ${user.email ? `<p style="font-size:14px;color:var(--text2);margin-bottom:4px">${user.email}</p>` : ''}
-      <p style="font-size:13px;color:var(--text3);margin-top:12px">Redirecting you now…</p>
+      <h2 style="font-family:var(--font-head);font-size:24px;font-weight:800;margin-bottom:8px">Signed in!</h2>
+      ${email ? `<p style="font-size:14px;color:var(--text2);margin-bottom:4px">${email}</p>` : ''}
+      <p style="font-size:13px;color:var(--text3);margin-top:12px">Redirecting to your dashboard…</p>
     </div>`;
-  setTimeout(() => { window.location.href = 'index.html'; }, 1200);
 }
 
 // ── UI HELPERS ────────────────────────────────────────────────────────────────
@@ -446,7 +432,6 @@ function setOAuthLoading(provider, loading) {
 }
 
 function showOAuthError(msg) {
-  setOAuthLoading('google', false);
   const bar = document.getElementById('oauthError');
   if (!bar) return;
   bar.textContent = msg;
@@ -454,14 +439,6 @@ function showOAuthError(msg) {
   setTimeout(() => bar.style.display = 'none', 6000);
 }
 
-function showSetupModal(provider) {
-  const steps = provider === 'Google'
-    ? '1. Visit console.cloud.google.com\n2. APIs & Services → Credentials → OAuth 2.0 Client ID\n3. Set Application type: Web application\n4. Add your domain to Authorized JavaScript origins\n5. Paste the Client ID into GOOGLE_CLIENT_ID at the top of this file\'s script'
-    : '1. Visit github.com/settings/developers → OAuth Apps\n2. Create a new OAuth App\n3. Set callback URL to this page\'s URL\n4. Paste the Client ID into GITHUB_CLIENT_ID at the top of this file\'s script\n5. Keep the Client Secret server-side only';
-  alert(`To enable ${provider} sign-in, add your credentials:\n\n${steps}`);
-}
-
-// ── SHARED FORM HELPERS ───────────────────────────────────────────────────────
 function togglePw(id, btn) {
   const inp = document.getElementById(id);
   const isText = inp.type === 'text';
@@ -470,21 +447,6 @@ function togglePw(id, btn) {
     ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'
     : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
 }
-
-function handleSignIn(e) {
-  e.preventDefault();
-  const btn = document.getElementById('submitBtn');
-  btn.textContent = 'Signing in…';
-  btn.disabled = true;
-  // Wire to your backend auth endpoint here
-  setTimeout(() => { btn.textContent = 'Sign In'; btn.disabled = false; }, 1200);
-}
-
-// ── INIT ──────────────────────────────────────────────────────────────────────
-window.addEventListener('load', () => {
-  initGoogle();
-  checkGitHubCallback();
-});
 </script>
 
 </body>

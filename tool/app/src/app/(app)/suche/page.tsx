@@ -3,6 +3,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '@/lib/supabase'
 import { Lehrstelle } from '@/types'
+import { useT } from '@/lib/lang-context'
+import { useProfile } from '@/lib/profile-context'
+import Link from 'next/link'
 
 const IS_DEMO = typeof window !== 'undefined'
   ? (!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL.includes('abcdefgh'))
@@ -25,14 +28,15 @@ function Avatar({ name }: { name: string }) {
   const colors = ['#6d28d9','#0891b2','#059669','#d97706','#dc2626','#7c3aed','#0284c7']
   const color = colors[name.charCodeAt(0) % colors.length]
   return (
-    <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold shrink-0"
-      style={{ background: `${color}25`, color, border: `1px solid ${color}40` }}>
+    <div style={{ width: '32px', height: '32px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', fontWeight: 700, flexShrink: 0, background: `${color}25`, color, border: `1px solid ${color}40` }}>
       {name[0]?.toUpperCase()}
     </div>
   )
 }
 
 export default function SuchePage() {
+  const t = useT()
+  const { canApply, canUseAi, dailyUsed, dailyLimit, aiUsed, aiLimit, tier, refresh: refreshProfile } = useProfile()
   const [beruf, setBeruf] = useState('')
   const [kanton, setKanton] = useState('Alle')
   const [results, setResults] = useState<Lehrstelle[]>([])
@@ -47,30 +51,21 @@ export default function SuchePage() {
   const emailFetchRef = useRef<AbortController | null>(null)
   const [emailDone, setEmailDone] = useState<Set<string>>(new Set())
 
-  // After results load, fetch emails per row — only keep rows with email once done
   useEffect(() => {
     if (IS_DEMO || results.length === 0) return
     emailFetchRef.current?.abort()
     const controller = new AbortController()
     emailFetchRef.current = controller
     setEmailDone(new Set())
-
     results.forEach((stelle) => {
-      if (stelle.email) {
-        setEmailDone(prev => new Set([...prev, stelle.id]))
-        return
-      }
+      if (stelle.email) { setEmailDone(prev => new Set([...prev, stelle.id])); return }
       const params = new URLSearchParams({ firma: stelle.firma })
       if (stelle.url) params.set('url', stelle.url)
       fetch(`/api/email?${params}`, { signal: controller.signal })
         .then(r => r.json())
-        .then(({ email }) => {
+        .then(({ email, telefon }) => {
           setEmailDone(prev => new Set([...prev, stelle.id]))
-          if (email) {
-            setResults(prev => prev.map(r =>
-              r.firma === stelle.firma ? { ...r, email } : r
-            ))
-          }
+          setResults(prev => prev.map(r => r.id === stelle.id ? { ...r, email: email ?? r.email, telefon: telefon ?? r.telefon } : r))
         })
         .catch(() => {})
     })
@@ -80,61 +75,43 @@ export default function SuchePage() {
   async function handleSearch(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault()
     if (!beruf.trim()) return
-    setLoading(true)
-    setError('')
-    setResults([])
-
+    setLoading(true); setError(''); setResults([])
     if (IS_DEMO) {
       await new Promise(r => setTimeout(r, 800))
-      setResults(getMockResults(beruf, kanton))
-      setLoading(false)
-      return
+      setResults(getMockResults(beruf, kanton)); setLoading(false); return
     }
-
     const params = new URLSearchParams({ beruf })
     if (kanton !== 'Alle') params.set('kanton', kanton)
-
     const res = await fetch(`/api/lehrstellen?${params}`)
     const data = await res.json()
-    if (!res.ok) setError(data.error ?? 'Fehler bei der Suche')
+    if (!res.ok) setError(data.error ?? 'Search error')
     else setResults(data.results ?? [])
     setLoading(false)
   }
 
   async function handleGenerate(stelle: Lehrstelle) {
-    setSelected(stelle)
-    setGenerated(null)
-    setSent(false)
-    setGenerating(true)
-
+    if (!canApply) { setError(`Tageslimit erreicht (${dailyUsed}/${dailyLimit} heute). Upgrade auf Pro für 100 Bewerbungen/Tag.`); return }
+    if (!canUseAi) { setError(`KI-Limit erreicht (${aiUsed}/${aiLimit} heute). Upgrade auf Pro für unbegrenzte KI-Briefe.`); return }
+    setSelected(stelle); setGenerated(null); setSent(false); setGenerating(true)
     if (IS_DEMO) {
       await new Promise(r => setTimeout(r, 1200))
       const script = localStorage.getItem('ls_demo_script') ?? ''
       setGenerated({
-        fakten: [`${stelle.firma} ist seit über 20 Jahren tätig`, `Standort in ${stelle.stadt}`, `Qualitativ hochwertige Ausbildung`],
+        fakten: [`${stelle.firma} has been operating for over 20 years`, `Located in ${stelle.stadt}`, `High-quality apprenticeship training`],
         message: script
           ? script.replace(/\[Firma\]/g, stelle.firma).replace(/\[Beruf\]/g, stelle.beruf).replace(/\[Ort\]/g, stelle.stadt)
-          : `Sehr geehrte Damen und Herren von ${stelle.firma},\n\nmit grossem Interesse habe ich Ihre Lehrstelle als ${stelle.beruf} in ${stelle.stadt} entdeckt.\n\nIch bin ein motivierter Schüler und möchte meine Ausbildung bei ${stelle.firma} absolvieren.\n\nMit freundlichen Grüssen\nMax Muster`,
+          : `Dear ${stelle.firma} team,\n\nI am writing to express my strong interest in the apprenticeship position as ${stelle.beruf} in ${stelle.stadt}.\n\nI am a motivated student eager to begin my training at ${stelle.firma}.\n\nKind regards,\nMax Muster`,
       })
-      setGenerating(false)
-      return
+      setGenerating(false); return
     }
-
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
-
-    const res = await fetch('/api/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ lehrstelle: stelle, userId: user.id }),
-    })
+    const res = await fetch('/api/generate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ lehrstelle: stelle, userId: user.id }) })
     const data = await res.json()
-    if (!res.ok) setError(data.error ?? 'Fehler')
+    if (!res.ok) setError(data.error ?? 'Error')
     else {
       setGenerated(data)
-      if (data.email || data.telefon) {
-        setSelected(prev => prev ? { ...prev, email: data.email ?? prev.email, telefon: data.telefon ?? prev.telefon } : prev)
-      }
+      if (data.email || data.telefon) setSelected(prev => prev ? { ...prev, email: data.email ?? prev.email, telefon: data.telefon ?? prev.telefon } : prev)
     }
     setGenerating(false)
   }
@@ -146,12 +123,8 @@ export default function SuchePage() {
     if (!user) return
     const { data: profile } = await supabase.from('profiles').select('vorname, nachname').eq('user_id', user.id).single()
     const name = `${profile?.vorname ?? ''} ${profile?.nachname ?? ''}`.trim()
-    const res = await fetch('/api/send-email', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId: user.id, toEmail: selected.email, subject: `Bewerbung als ${selected.beruf} – ${name}`, message: generated.message, vonName: name }),
-    })
-    if (res.ok) setSent(true)
+    const res = await fetch('/api/send-email', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: user.id, toEmail: selected.email, subject: `Application as ${selected.beruf} – ${name}`, message: generated.message, vonName: name }) })
+    if (res.ok) { setSent(true); refreshProfile() }
     setSending(false)
   }
 
@@ -160,15 +133,11 @@ export default function SuchePage() {
     setDownloading(true)
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
-    const res = await fetch('/api/export-docx', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firma: selected.firma, beruf: selected.beruf, bewerbungstext: generated.message, userId: user.id }),
-    })
+    const res = await fetch('/api/export-docx', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ firma: selected.firma, beruf: selected.beruf, bewerbungstext: generated.message, userId: user.id }) })
     if (res.ok) {
       const blob = await res.blob()
       const cd = res.headers.get('Content-Disposition') ?? ''
-      const filename = cd.match(/filename="(.+)"/)?.[1] ?? 'Bewerbung.docx'
+      const filename = cd.match(/filename="(.+)"/)?.[1] ?? 'Application.docx'
       const url = URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url; a.download = filename; a.click()
@@ -177,203 +146,157 @@ export default function SuchePage() {
     setDownloading(false)
   }
 
+  const visibleResults = results
+  const emailFoundCount = results.filter(s => s.email).length
+
   return (
-    <div className="p-6 max-w-6xl">
-      {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-xl font-bold mb-0.5">Lehrstellen suchen</h1>
-        <p className="text-sm" style={{ color: 'var(--muted)' }}>
+    <div style={{ padding: '28px 32px', maxWidth: '960px' }} className="fade-in">
+      <div style={{ marginBottom: '22px' }}>
+        <h1 style={{ fontSize: '20px', fontWeight: 700, marginBottom: '3px' }}>{t.search_title}</h1>
+        <p style={{ fontSize: '13px', color: 'var(--muted)' }}>
           {results.length > 0
-            ? `${results.filter(s => !emailDone.has(s.id) || s.email).length} Stellen mit Email gefunden`
-            : 'Finde offene Lehrstellen in der Schweiz'}
+            ? `${results.length} results · ${emailFoundCount} emails found${emailDone.size < results.length ? ` · searching ${results.length - emailDone.size} more…` : ''}`
+            : t.search_subtitle_empty}
         </p>
       </div>
 
-      {/* Search */}
-      <form onSubmit={handleSearch} className="flex gap-3 mb-6">
-        <div className="flex-1 relative">
-          <svg className="absolute left-3 top-1/2 -translate-y-1/2" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: 'var(--muted)' }}>
-            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-          </svg>
-          <input
-            value={beruf}
-            onChange={e => setBeruf(e.target.value)}
-            placeholder="Beruf suchen — z.B. Kaufmann, Informatiker, Polymechaniker..."
-            className="w-full pl-9 pr-4 py-2.5 rounded-xl text-sm outline-none"
-            style={{ background: 'var(--surface)', border: '1px solid var(--border-2)', color: 'var(--text)' }}
-          />
+      <form onSubmit={handleSearch} style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+        <div style={{ flex: 1, position: 'relative' }}>
+          <svg style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--muted)' }} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input value={beruf} onChange={e => setBeruf(e.target.value)} placeholder={t.search_placeholder}
+            style={{ width: '100%', paddingLeft: '36px', paddingRight: '14px', paddingTop: '10px', paddingBottom: '10px', borderRadius: '10px', fontSize: '13px', outline: 'none', background: 'var(--surface)', border: '1px solid var(--border-2)', color: 'var(--text)', fontFamily: 'inherit' }} />
         </div>
-        <select
-          value={kanton}
-          onChange={e => setKanton(e.target.value)}
-          className="w-36 px-3 py-2.5 rounded-xl text-sm outline-none"
-          style={{ background: 'var(--surface)', border: '1px solid var(--border-2)', color: 'var(--text)' }}
-        >
+        <select value={kanton} onChange={e => setKanton(e.target.value)}
+          style={{ width: '130px', padding: '10px 12px', borderRadius: '10px', fontSize: '13px', outline: 'none', background: 'var(--surface)', border: '1px solid var(--border-2)', color: 'var(--text)', fontFamily: 'inherit' }}>
           {KANTONE.map(k => <option key={k} value={k}>{k}</option>)}
         </select>
-        <button
-          type="submit"
-          disabled={loading || !beruf.trim()}
-          className="px-5 py-2.5 rounded-xl text-sm font-semibold disabled:opacity-40 cursor-pointer"
-          style={{ background: 'var(--purple)', color: 'white' }}
-        >
-          {loading ? 'Suche...' : 'Suchen'}
+        <button type="submit" disabled={loading || !beruf.trim()}
+          style={{ padding: '10px 20px', borderRadius: '10px', fontSize: '13px', fontWeight: 600, background: 'var(--accent)', color: 'white', border: 'none', cursor: 'pointer', opacity: loading || !beruf.trim() ? 0.5 : 1, fontFamily: 'inherit' }}>
+          {loading ? t.search_btn_loading : t.search_btn}
         </button>
       </form>
 
       {error && (
-        <div className="mb-4 px-4 py-3 rounded-xl text-sm flex items-center gap-2" style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.3)', color: 'var(--red)' }}>
-          <span>⚠</span> {error}
+        <div style={{ marginBottom: '14px', padding: '10px 14px', borderRadius: '10px', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.3)', color: 'var(--red)' }}>
+          ⚠ {error}
         </div>
       )}
 
-      {/* Loading skeleton */}
       {loading && (
-        <div className="space-y-2">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
           {[...Array(5)].map((_, i) => (
-            <div key={i} className="h-14 rounded-xl animate-pulse" style={{ background: 'var(--surface)' }} />
+            <div key={i} style={{ height: '52px', borderRadius: '10px', background: 'var(--surface)', animation: 'pulse 1.5s ease-in-out infinite' }} />
           ))}
         </div>
       )}
 
-      {/* Results */}
-      {!loading && results.length > 0 && (
-        <div className="rounded-xl overflow-hidden fade-in" style={{ border: '1px solid var(--border)' }}>
-          {/* Table header */}
-          <div className="grid text-xs font-semibold tracking-widest px-4 py-3"
-            style={{ gridTemplateColumns: '2.5fr 2fr 0.6fr 2fr auto', color: 'var(--muted)', background: 'var(--surface-2)', borderBottom: '1px solid var(--border)' }}>
-            <span>FIRMA</span><span>STELLE</span><span>KT</span><span>EMAIL</span><span></span>
+      {!loading && visibleResults.length > 0 && (
+        <div style={{ borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1.8fr 0.4fr 1.6fr 1.6fr auto', fontSize: '11px', fontWeight: 600, letterSpacing: '0.07em', padding: '10px 16px', color: 'var(--muted)', background: 'var(--surface-2)', borderBottom: '1px solid var(--border)' }}>
+            <span>{t.search_col_company}</span><span>{t.search_col_position}</span><span>CT</span><span>EMAIL</span><span>PHONE</span><span/>
           </div>
-
-          {results.filter(s => !emailDone.has(s.id) || s.email).map((stelle) => (
-            <div key={stelle.id}
-              className="grid items-center px-4 py-3 text-sm transition-colors"
-              style={{
-                gridTemplateColumns: '2.5fr 2fr 0.6fr 2fr auto',
-                borderBottom: '1px solid var(--border)',
-                background: selected?.id === stelle.id ? 'var(--purple-glow)' : 'var(--surface)',
-              }}
-            >
-              <button className="flex items-center gap-2.5 text-left cursor-pointer group" onClick={() => handleGenerate(stelle)}>
+          {visibleResults.map((stelle) => (
+            <div key={stelle.id} style={{ display: 'grid', gridTemplateColumns: '2fr 1.8fr 0.4fr 1.6fr 1.6fr auto', alignItems: 'center', padding: '12px 16px', borderBottom: '1px solid var(--border)', background: selected?.id === stelle.id ? 'var(--accent-glow)' : 'var(--surface)', transition: 'background 0.15s' }}>
+              <button style={{ display: 'flex', alignItems: 'center', gap: '10px', textAlign: 'left', cursor: 'pointer', background: 'none', border: 'none', padding: 0 }} onClick={() => handleGenerate(stelle)}>
                 <Avatar name={stelle.firma} />
-                <span className="font-medium group-hover:text-purple-400 transition-colors" style={{ color: 'var(--purple-light)' }}>
-                  {stelle.firma}
-                </span>
+                <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--accent-light)' }}>{stelle.firma}</span>
               </button>
-              <span className="text-xs leading-tight pr-2" style={{ color: 'var(--text-2)' }}>{stelle.beruf}</span>
-              <span className="text-xs font-mono" style={{ color: 'var(--muted)' }}>{stelle.kanton}</span>
-              <span className="text-xs truncate pr-2" style={{ color: stelle.email ? 'var(--green)' : 'var(--muted)' }}>
-                {stelle.email || <span className="animate-pulse">·····</span>}
+              <span style={{ fontSize: '12px', color: 'var(--text-2)', paddingRight: '8px' }}>{stelle.beruf}</span>
+              <span style={{ fontSize: '11px', fontFamily: 'monospace', color: 'var(--muted)' }}>{stelle.kanton}</span>
+              {/* Email column */}
+              <span style={{ fontSize: '11px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', paddingRight: '8px' }}>
+                {stelle.email
+                  ? <span style={{ color: 'var(--green)' }}>{stelle.email}</span>
+                  : emailDone.has(stelle.id)
+                    ? <span style={{ color: 'var(--muted-2)' }}>—</span>
+                    : <span style={{ color: 'var(--accent)', animation: 'pulse 1.5s ease-in-out infinite' }}>searching…</span>
+                }
               </span>
-              <button
-                onClick={() => handleGenerate(stelle)}
-                className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg font-semibold cursor-pointer whitespace-nowrap"
-                style={{ background: 'var(--purple-glow-2)', color: 'var(--purple-light)', border: '1px solid rgba(109,40,217,0.3)' }}
-              >
-                <span>✦</span> Bewerben
+              {/* Phone column */}
+              <span style={{ fontSize: '11px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', paddingRight: '8px' }}>
+                {stelle.telefon
+                  ? <span style={{ color: 'var(--blue)' }}>{stelle.telefon}</span>
+                  : emailDone.has(stelle.id)
+                    ? <span style={{ color: 'var(--muted-2)' }}>—</span>
+                    : <span style={{ color: 'var(--accent)', animation: 'pulse 1.5s ease-in-out infinite' }}>searching…</span>
+                }
+              </span>
+              <button onClick={() => handleGenerate(stelle)} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', padding: '6px 12px', borderRadius: '7px', fontWeight: 600, cursor: canApply && canUseAi ? 'pointer' : 'not-allowed', whiteSpace: 'nowrap', background: canApply && canUseAi ? 'var(--accent-glow-2)' : 'var(--surface-2)', color: canApply && canUseAi ? 'var(--accent-light)' : 'var(--muted)', border: `1px solid ${canApply && canUseAi ? 'var(--accent)' : 'var(--border)'}`, fontFamily: 'inherit', opacity: canApply && canUseAi ? 1 : 0.5 }}>
+                ✦ {t.search_apply}
               </button>
             </div>
           ))}
         </div>
       )}
 
-      {/* Empty state */}
       {!loading && results.length === 0 && beruf && !error && (
-        <div className="text-center py-16" style={{ color: 'var(--muted)' }}>
-          <p className="text-4xl mb-3">🔍</p>
-          <p className="font-medium mb-1" style={{ color: 'var(--text-2)' }}>Keine Stellen gefunden</p>
-          <p className="text-sm">Versuche einen anderen Beruf oder Kanton</p>
+        <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--muted)' }}>
+          <p style={{ fontSize: '36px', marginBottom: '10px' }}>🔍</p>
+          <p style={{ fontSize: '14px', fontWeight: 500, color: 'var(--text-2)', marginBottom: '4px' }}>{t.search_none_title}</p>
+          <p style={{ fontSize: '13px' }}>{t.search_none_sub}</p>
         </div>
       )}
 
       {/* Modal */}
       {selected && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.8)' }}
+        <div style={{ position: 'fixed', inset: 0, zIndex: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', background: 'rgba(0,0,0,0.8)' }}
           onClick={e => { if (e.target === e.currentTarget) { setSelected(null); setGenerated(null); setSent(false) } }}>
-          <div className="w-full max-w-xl rounded-2xl fade-in" style={{ background: 'var(--surface)', border: '1px solid var(--border-2)', maxHeight: '90vh', overflowY: 'auto' }}>
-            {/* Modal header */}
-            <div className="flex items-center gap-3 px-5 py-4" style={{ borderBottom: '1px solid var(--border)' }}>
+          <div style={{ width: '100%', maxWidth: '560px', borderRadius: '16px', background: 'var(--surface)', border: '1px solid var(--border-2)', maxHeight: '90vh', overflowY: 'auto' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '16px 20px', borderBottom: '1px solid var(--border)' }}>
               <Avatar name={selected.firma} />
-              <div className="flex-1 min-w-0">
-                <h2 className="font-bold text-base truncate">{selected.firma}</h2>
-                <p className="text-xs" style={{ color: 'var(--muted)' }}>{selected.beruf} · {selected.kanton} · {selected.stadt}</p>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <h2 style={{ fontSize: '15px', fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{selected.firma}</h2>
+                <p style={{ fontSize: '12px', color: 'var(--muted)', marginTop: '1px' }}>{selected.beruf} · {selected.kanton} · {selected.stadt}</p>
               </div>
               <button onClick={() => { setSelected(null); setGenerated(null); setSent(false) }}
-                className="w-7 h-7 rounded-lg flex items-center justify-center cursor-pointer hover:opacity-70"
-                style={{ color: 'var(--muted)', background: 'var(--surface-2)' }}>✕</button>
+                style={{ width: '28px', height: '28px', borderRadius: '7px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'var(--muted)', background: 'var(--surface-2)', border: 'none', fontSize: '14px' }}>✕</button>
             </div>
 
-            <div className="p-5">
-              {/* Contact info */}
-              {(selected.telefon || selected.email) && (
-                <div className="flex gap-3 mb-4">
-                  {selected.telefon && (
-                    <div className="flex items-center gap-2 text-xs px-3 py-2 rounded-lg" style={{ background: 'var(--surface-2)', color: 'var(--text-2)' }}>
-                      <span>📞</span> {selected.telefon}
-                    </div>
-                  )}
-                  {selected.email && (
-                    <div className="flex items-center gap-2 text-xs px-3 py-2 rounded-lg" style={{ background: 'var(--surface-2)', color: 'var(--green)' }}>
-                      <span>✉</span> {selected.email}
-                    </div>
-                  )}
-                </div>
-              )}
+            <div style={{ padding: '18px 20px' }}>
+              <div style={{ display: 'flex', gap: '8px', marginBottom: '14px', flexWrap: 'wrap' }}>
+                {selected.email
+                  ? <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', padding: '6px 10px', borderRadius: '7px', background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)', color: 'var(--green)' }}>✉ {selected.email}</div>
+                  : <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', padding: '6px 10px', borderRadius: '7px', background: 'var(--surface-2)', color: 'var(--muted)', animation: emailDone.has(selected.id) ? undefined : 'pulse 1.5s ease-in-out infinite' }}>{emailDone.has(selected.id) ? '✉ No email found' : '✉ Finding email…'}</div>
+                }
+                {selected.telefon
+                  ? <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', padding: '6px 10px', borderRadius: '7px', background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.3)', color: 'var(--blue)' }}>📞 {selected.telefon}</div>
+                  : <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', padding: '6px 10px', borderRadius: '7px', background: 'var(--surface-2)', color: 'var(--muted)', animation: emailDone.has(selected.id) ? undefined : 'pulse 1.5s ease-in-out infinite' }}>{emailDone.has(selected.id) ? '📞 No phone found' : '📞 Finding phone…'}</div>
+                }
+              </div>
 
-              {/* Facts */}
               {generated?.fakten && generated.fakten.length > 0 && (
-                <div className="mb-4 p-3 rounded-xl" style={{ background: 'var(--purple-glow)', border: '1px solid rgba(109,40,217,0.2)' }}>
-                  <p className="text-xs font-semibold tracking-widest mb-2" style={{ color: 'var(--purple-light)' }}>✦ KI-FAKTEN</p>
-                  <div className="space-y-1">
-                    {generated.fakten.map((f, i) => (
-                      <p key={i} className="text-xs" style={{ color: 'var(--text-2)' }}>· {f}</p>
-                    ))}
-                  </div>
+                <div style={{ marginBottom: '14px', padding: '12px', borderRadius: '10px', background: 'var(--accent-glow)', border: '1px solid var(--accent)' }}>
+                  <p style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.07em', marginBottom: '8px', color: 'var(--accent-light)' }}>{t.search_ai_facts}</p>
+                  {generated.fakten.map((f, i) => <p key={i} style={{ fontSize: '12px', color: 'var(--text-2)', marginBottom: '2px' }}>· {f}</p>)}
                 </div>
               )}
 
-              {/* Generating */}
               {generating ? (
-                <div className="py-12 text-center">
-                  <p className="animate-pulse text-sm" style={{ color: 'var(--purple-light)' }}>✦ KI schreibt deine Bewerbung...</p>
+                <div style={{ padding: '40px 0', textAlign: 'center' }}>
+                  <p style={{ fontSize: '13px', color: 'var(--accent-light)', animation: 'pulse 1.5s ease-in-out infinite' }}>{t.search_ai_generating}</p>
                 </div>
               ) : generated ? (
                 <>
-                  <textarea
-                    value={generated.message}
-                    onChange={e => setGenerated({ ...generated, message: e.target.value })}
-                    rows={12}
-                    className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none mb-4"
-                    style={{ background: 'var(--surface-2)', border: '1px solid var(--border-2)', color: 'var(--text)', lineHeight: '1.8', fontFamily: 'var(--font-geist-mono, monospace)' }}
-                  />
-
+                  <textarea value={generated.message} onChange={e => setGenerated({ ...generated, message: e.target.value })} rows={12}
+                    style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', fontSize: '13px', outline: 'none', resize: 'none', marginBottom: '12px', background: 'var(--surface-2)', border: '1px solid var(--border-2)', color: 'var(--text)', lineHeight: 1.8, fontFamily: 'var(--font-geist-mono, monospace)' }} />
                   {sent && (
-                    <div className="flex items-center gap-2 text-sm mb-3 px-3 py-2 rounded-lg" style={{ background: 'var(--green-glow)', color: 'var(--green)', border: '1px solid rgba(16,185,129,0.3)' }}>
-                      ✓ Email erfolgreich gesendet!
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', marginBottom: '10px', padding: '8px 12px', borderRadius: '8px', background: 'rgba(16,185,129,0.1)', color: 'var(--green)', border: '1px solid rgba(16,185,129,0.3)' }}>
+                      {t.search_email_sent}
                     </div>
                   )}
-
-                  <div className="flex gap-2">
-                    <button
-                      onClick={handleDownloadDocx}
-                      disabled={downloading}
-                      className="flex-1 py-2.5 rounded-xl text-sm font-semibold cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
-                      style={{ background: 'var(--surface-2)', color: 'var(--text)', border: '1px solid var(--border-2)' }}
-                    >
-                      <span>⤓</span> {downloading ? 'Erstellt...' : 'Word (.docx)'}
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <button onClick={handleDownloadDocx} disabled={downloading}
+                      style={{ flex: 1, padding: '10px', borderRadius: '9px', fontSize: '13px', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', background: 'var(--surface-2)', color: 'var(--text)', border: '1px solid var(--border-2)', fontFamily: 'inherit', opacity: downloading ? 0.5 : 1 }}>
+                      ⤓ {downloading ? t.search_downloading : t.search_download}
                     </button>
                     {selected.email ? (
-                      <button
-                        onClick={handleSendEmail}
-                        disabled={sending || sent}
-                        className="flex-1 py-2.5 rounded-xl text-sm font-semibold cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
-                        style={{ background: sent ? 'var(--green)' : 'var(--purple)', color: 'white' }}
-                      >
-                        <span>✉</span> {sending ? 'Sendet...' : sent ? 'Gesendet' : 'Email senden'}
+                      <button onClick={handleSendEmail} disabled={sending || sent}
+                        style={{ flex: 1, padding: '10px', borderRadius: '9px', fontSize: '13px', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', background: sent ? 'var(--green)' : 'var(--accent)', color: 'white', border: 'none', fontFamily: 'inherit', opacity: sending ? 0.5 : 1 }}>
+                        ✉ {sending ? t.search_sending : sent ? t.search_sent : t.search_send_email}
                       </button>
                     ) : (
-                      <div className="flex-1 py-2.5 rounded-xl text-sm text-center flex items-center justify-center" style={{ color: 'var(--muted)', border: '1px solid var(--border)' }}>
-                        Keine Email hinterlegt
+                      <div style={{ flex: 1, padding: '10px', borderRadius: '9px', fontSize: '13px', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--muted)', border: '1px solid var(--border)' }}>
+                        {t.search_no_email}
                       </div>
                     )}
                   </div>

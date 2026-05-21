@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
     const userId = sub.metadata?.userId
     if (userId) {
       await supabase.from('profiles').update({
-        subscription_tier: 'basic',
+        subscription_tier: 'free',
         subscription_status: event.type === 'customer.subscription.paused' ? 'paused' : 'cancelled',
       }).eq('user_id', userId)
     }
