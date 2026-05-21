@@ -12,7 +12,7 @@ export default function RootPage() {
       if (data.user) {
         router.replace('/dashboard')
       } else {
-        window.location.href = 'http://localhost:3001/signin.html'
+        window.location.href = 'https://yrb1.github.io/AiCV/signin.html'
       }
     })
   }, [router])

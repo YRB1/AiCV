@@ -53,7 +53,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       return
     }
     supabase.auth.getUser().then(({ data }) => {
-      if (!data.user) { window.location.href = 'http://localhost:3001/signin.html'; return }
+      if (!data.user) { window.location.href = 'https://yrb1.github.io/AiCV/signin.html'; return }
       const e = data.user.email ?? ''
       setEmail(e)
       setInitials(e.slice(0, 2).toUpperCase())
