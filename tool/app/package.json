@@ -7,6 +7,7 @@
     "dev:all": "npx concurrently \"next dev\" \"npx serve ../../website -p 3001\"",
     "build": "next build",
     "start": "next start",
+    "start:all": "npx concurrently \"next start\" \"npx serve ../../website -p 3001\"",
     "lint": "eslint"
   },
   "dependencies": {
