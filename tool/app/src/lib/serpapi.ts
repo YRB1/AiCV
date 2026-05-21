@@ -11,39 +11,47 @@ const KANTON_NAMES: Record<string, string> = {
   TI: 'Tessin', UR: 'Uri', VD: 'Waadt', VS: 'Wallis', ZG: 'Zug', ZH: 'Zürich',
 }
 
-// Recruitment agencies / platforms — their emails are NOT the company's contact
-const RECRUITER_EMAIL_DOMAINS = [
-  'convit.ch', 'yousty.ch', 'lehrstellenboerse.ch', 'jobup.ch',
-  'jobs.ch', 'indeed.com', 'linkedin.com', 'scout24.ch', 'monster.ch',
-  'glassdoor.com', 'jobagent.ch', 'stellenanzeigen.de', 'karriere.ch',
-  'noreply', 'example', 'sentry', 'no-reply', 'donotreply',
+// Domains belonging to recruiters/platforms — not the actual company
+const RECRUITER_DOMAINS = [
+  'convit.ch', 'yousty.ch', 'lehrstellenboerse.ch', 'jobup.ch', 'jobs.ch',
+  'indeed.com', 'linkedin.com', 'scout24.ch', 'monster.ch', 'glassdoor.com',
+  'jobagent.ch', 'stellenanzeigen.de', 'karriere.ch', 'jobscout24.ch',
+  'adecco.ch', 'manpower.ch', 'randstad.ch', 'tempodrei.ch', 'perret.ch',
+  'noreply', 'no-reply', 'donotreply', 'example',
 ]
 
-// Platform phone numbers that appear on all listings
-const JUNK_PHONES = ['0079941352', '0799413527', '0800', '+41800']
+// Known platform phone numbers — appear on every listing
+const JUNK_PHONES = ['0079941352', '0799413527', '0800800', '+41800']
 
-function isRecruiterEmail(email: string): boolean {
-  const lower = email.toLowerCase()
-  return RECRUITER_EMAIL_DOMAINS.some(d => lower.includes(d)) ||
-    lower.endsWith('.png') || lower.endsWith('.jpg')
+// A result is only kept if its title suggests an apprenticeship
+const APPRENTICESHIP_TITLE_KEYWORDS = [
+  'lehrstelle', 'lernende', 'lernender', 'efz', 'ausbildung',
+  'ausbildungsplatz', 'lehrjahr', 'berufslehre', 'apprenti',
+]
+
+function isApprenticeship(title: string): boolean {
+  const lower = title.toLowerCase()
+  return APPRENTICESHIP_TITLE_KEYWORDS.some(k => lower.includes(k))
 }
 
-function isJunkPhone(phone: string): boolean {
-  const digits = phone.replace(/\s/g, '')
-  return JUNK_PHONES.some(j => digits.startsWith(j))
+function extractEmail(text: string): string | undefined {
+  const emails = text.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g) ?? []
+  return emails.find(e => {
+    const lower = e.toLowerCase()
+    return !RECRUITER_DOMAINS.some(d => lower.includes(d)) &&
+      !lower.endsWith('.png') && !lower.endsWith('.jpg') && !lower.endsWith('.svg')
+  })
 }
 
-function extractEmail(desc: string): string | undefined {
-  const emails = desc.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g) ?? []
-  return emails.find(e => !isRecruiterEmail(e))
+function extractPhone(text: string): string | undefined {
+  const phones = text.match(/(\+41|0041|0)[\s\-.]?(\d{2})[\s\-.]?(\d{3})[\s\-.]?(\d{2})[\s\-.]?(\d{2})/g) ?? []
+  return phones.find(p => {
+    const digits = p.replace(/[\s\-.]/g, '')
+    return !JUNK_PHONES.some(j => digits.startsWith(j))
+  })
 }
 
-function extractPhone(desc: string): string | undefined {
-  const phones = desc.match(/(\+41|0041|0)[\s\-]?(\d{2})[\s\-]?(\d{3})[\s\-]?(\d{2})[\s\-]?(\d{2})/g) ?? []
-  return phones.find(p => !isJunkPhone(p))
-}
-
-async function fetchPage(query: string, start: number): Promise<SerpApiJob[]> {
+async function fetchJobsPage(query: string, start: number): Promise<SerpApiJob[]> {
   const url = new URL('https://serpapi.com/search.json')
   url.searchParams.set('engine', 'google_jobs')
   url.searchParams.set('q', query)
@@ -61,6 +69,28 @@ async function fetchPage(query: string, start: number): Promise<SerpApiJob[]> {
   }
 }
 
+// Secondary Google search to find a company's contact email
+async function lookupCompanyEmail(companyName: string, city: string): Promise<string | undefined> {
+  const url = new URL('https://serpapi.com/search.json')
+  url.searchParams.set('engine', 'google')
+  url.searchParams.set('q', `"${companyName}" ${city} Kontakt Email Impressum`)
+  url.searchParams.set('hl', 'de')
+  url.searchParams.set('gl', 'ch')
+  url.searchParams.set('num', '5')
+  url.searchParams.set('api_key', SERPAPI_KEY)
+  try {
+    const r = await fetch(url.toString())
+    if (!r.ok) return undefined
+    const data = await r.json()
+    const text = (data.organic_results ?? [])
+      .map((res: { snippet?: string; title?: string }) => `${res.title ?? ''} ${res.snippet ?? ''}`)
+      .join(' ')
+    return extractEmail(text)
+  } catch {
+    return undefined
+  }
+}
+
 export async function searchLehrstellen(params: {
   beruf: string
   kanton?: string
@@ -70,33 +100,36 @@ export async function searchLehrstellen(params: {
   const kantonName = kanton && KANTON_NAMES[kanton] ? KANTON_NAMES[kanton] : ''
   const loc = kantonName ? `${kantonName} Schweiz` : 'Schweiz'
 
-  // Multiple query variations to maximise real results
+  // Lehrstellen-specific queries only — no generic job terms
   const queries = [
-    `${beruf} Lehrstelle ${loc}`,
-    `${beruf} Ausbildung ${loc}`,
-    `${beruf} EFZ Lehrstelle ${loc}`,
-    `Kaufmann Kauffrau EFZ Lehrstelle ${loc}`,
+    `"Lehrstelle" ${beruf} EFZ ${loc}`,
+    `"Ausbildungsplatz" ${beruf} ${loc}`,
+    `Lernende ${beruf} EFZ Lehrstelle ${loc}`,
+    `${beruf} Kauffrau Kaufmann Lehrstelle ${loc}`,
   ]
 
-  // 3 pages per query (0, 10, 20) = up to 120 raw results
-  const fetches = queries.flatMap(q => [0, 10, 20].map(start => fetchPage(q, start)))
+  // 3 pages per query = up to 120 raw results
+  const fetches = queries.flatMap(q => [0, 10, 20].map(start => fetchJobsPage(q, start)))
   const pages = await Promise.all(fetches)
-  const jobs = pages.flat()
+  const allJobs = pages.flat()
 
-  // Deduplicate by company name (keep first occurrence)
+  // Deduplicate by company name
   const seen = new Set<string>()
-  const unique = jobs.filter(job => {
+  const unique = allJobs.filter(job => {
     const key = (job.company_name ?? '').toLowerCase().trim()
-    if (!key || seen.has(key)) return false
+    if (!key || key === 'unbekannt' || seen.has(key)) return false
     seen.add(key)
     return true
   })
 
-  return unique.map((job: SerpApiJob, i: number): Lehrstelle => {
+  // Filter to only real apprenticeships
+  const apprenticeships = unique.filter(job => isApprenticeship(job.title ?? ''))
+
+  // Map to Lehrstelle — collect those needing email enrichment
+  const results: Lehrstelle[] = apprenticeships.map((job, i) => {
     const desc = job.description ?? ''
     const email = extractEmail(desc)
     const telefon = extractPhone(desc)
-
     const applyLinks = job.apply_options ?? []
     const directLink = applyLinks.find(l => l.link && !isJobBoardUrl(l.link ?? ''))?.link
     const anyLink = applyLinks[0]?.link ?? ''
@@ -113,8 +146,25 @@ export async function searchLehrstellen(params: {
       beschreibung: desc.slice(0, 600),
       url: directLink ?? anyLink,
       quelle: extractSource(job.apply_options?.[0]?.title ?? ''),
+      _raw: job,
     }
   })
+
+  // Enrich up to 20 companies that have no email with a secondary Google search
+  const needsEmail = results.filter(r => !r.email).slice(0, 20)
+  if (needsEmail.length > 0) {
+    const enriched = await Promise.all(
+      needsEmail.map(r => lookupCompanyEmail(r.firma, r.stadt))
+    )
+    enriched.forEach((email, i) => {
+      if (email) needsEmail[i].email = email
+    })
+  }
+
+  // Clean up internal field
+  results.forEach(r => { delete (r as Lehrstelle & { _raw?: unknown })._raw })
+
+  return results
 }
 
 interface SerpApiJob {
@@ -144,6 +194,10 @@ function extractSource(applyTitle: string): string {
 }
 
 export function isJobBoardUrl(url: string): boolean {
-  const boards = ['yousty', 'linkedin', 'indeed', 'jobup', 'jobs.ch', 'scout24', 'monster', 'glassdoor', 'stellenanzeigen', 'jobscout', 'jobagent', 'karriere', 'xing.com']
+  const boards = [
+    'yousty', 'linkedin', 'indeed', 'jobup', 'jobs.ch', 'scout24',
+    'monster', 'glassdoor', 'stellenanzeigen', 'jobscout', 'jobagent',
+    'karriere', 'xing.com', 'jobsearch.ch', 'jobfinder',
+  ]
   return boards.some(b => url.includes(b))
 }
