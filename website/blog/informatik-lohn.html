@@ -11,22 +11,49 @@
 <link rel="stylesheet" href="blog.css"/>
 </head>
 <body>
-<nav class="topnav">
-  <a class="nav-logo" href="../index.html">
-    <div class="nav-logo-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="#5b7fff"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-    <span class="nav-logo-text">LehrstellenSniper</span>
-  </a>
-  <div class="nav-right">
-    <div class="lang-toggle">
-      <button id="btn-de" class="active" onclick="setLang('de')">DE</button>
-      <button id="btn-en" onclick="setLang('en')">EN</button>
+<div class="bg-glass"></div>
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">
+      <div class="logo-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+      LehrstellenSniper
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="index.html">Blog</a>
     </div>
-    <a class="cta-btn" href="https://ai-cv-red.vercel.app">Tool starten</a>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button id="btn-de" class="active" onclick="setLang('de')">DE</button>
+        <button id="btn-en" onclick="setLang('en')">EN</button>
+      </div>
+      <a href="../signin.html"><button class="btn-ghost-sm">Sign in</button></a>
+      <a href="https://ai-cv-red.vercel.app" class="btn-nav-cta">
+        <svg viewBox="0 0 24 24" width="13" height="13"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span class="de">Tool starten</span><span class="en" style="display:none">Open tool</span>
+      </a>
+      <button class="hamburger" id="hamburger-btn">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
   </div>
 </nav>
+<div id="mobile-menu">
+  <a href="../index.html#features">Features</a>
+  <a href="../index.html#pricing">Pricing</a>
+  <a href="index.html">Blog</a>
+  <div class="mobile-ctas">
+    <a href="../signin.html"><button class="btn-ghost-sm">Sign in</button></a>
+    <a href="https://ai-cv-red.vercel.app" class="btn-nav-cta" style="justify-content:center">Get started</a>
+  </div>
+</div>
 
 <!-- GERMAN -->
-<div class="post-wrap de">
+<div class="page"><div class="post-outer de">
   <div class="post-header">
     <span class="post-tag-lg">Lohn & Karriere</span>
     <h1>Informatiker EFZ Lohn 2025: Was verdienst du als Lernender in der Schweiz?</h1>
@@ -90,7 +117,7 @@
 </div>
 
 <!-- ENGLISH -->
-<div class="post-wrap en" style="display:none">
+<div class="page"><div class="post-outer en" style="display:none">
   <div class="post-header">
     <span class="post-tag-lg">Salary & Career</span>
     <h1>IT Apprenticeship Salary Switzerland 2025: What Do You Earn as a Trainee?</h1>
@@ -140,22 +167,28 @@
       <a href="https://ai-cv-red.vercel.app">Search now</a>
     </div>
   </div>
-</div>
+</div></div>
 
-<footer>
-  <span class="de">© 2025 LehrstellenSniper · <a href="index.html" style="color:#5b7fff">← Alle Artikel</a></span>
-  <span class="en" style="display:none">© 2025 LehrstellenSniper · <a href="index.html" style="color:#5b7fff">← All posts</a></span>
+<footer class="site-footer">
+  <span class="de">© 2025 LehrstellenSniper · <a href="index.html">← Alle Artikel</a></span>
+  <span class="en" style="display:none">© 2025 LehrstellenSniper · <a href="index.html">← All posts</a></span>
 </footer>
 <script>
 function setLang(l){
-  document.querySelectorAll('.de').forEach(e=>e.style.display=l==='de'?'':'none')
-  document.querySelectorAll('.en').forEach(e=>e.style.display=l==='en'?'':'none')
+  document.querySelectorAll('.de').forEach(e=>e.style.display=l==='de'?'':' none'.trim())
+  document.querySelectorAll('.en').forEach(e=>e.style.display=l==='en'?'':' none'.trim())
   document.getElementById('btn-de').classList.toggle('active',l==='de')
   document.getElementById('btn-en').classList.toggle('active',l==='en')
   localStorage.setItem('blog-lang',l)
 }
 const saved=localStorage.getItem('blog-lang')||'de'
 setLang(saved)
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>20)
+})
+document.getElementById('hamburger-btn').addEventListener('click',()=>{
+  document.getElementById('mobile-menu').classList.toggle('open')
+})
 </script>
 </body>
 </html>

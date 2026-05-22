@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title class="de">Blog — Tipps & Wissen rund um die Lehrstelle | LehrstellenSniper</title>
+<title>Blog — Tipps & Wissen rund um die Lehrstelle | LehrstellenSniper</title>
 <meta name="description" content="Praxisnahe Tipps für Lernende und Eltern: Bewerbung, Interview, Lohn, Fehler vermeiden und mehr."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -11,83 +11,129 @@
 <link rel="stylesheet" href="blog.css"/>
 </head>
 <body>
-<nav class="topnav">
-  <a class="nav-logo" href="../index.html">
-    <div class="nav-logo-icon">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="#5b7fff"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+<div class="bg-glass"></div>
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">
+      <div class="logo-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+      LehrstellenSniper
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="index.html" class="active">Blog</a>
     </div>
-    <span class="nav-logo-text">LehrstellenSniper</span>
-  </a>
-  <div class="nav-right">
-    <div class="lang-toggle">
-      <button id="btn-de" class="active" onclick="setLang('de')">DE</button>
-      <button id="btn-en" onclick="setLang('en')">EN</button>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button id="btn-de" class="active" onclick="setLang('de')">DE</button>
+        <button id="btn-en" onclick="setLang('en')">EN</button>
+      </div>
+      <a href="../signin.html"><button class="btn-ghost-sm">Sign in</button></a>
+      <a href="https://ai-cv-red.vercel.app" class="btn-nav-cta">
+        <svg viewBox="0 0 24 24" width="13" height="13"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span class="de">Tool starten</span><span class="en" style="display:none">Open tool</span>
+      </a>
+      <button class="hamburger" id="hamburger-btn">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
     </div>
-    <a class="cta-btn" href="https://ai-cv-red.vercel.app">Tool starten</a>
   </div>
 </nav>
-
-<div class="blog-hero">
-  <p class="de" style="font-size:12px;font-weight:600;color:#5b7fff;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px">BLOG</p>
-  <p class="en" style="font-size:12px;font-weight:600;color:#5b7fff;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px;display:none">BLOG</p>
-  <h1 class="de">Tipps & Wissen rund um die Lehrstelle</h1>
-  <h1 class="en" style="display:none">Tips & Knowledge for Your Apprenticeship</h1>
-  <p class="de" style="margin-top:16px">Praxisnahe Ratschläge für Lernende und Eltern — von der Bewerbung bis zum ersten Arbeitstag.</p>
-  <p class="en" style="display:none;margin-top:16px">Practical advice for students and parents — from the first application to the first day of work.</p>
+<div id="mobile-menu">
+  <a href="../index.html#features">Features</a>
+  <a href="../index.html#pricing">Pricing</a>
+  <a href="index.html">Blog</a>
+  <div class="mobile-ctas">
+    <a href="../signin.html"><button class="btn-ghost-sm">Sign in</button></a>
+    <a href="https://ai-cv-red.vercel.app" class="btn-nav-cta" style="justify-content:center">Get started</a>
+  </div>
 </div>
 
-<div class="posts-grid">
+<div class="page">
+  <div class="blog-hero">
+    <div class="blog-eyebrow"><span></span>Blog</div>
+    <h1 class="de">Tipps & Wissen rund um die Lehrstelle</h1>
+    <h1 class="en" style="display:none">Tips & Knowledge for Your Apprenticeship</h1>
+    <p class="de">Praxisnahe Ratschläge für Lernende und Eltern — von der Bewerbung bis zum ersten Arbeitstag.</p>
+    <p class="en" style="display:none">Practical advice for students and parents — from the first application to the first day of work.</p>
+  </div>
 
-  <a class="post-card" href="bewerbungsfehler.html" style="text-decoration:none">
-    <span class="post-tag">Bewerbung / Applications</span>
-    <h2 class="de">Die 7 grössten Fehler bei der Lehrstellen-Bewerbung</h2>
-    <h2 class="en" style="display:none">The 7 Biggest Mistakes When Applying for an Apprenticeship</h2>
-    <p class="de">Diese Fehler machen fast alle — und genau deshalb bekommst du keine Antwort. Hier erfährst du, wie du es besser machst.</p>
-    <p class="en" style="display:none">Almost everyone makes these mistakes — and that's exactly why they get no reply. Here's how to do it right.</p>
-    <span class="read-more">Lesen →</span>
-  </a>
+  <div class="posts-grid">
 
-  <a class="post-card" href="interview-tipps.html" style="text-decoration:none">
-    <span class="post-tag">Interview / Vorstellungsgespräch</span>
-    <h2 class="de">Vorstellungsgespräch für die Lehrstelle: 10 Tipps die dich abheben</h2>
-    <h2 class="en" style="display:none">Apprenticeship Interview: 10 Tips That Make You Stand Out</h2>
-    <p class="de">Ein Vorstellungsgespräch ist deine grösste Chance. Mit diesen 10 Tipps gehst du vorbereitet rein und hinterlässt einen bleibenden Eindruck.</p>
-    <p class="en" style="display:none">An interview is your biggest chance. With these 10 tips you walk in prepared and leave a lasting impression.</p>
-    <span class="read-more">Read →</span>
-  </a>
+    <a class="post-card" href="bewerbungsfehler.html">
+      <span class="post-tag">Bewerbung / Applications</span>
+      <h2 class="de">Die 7 grössten Fehler bei der Lehrstellen-Bewerbung</h2>
+      <h2 class="en" style="display:none">The 7 Biggest Mistakes When Applying for an Apprenticeship</h2>
+      <p class="de">Diese Fehler machen fast alle — und genau deshalb bekommst du keine Antwort. Hier erfährst du, wie du es besser machst.</p>
+      <p class="en" style="display:none">Almost everyone makes these mistakes — and that's exactly why they get no reply. Here's how to do it right.</p>
+      <div class="post-card-footer">
+        <span class="post-meta">Mai 2025 · 6 Min.</span>
+        <span class="read-more de">Lesen →</span>
+        <span class="read-more en" style="display:none">Read →</span>
+      </div>
+    </a>
 
-  <a class="post-card" href="lehrstellen-zuerich.html" style="text-decoration:none">
-    <span class="post-tag">Kanton / Canton</span>
-    <h2 class="de">Die besten Lehrstellen in Zürich 2025 — So findest du sie zuerst</h2>
-    <h2 class="en" style="display:none">Best Apprenticeships in Zurich 2025 — How to Find Them First</h2>
-    <p class="de">Zürich bietet tausende Lehrstellen — aber nur wer schnell und gezielt sucht, bekommt eine der begehrten Stellen.</p>
-    <p class="en" style="display:none">Zurich offers thousands of apprenticeships — but only those who search fast and smart land the best ones.</p>
-    <span class="read-more">Lesen →</span>
-  </a>
+    <a class="post-card" href="interview-tipps.html">
+      <span class="post-tag">Interview</span>
+      <h2 class="de">Vorstellungsgespräch für die Lehrstelle: 10 Tipps die dich abheben</h2>
+      <h2 class="en" style="display:none">Apprenticeship Interview: 10 Tips That Make You Stand Out</h2>
+      <p class="de">Ein Vorstellungsgespräch ist deine grösste Chance. Mit diesen 10 Tipps gehst du vorbereitet rein und hinterlässt einen bleibenden Eindruck.</p>
+      <p class="en" style="display:none">An interview is your biggest chance. With these 10 tips you walk in prepared and leave a lasting impression.</p>
+      <div class="post-card-footer">
+        <span class="post-meta">Mai 2025 · 7 Min.</span>
+        <span class="read-more de">Lesen →</span>
+        <span class="read-more en" style="display:none">Read →</span>
+      </div>
+    </a>
 
-  <a class="post-card" href="informatik-lohn.html" style="text-decoration:none">
-    <span class="post-tag">Lohn / Salary</span>
-    <h2 class="de">Informatiker EFZ Lohn: Was verdienst du als Lernender?</h2>
-    <h2 class="en" style="display:none">IT Apprenticeship Salary Switzerland: What Do You Earn?</h2>
-    <p class="de">Was verdient man wirklich als Informatik-Lernender in der Schweiz? Alle Zahlen nach Lehrjahr, Kanton und Betrieb.</p>
-    <p class="en" style="display:none">What do you actually earn as an IT trainee in Switzerland? All numbers by year, canton and company.</p>
-    <span class="read-more">Lesen →</span>
-  </a>
+    <a class="post-card" href="lehrstellen-zuerich.html">
+      <span class="post-tag">Kanton Zürich</span>
+      <h2 class="de">Die besten Lehrstellen in Zürich 2025 — So findest du sie zuerst</h2>
+      <h2 class="en" style="display:none">Best Apprenticeships in Zurich 2025 — How to Find Them First</h2>
+      <p class="de">Zürich bietet tausende Lehrstellen — aber nur wer schnell und gezielt sucht, bekommt eine der begehrten Stellen.</p>
+      <p class="en" style="display:none">Zurich offers thousands of apprenticeships — but only those who search fast and smart land the best ones.</p>
+      <div class="post-card-footer">
+        <span class="post-meta">Mai 2025 · 6 Min.</span>
+        <span class="read-more de">Lesen →</span>
+        <span class="read-more en" style="display:none">Read →</span>
+      </div>
+    </a>
 
-  <a class="post-card" href="eltern-helfen.html" style="text-decoration:none">
-    <span class="post-tag">Eltern / Parents</span>
-    <h2 class="de">Eltern: So helft ihr eurem Kind bei der Lehrstellen-Suche richtig</h2>
-    <h2 class="en" style="display:none">Parents: How to Actually Help Your Child Find an Apprenticeship</h2>
-    <p class="de">Zu viel helfen schadet, zu wenig auch. Hier ist der goldene Mittelweg — was ihr tun solltet und was ihr besser lasst.</p>
-    <p class="en" style="display:none">Too much help hurts, too little does too. Here's the sweet spot — what you should do and what to leave alone.</p>
-    <span class="read-more">Read →</span>
-  </a>
+    <a class="post-card" href="informatik-lohn.html">
+      <span class="post-tag">Lohn / Salary</span>
+      <h2 class="de">Informatiker EFZ Lohn: Was verdienst du als Lernender?</h2>
+      <h2 class="en" style="display:none">IT Apprenticeship Salary Switzerland: What Do You Earn?</h2>
+      <p class="de">Was verdient man wirklich als Informatik-Lernender in der Schweiz? Alle Zahlen nach Lehrjahr, Kanton und Betrieb.</p>
+      <p class="en" style="display:none">What do you actually earn as an IT trainee in Switzerland? All numbers by year, canton and company.</p>
+      <div class="post-card-footer">
+        <span class="post-meta">Mai 2025 · 5 Min.</span>
+        <span class="read-more de">Lesen →</span>
+        <span class="read-more en" style="display:none">Read →</span>
+      </div>
+    </a>
 
+    <a class="post-card" href="eltern-helfen.html">
+      <span class="post-tag">Für Eltern / For Parents</span>
+      <h2 class="de">Eltern: So helft ihr eurem Kind bei der Lehrstellen-Suche richtig</h2>
+      <h2 class="en" style="display:none">Parents: How to Actually Help Your Child Find an Apprenticeship</h2>
+      <p class="de">Zu viel helfen schadet, zu wenig auch. Hier ist der goldene Mittelweg — was ihr tun solltet und was ihr besser lasst.</p>
+      <p class="en" style="display:none">Too much help hurts, too little does too. Here's the sweet spot — what to do and what to leave alone.</p>
+      <div class="post-card-footer">
+        <span class="post-meta">Mai 2025 · 6 Min.</span>
+        <span class="read-more de">Lesen →</span>
+        <span class="read-more en" style="display:none">Read →</span>
+      </div>
+    </a>
+
+  </div>
 </div>
 
-<footer>
-  <span class="de">© 2025 LehrstellenSniper · <a href="../index.html" style="color:#5b7fff">Zurück zur Startseite</a></span>
-  <span class="en" style="display:none">© 2025 LehrstellenSniper · <a href="../index.html" style="color:#5b7fff">Back to homepage</a></span>
+<footer class="site-footer">
+  <span class="de">© 2025 LehrstellenSniper · <a href="../index.html">Zurück zur Startseite</a></span>
+  <span class="en" style="display:none">© 2025 LehrstellenSniper · <a href="../index.html">Back to homepage</a></span>
 </footer>
 
 <script>
@@ -100,6 +146,12 @@ function setLang(l){
 }
 const saved=localStorage.getItem('blog-lang')||'de'
 setLang(saved)
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>20)
+})
+document.getElementById('hamburger-btn').addEventListener('click',()=>{
+  document.getElementById('mobile-menu').classList.toggle('open')
+})
 </script>
 </body>
 </html>
