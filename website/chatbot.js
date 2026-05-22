@@ -1,0 +1,245 @@
+(function(){
+  'use strict';
+  const inBlog = /\/blog\//.test(window.location.pathname);
+  const base   = inBlog ? '../' : '';
+  const bbase  = inBlog ? ''    : 'blog/';
+  const r = p  => base  + p;
+  const b = p  => bbase + p;
+
+  /* ── Knowledge base ─────────────────────────────────────────────────── */
+  function KB(){
+    return {
+      de:[
+        {k:['hallo','hi','hey','guten','morgen','tag'],a:`Hallo! 👋 Ich bin <strong>Sniper Bot</strong> — ich beantworte Fragen zu LehrstellenSniper sofort. Was möchtest du wissen?`},
+        {k:['kostenlos','gratis','preis','kosten','abo','plan','pro','zahlen','bezahl'],a:`Es gibt einen <strong>kostenlosen Einstieg</strong>. Das volle Feature-Set (unlimitierte Suchen, KI-Bewerbungen, direkte Kontakte) ist im Pro-Abo. Schau dir die <a href="${r('index.html')}#pricing">Preise</a> an.`},
+        {k:['kündigen','kündigung','cancel'],a:`Du kannst dein Abo <strong>jederzeit</strong> in den Kontoeinstellungen kündigen — kein Formular, keine Wartezeit.`},
+        {k:['passwort','password','vergessen','reset'],a:`Klick auf der <a href="${r('signin.html')}">Anmeldeseite</a> auf <strong>"Passwort vergessen?"</strong> — du bekommst sofort einen Reset-Link per E-Mail.`},
+        {k:['konto','registrieren','sign up','erstellen','account'],a:`Klick oben rechts auf <strong>Sign up</strong> und gib deine E-Mail ein — fertig in unter einer Minute.`},
+        {k:['suche','stellen','jobs','finden','resultate','quellen'],a:`LehrstellenSniper durchsucht gleichzeitig <strong>Google Jobs, Firmenwebsites und kantonale Portale</strong>. So findest du auch Stellen, die nie auf Yousty erscheinen.`},
+        {k:['ki','ai','gpt','chatgpt','motivationsschreiben','bewerbungsschreiben','automatisch'],a:`Für jede Stelle wird <strong>automatisch ein personalisiertes Motivationsschreiben</strong> auf Deutsch oder Englisch generiert — du kannst es danach bearbeiten und versenden.`},
+        {k:['englisch','sprache','language'],a:`LehrstellenSniper ist auf <strong>Deutsch und Englisch</strong> verfügbar — Suche, Bewerbungsschreiben und die ganze App.`},
+        {k:['zahlung','payment','kreditkarte','twint','stripe'],a:`Wir akzeptieren <strong>Visa, Mastercard, Amex und TWINT</strong>. Zahlung sicher über Stripe.`},
+        {k:['yousty','vergleich','unterschied'],a:`Yousty zeigt nur bezahlte Inserate. Wir finden zusätzlich Stellen auf Firmenwebsites — <strong>über 40% der Lehrstellen erscheinen nie auf Yousty</strong>. Lies den <a href="${b('lehrstellensniper-vs-yousty.html')}">Vergleich</a>.`},
+        {k:['datenschutz','daten','privacy','dsgvo','gdpr'],a:`Deine Daten werden <strong>nicht an Firmen weitergegeben</strong>. Lies unsere <a href="${r('privacy.html')}">Datenschutzerklärung</a>.`},
+        {k:['cookie','cookies','zustimmung'],a:`Wir nutzen nur notwendige Cookies für die Anmeldung und deine Spracheinstellung. Details in der <a href="${r('privacy.html')}">Datenschutzerklärung</a>.`},
+        {k:['zürich','bern','basel','zug','kanton','region'],a:`Die Suche ist <strong>schweizweit — alle 26 Kantone</strong>. Für Kantonstipps schau in den <a href="${b('index.html')}">Blog</a>.`},
+        {k:['schnupperlehre','schnupper'],a:`Dazu haben wir einen ganzen Artikel! Lies: <a href="${b('schnupperlehre-organisieren.html')}">Schnupperlehre organisieren</a>.`},
+        {k:['lebenslauf','cv','curriculum'],a:`Dazu haben wir einen Guide: <a href="${b('lebenslauf-vorlage-lernende.html')}">Lebenslauf Vorlage für Lernende</a>.`},
+        {k:['interview','vorstellungsgespräch','gespräch','tipps'],a:`Lies unseren Ratgeber: <a href="${b('interview-tipps.html')}">10 Interview-Tipps für die Lehrstelle</a>.`},
+        {k:['kontakt','email','mail','hilfe','support'],a:`Schreib uns an <a href="mailto:hallo@lehrstellensniper.ch">hallo@lehrstellensniper.ch</a> — wir antworten innerhalb von <strong>24 Stunden</strong>. 📧`},
+        {k:['danke','thanks','super','top','toll','perfekt'],a:`Freut mich! 😊 Noch weitere Fragen? Ich bin hier.`},
+        {k:['agb','nutzungsbedingungen','terms'],a:`Unsere <a href="${r('terms.html')}">Nutzungsbedingungen</a> findest du hier.`},
+      ],
+      en:[
+        {k:['hello','hi','hey','good'],a:`Hi! 👋 I'm <strong>Sniper Bot</strong> — I instantly answer questions about LehrstellenSniper. What would you like to know?`},
+        {k:['free','cost','price','plan','pro','pay','subscription'],a:`There's a <strong>free tier</strong> with limited searches. The full feature set is in the Pro subscription. Check <a href="${r('index.html')}#pricing">pricing</a>.`},
+        {k:['cancel','cancellation'],a:`You can cancel <strong>any time</strong> in account settings — no forms, no waiting.`},
+        {k:['password','forgot','reset'],a:`Click <strong>"Forgot password?"</strong> on the <a href="${r('signin.html')}">sign-in page</a> — you'll get a reset link instantly.`},
+        {k:['account','register','signup','sign up','create'],a:`Click <strong>Sign up</strong> top right and enter your email — done in under a minute.`},
+        {k:['search','jobs','find','results','sources'],a:`LehrstellenSniper searches <strong>Google Jobs, company websites and cantonal portals simultaneously</strong>. You find positions that never appear on Yousty.`},
+        {k:['ai','gpt','chatgpt','cover letter','application','automatic'],a:`For every position, a <strong>personalised cover letter is automatically generated</strong> in German or English — edit and send directly.`},
+        {k:['english','language','bilingual'],a:`LehrstellenSniper is available in <strong>German and English</strong> — search, cover letters and the entire app.`},
+        {k:['payment','credit card','twint','stripe'],a:`We accept <strong>Visa, Mastercard, Amex and TWINT</strong>, processed securely via Stripe.`},
+        {k:['yousty','compare','difference'],a:`Yousty only shows paid listings. We additionally find positions on company websites — <strong>over 40% of apprenticeships never appear on Yousty</strong>. Read the <a href="${b('lehrstellensniper-vs-yousty.html')}">comparison</a>.`},
+        {k:['privacy','data','gdpr','secure'],a:`Your data is <strong>never shared with companies</strong>. Read our <a href="${r('privacy.html')}">Privacy Policy</a>.`},
+        {k:['cookie','cookies'],a:`We only use essential cookies for login and language preference. Details in our <a href="${r('privacy.html')}">Privacy Policy</a>.`},
+        {k:['zurich','bern','basel','zug','canton','region'],a:`The search is <strong>nationwide — all 26 cantons</strong>. For canton-specific guides check the <a href="${b('index.html')}">Blog</a>.`},
+        {k:['trial day','schnupperlehre'],a:`We have a full guide: <a href="${b('schnupperlehre-organisieren.html')}">Organising a Trial Day</a>.`},
+        {k:['cv','resume','curriculum'],a:`Check our guide: <a href="${b('lebenslauf-vorlage-lernende.html')}">CV Template for Apprentices</a>.`},
+        {k:['interview','tips'],a:`Read our guide: <a href="${b('interview-tipps.html')}">10 Interview Tips for Apprenticeships</a>.`},
+        {k:['contact','email','support','help'],a:`Write to <a href="mailto:hallo@lehrstellensniper.ch">hallo@lehrstellensniper.ch</a> — we reply within <strong>24 hours</strong>. 📧`},
+        {k:['thanks','thank','great','perfect'],a:`Glad I could help! 😊 Any other questions? I'm right here.`},
+        {k:['terms','terms of service'],a:`Find our <a href="${r('terms.html')}">Terms of Service</a> here.`},
+      ]
+    };
+  }
+
+  const QUICK = {
+    de:['Ist es kostenlos?','Wie funktioniert die KI?','Wo finde ich Stellen?','Kontakt'],
+    en:['Is it free?','How does the AI work?','Where do I find positions?','Contact']
+  };
+  const QUICK_KEYS = {
+    de:['kostenlos','ki','stellen','kontakt'],
+    en:['free','ai','find','contact']
+  };
+
+  /* ── CSS ─────────────────────────────────────────────────────────────── */
+  const css = `
+#chatbot-wrap{position:fixed;bottom:28px;right:28px;z-index:9999;display:flex;flex-direction:column;align-items:flex-end;gap:12px;font-family:'Inter',sans-serif}
+#chat-toggle{display:flex;align-items:center;gap:8px;padding:12px 20px 12px 16px;border-radius:50px;background:linear-gradient(135deg,#7b9fff,#3a5ce0);color:#fff;border:none;cursor:pointer;font-weight:700;font-size:14px;box-shadow:0 4px 24px rgba(91,127,255,0.45);transition:transform .2s,box-shadow .2s;position:relative;animation:cbPulse 3s 2.5s ease infinite}
+#chat-toggle:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(91,127,255,0.6)}
+#chat-toggle svg{width:18px;height:18px;flex-shrink:0}
+.cb-label{font-size:13.5px;font-family:'Inter',sans-serif}
+.cb-unread{position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:#f04;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #060609;animation:cbBadge .3s ease}
+.cb-unread.hidden{display:none!important}
+@keyframes cbPulse{0%,100%{box-shadow:0 4px 24px rgba(91,127,255,0.45),0 0 0 0 rgba(91,127,255,0.35)}60%{box-shadow:0 4px 24px rgba(91,127,255,0.45),0 0 0 10px rgba(91,127,255,0)}}
+@keyframes cbBadge{from{transform:scale(0)}to{transform:scale(1)}}
+#chat-panel{width:360px;background:#0f0f18;border:1px solid rgba(100,130,255,0.22);border-radius:20px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,0.6),0 0 0 1px rgba(91,127,255,0.08);transform:scale(0.9) translateY(16px);transform-origin:bottom right;opacity:0;pointer-events:none;transition:transform .28s cubic-bezier(.34,1.56,.64,1),opacity .2s ease;max-height:520px}
+#chat-panel.cb-open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+.cb-header{display:flex;align-items:center;gap:12px;padding:16px 18px;background:rgba(91,127,255,0.08);border-bottom:1px solid rgba(100,130,255,0.12);flex-shrink:0}
+.cb-avatar{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#7b9fff,#3a5ce0);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 14px rgba(91,127,255,0.35)}
+.cb-avatar svg{width:18px;height:18px}
+.cb-hname{font-weight:700;font-size:14px;color:#f0f0fa;font-family:'Inter',sans-serif}
+.cb-hstatus{font-size:11.5px;color:#8888aa;display:flex;align-items:center;gap:5px;margin-top:1px;font-family:'Inter',sans-serif}
+.cb-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0;animation:cbDotPulse 2s ease infinite}
+@keyframes cbDotPulse{0%,100%{opacity:1}50%{opacity:.5}}
+.cb-close{margin-left:auto;background:none;border:none;cursor:pointer;color:#4a4a66;padding:4px;border-radius:6px;transition:color .2s,background .2s;display:flex;line-height:1}
+.cb-close:hover{color:#f0f0fa;background:rgba(255,255,255,0.07)}
+.cb-close svg{width:16px;height:16px}
+.cb-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;scrollbar-width:thin;scrollbar-color:rgba(91,127,255,0.25) transparent}
+.cb-msg{display:flex;gap:8px;max-width:90%;animation:cbMsgIn .3s ease}
+.cb-msg.bot{align-self:flex-start}
+.cb-msg.usr{align-self:flex-end;flex-direction:row-reverse}
+@keyframes cbMsgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.cb-msg-av{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,#7b9fff,#3a5ce0);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.cb-msg-av svg{width:12px;height:12px}
+.cb-bubble{padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.55;font-family:'Inter',sans-serif}
+.cb-msg.bot .cb-bubble{background:#15151f;border:1px solid rgba(100,130,255,0.12);color:#8888aa;border-radius:4px 14px 14px 14px}
+.cb-msg.usr .cb-bubble{background:linear-gradient(135deg,#7b9fff,#3a5ce0);color:#fff;border-radius:14px 4px 14px 14px}
+.cb-bubble a{color:#a0b0ff;text-decoration:underline}
+.cb-msg.usr .cb-bubble a{color:rgba(255,255,255,0.85)}
+.cb-bubble strong{color:#f0f0fa}
+.cb-msg.usr .cb-bubble strong{color:#fff}
+.cb-typing{display:flex;align-items:center;gap:4px;padding:12px 14px}
+.cb-tdot{width:7px;height:7px;border-radius:50%;background:#4a4a66;animation:cbBounce 1.2s ease infinite}
+.cb-tdot:nth-child(2){animation-delay:.2s}
+.cb-tdot:nth-child(3){animation-delay:.4s}
+@keyframes cbBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.cb-chips{padding:0 12px 10px;display:flex;flex-wrap:wrap;gap:6px;flex-shrink:0}
+.cb-chip{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:600;background:rgba(91,127,255,0.1);border:1px solid rgba(91,127,255,0.25);color:#a0b0ff;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;white-space:nowrap}
+.cb-chip:hover{background:rgba(91,127,255,0.2);border-color:rgba(91,127,255,0.5);transform:translateY(-1px)}
+.cb-input-row{display:flex;align-items:center;gap:8px;padding:12px 14px;border-top:1px solid rgba(100,130,255,0.12);flex-shrink:0}
+.cb-input{flex:1;padding:10px 14px;border-radius:10px;background:#060609;border:1px solid rgba(100,130,255,0.22);color:#f0f0fa;font-size:13.5px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.cb-input:focus{border-color:rgba(91,127,255,0.45)}
+.cb-input::placeholder{color:#4a4a66}
+.cb-send{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#7b9fff,#3a5ce0);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;transition:all .2s;box-shadow:0 0 14px rgba(91,127,255,0.35)}
+.cb-send:hover{transform:scale(1.08);box-shadow:0 0 24px rgba(91,127,255,0.5)}
+.cb-send svg{width:15px;height:15px}
+@media(max-width:500px){#chatbot-wrap{bottom:16px;right:16px}#chat-panel{width:calc(100vw - 32px);max-height:460px}}
+`;
+
+  /* ── Inject styles ───────────────────────────────────────────────────── */
+  const styleEl = document.createElement('style');
+  styleEl.textContent = css;
+  document.head.appendChild(styleEl);
+
+  /* ── Inject HTML ─────────────────────────────────────────────────────── */
+  const wrap = document.createElement('div');
+  wrap.id = 'chatbot-wrap';
+  wrap.innerHTML = `
+    <button id="chat-toggle" onclick="window._cb.toggle()" aria-label="Chat">
+      <span id="cb-icon-open"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+      <span id="cb-icon-close" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
+      <span class="cb-label" id="cb-label">Hilfe?</span>
+      <span class="cb-unread" id="cb-unread">1</span>
+    </button>
+    <div id="chat-panel">
+      <div class="cb-header">
+        <div class="cb-avatar"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill="white"/></svg></div>
+        <div>
+          <div class="cb-hname">Sniper Bot</div>
+          <div class="cb-hstatus"><span class="cb-dot"></span><span id="cb-status-txt">Online — antwortet sofort</span></div>
+        </div>
+        <button class="cb-close" onclick="window._cb.toggle()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>
+      <div class="cb-msgs" id="cb-msgs"></div>
+      <div class="cb-chips" id="cb-chips"></div>
+      <div class="cb-input-row">
+        <input class="cb-input" id="cb-inp" placeholder="Frage stellen..." onkeydown="if(event.key==='Enter')window._cb.send()"/>
+        <button class="cb-send" onclick="window._cb.send()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+      </div>
+    </div>`;
+  document.body.appendChild(wrap);
+
+  /* ── Logic ───────────────────────────────────────────────────────────── */
+  let open = false, initiated = false;
+  const L = () => localStorage.getItem('blog-lang') || 'de';
+
+  function syncLang(){
+    const l = L();
+    document.getElementById('cb-label').textContent = l==='de' ? 'Hilfe?' : 'Help?';
+    document.getElementById('cb-status-txt').textContent = l==='de' ? 'Online — antwortet sofort' : 'Online — replies instantly';
+    document.getElementById('cb-inp').placeholder = l==='de' ? 'Frage stellen…' : 'Ask a question…';
+  }
+
+  function toggle(){
+    open = !open;
+    document.getElementById('chat-panel').classList.toggle('cb-open', open);
+    document.getElementById('cb-icon-open').style.display = open ? 'none' : '';
+    document.getElementById('cb-icon-close').style.display = open ? '' : 'none';
+    document.getElementById('cb-unread').classList.add('hidden');
+    syncLang();
+    if(open && !initiated){ initiated=true; initChat(); }
+    if(open) setTimeout(()=>document.getElementById('cb-inp').focus(), 300);
+  }
+
+  function initChat(){
+    const l = L();
+    const greet = l==='de'
+      ? `Hallo! 👋 Ich bin <strong>Sniper Bot</strong>. Ich beantworte sofort Fragen zu LehrstellenSniper — Suche, Bewerbung, Konto, Datenschutz und mehr.`
+      : `Hi! 👋 I'm <strong>Sniper Bot</strong>. I instantly answer questions about LehrstellenSniper — search, applications, account, privacy and more.`;
+    addBot(greet, 350);
+    setTimeout(renderChips, 800);
+  }
+
+  function renderChips(){
+    const l = L();
+    const el = document.getElementById('cb-chips');
+    el.innerHTML = '';
+    QUICK[l].forEach((label,i)=>{
+      const btn = document.createElement('button');
+      btn.className = 'cb-chip';
+      btn.textContent = label;
+      btn.onclick = ()=>{ addUsr(label); el.innerHTML=''; addBot(findAns(QUICK_KEYS[l][i]), 650); };
+      el.appendChild(btn);
+    });
+  }
+
+  function send(){
+    const inp = document.getElementById('cb-inp');
+    const val = inp.value.trim();
+    if(!val) return;
+    inp.value = '';
+    document.getElementById('cb-chips').innerHTML = '';
+    addUsr(val);
+    addBot(findAns(val), 750);
+  }
+
+  function findAns(text){
+    const l = L();
+    const t = text.toLowerCase();
+    const kb = KB()[l];
+    for(const e of kb){ if(e.k.some(k=>t.includes(k))) return e.a; }
+    return l==='de'
+      ? `Gute Frage! Dazu habe ich leider keine Antwort. Schreib uns direkt an <a href="mailto:hallo@lehrstellensniper.ch">hallo@lehrstellensniper.ch</a> — wir helfen innerhalb von 24h. 📧`
+      : `Good question! I don't have an answer for that. Write to <a href="mailto:hallo@lehrstellensniper.ch">hallo@lehrstellensniper.ch</a> — we reply within 24h. 📧`;
+  }
+
+  function addUsr(text){
+    const d = document.createElement('div');
+    d.className='cb-msg usr';
+    d.innerHTML=`<div class="cb-bubble">${esc(text)}</div>`;
+    document.getElementById('cb-msgs').appendChild(d);
+    scroll();
+  }
+
+  function addBot(html, delay){
+    const msgs = document.getElementById('cb-msgs');
+    const t = document.createElement('div');
+    t.className='cb-msg bot';
+    t.innerHTML=`<div class="cb-msg-av"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill="white"/></svg></div><div class="cb-bubble"><div class="cb-typing"><span class="cb-tdot"></span><span class="cb-tdot"></span><span class="cb-tdot"></span></div></div>`;
+    msgs.appendChild(t); scroll();
+    setTimeout(()=>{
+      t.remove();
+      const d = document.createElement('div');
+      d.className='cb-msg bot';
+      d.innerHTML=`<div class="cb-msg-av"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill="white"/></svg></div><div class="cb-bubble">${html}</div>`;
+      msgs.appendChild(d); scroll();
+    }, delay||700);
+  }
+
+  function scroll(){ const m=document.getElementById('cb-msgs'); setTimeout(()=>m.scrollTop=m.scrollHeight,50); }
+  function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  window._cb = { toggle, send };
+})();
