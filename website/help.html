@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Help Center | LehrstellenSniper</title>
+<meta name="description" content="Antworten auf die häufigsten Fragen zu LehrstellenSniper — Suche, Bewerbung, Konto und mehr."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060609;--bg2:#0a0a10;--surface:#0f0f18;--surface2:#15151f;
+  --border:rgba(100,130,255,0.12);--border2:rgba(100,130,255,0.22);
+  --text:#f0f0fa;--text2:#8888aa;--text3:#4a4a66;--indigo:#a0b0ff;
+  --blue:#5b7fff;--blue2:#3a5ce0;--blue-glow:rgba(91,127,255,0.25);
+  --grad:linear-gradient(135deg,#7b9fff,#3a5ce0);
+  --font-head:'Bricolage Grotesque',sans-serif;--font-body:'Inter',sans-serif;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:rgba(6,6,9,0.8)}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,rgba(123,159,255,0.45),rgba(58,92,224,0.3));border-radius:10px}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:15px;line-height:1.7;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.bg-glass{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 10% 15%,rgba(60,90,255,0.07) 0%,transparent 65%),radial-gradient(ellipse 50% 70% at 90% 80%,rgba(40,70,220,0.05) 0%,transparent 65%)}
+.blob{position:fixed;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0;animation:blobFloat 14s ease-in-out infinite}
+.blob1{width:600px;height:600px;background:rgba(60,90,255,0.07);top:-200px;right:-150px}
+.blob2{width:500px;height:500px;background:rgba(40,70,200,0.05);bottom:-150px;left:-100px;animation-delay:-7s}
+@keyframes blobFloat{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-15px) scale(1.04)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* NAV */
+#navbar{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 32px;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+#navbar.scrolled{background:rgba(0,0,0,0.85);border-color:var(--border);backdrop-filter:blur(20px)}
+.nav-inner{max-width:1180px;margin:0 auto;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:var(--font-head);font-size:18px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:flex;align-items:center;gap:8px}
+.logo-icon{width:32px;height:32px;background:linear-gradient(135deg,#7b9fff,#3a5ce0);border-radius:8px;display:flex;align-items:center;justify-content:center;-webkit-text-fill-color:initial;flex-shrink:0;box-shadow:0 0 14px rgba(91,127,255,0.35)}
+.logo-icon svg{width:17px;height:17px;fill:white}
+.nav-links{display:flex;align-items:center;gap:24px;font-size:13px;color:var(--text2)}
+.nav-links a{transition:color .2s}.nav-links a:hover{color:var(--text)}
+.nav-links a.active{color:var(--indigo)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.btn-ghost-sm{padding:7px 16px;border-radius:8px;font-size:13px;font-weight:500;border:1px solid var(--border2);color:var(--text2);background:transparent;cursor:pointer;font-family:var(--font-body);transition:all .2s}
+.btn-ghost-sm:hover{color:var(--text);border-color:rgba(255,255,255,0.28);background:rgba(255,255,255,0.05)}
+.btn-nav-cta{padding:8px 18px;border-radius:8px;font-size:13px;font-weight:600;background:var(--grad);color:#fff;border:none;cursor:pointer;font-family:var(--font-body);transition:all .2s;box-shadow:0 0 20px var(--blue-glow);display:inline-flex;align-items:center;gap:6px}
+.btn-nav-cta:hover{transform:translateY(-1px);box-shadow:0 0 32px rgba(91,127,255,0.4)}
+.lang-toggle{display:flex;border:1px solid var(--border2);border-radius:6px;overflow:hidden}
+.lang-toggle button{padding:5px 11px;font-size:11px;font-weight:600;background:transparent;color:var(--text2);border:none;cursor:pointer;transition:all .15s;font-family:var(--font-body);letter-spacing:0.06em;text-transform:uppercase}
+.lang-toggle button.active{background:rgba(91,127,255,0.15);color:var(--indigo)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--text2)}
+.hamburger svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2}
+#mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;z-index:99;background:rgba(0,0,0,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:20px 24px;flex-direction:column;gap:4px}
+#mobile-menu.open{display:flex}
+#mobile-menu a{padding:12px 0;font-size:15px;color:var(--text2);border-bottom:1px solid var(--border);transition:color .2s}
+#mobile-menu a:hover{color:var(--text)}
+.mobile-ctas{display:flex;gap:10px;margin-top:12px}
+.mobile-ctas .btn-ghost-sm,.mobile-ctas .btn-nav-cta{flex:1;text-align:center;justify-content:center;padding:11px}
+
+/* PAGE */
+.page{position:relative;z-index:1;padding-top:64px}
+
+/* HELP HERO */
+.help-hero{
+  padding:80px 24px 56px;max-width:760px;margin:0 auto;text-align:center;
+  animation:fadeUp .7s .1s ease both;
+}
+.help-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:5px 16px;border-radius:100px;
+  border:1px solid var(--border2);background:rgba(255,255,255,0.04);
+  font-size:11px;color:var(--indigo);letter-spacing:.4px;font-weight:600;
+  margin-bottom:24px;text-transform:uppercase;
+}
+.help-eyebrow span{width:6px;height:6px;border-radius:50%;background:var(--blue);animation:pulse 2s ease-in-out infinite}
+.help-hero h1{
+  font-family:var(--font-head);font-size:clamp(2rem,5vw,3rem);font-weight:800;
+  line-height:1.12;letter-spacing:-1px;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:14px;
+}
+.help-hero p{color:var(--text2);font-size:1.05rem;max-width:520px;margin:0 auto 36px}
+
+/* SEARCH BAR */
+.help-search{
+  max-width:500px;margin:0 auto;
+  position:relative;
+}
+.help-search input{
+  width:100%;padding:14px 20px 14px 48px;
+  background:var(--surface);border:1px solid var(--border2);border-radius:14px;
+  color:var(--text);font-size:15px;font-family:var(--font-body);
+  outline:none;transition:border-color .2s,box-shadow .2s;
+}
+.help-search input:focus{border-color:rgba(91,127,255,0.5);box-shadow:0 0 0 3px rgba(91,127,255,0.1)}
+.help-search input::placeholder{color:var(--text3)}
+.help-search-icon{
+  position:absolute;left:16px;top:50%;transform:translateY(-50%);
+  color:var(--text3);pointer-events:none;
+}
+.help-search-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+
+/* QUICK LINKS */
+.quick-links{
+  max-width:900px;margin:0 auto 64px;padding:0 24px;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;
+  animation:fadeUp .7s .25s ease both;
+}
+.quick-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  padding:24px 20px;display:flex;flex-direction:column;gap:10px;
+  transition:border-color .2s,transform .2s,box-shadow .2s;cursor:pointer;
+}
+.quick-card:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.35)}
+.quick-card-icon{font-size:1.6rem;line-height:1}
+.quick-card h3{font-family:var(--font-head);font-size:.95rem;font-weight:700;color:var(--text)}
+.quick-card p{font-size:12.5px;color:var(--text2);line-height:1.5;flex:1}
+.quick-card-arrow{font-size:13px;color:var(--indigo);font-weight:600;margin-top:4px}
+
+/* HELP SECTIONS */
+.help-content{max-width:900px;margin:0 auto;padding:0 24px 100px;display:grid;grid-template-columns:220px 1fr;gap:48px;align-items:start}
+.help-sidebar{position:sticky;top:88px}
+.help-sidebar-nav{display:flex;flex-direction:column;gap:4px}
+.help-sidebar-link{
+  display:block;padding:9px 14px;border-radius:9px;font-size:13px;color:var(--text2);
+  transition:all .2s;border-left:2px solid transparent;
+}
+.help-sidebar-link:hover{color:var(--text);background:rgba(255,255,255,0.04);border-left-color:var(--border2)}
+.help-sidebar-link.active-link{color:var(--indigo);background:rgba(91,127,255,0.08);border-left-color:var(--blue)}
+.help-main{min-width:0}
+.help-section{margin-bottom:64px}
+.help-section-title{
+  font-family:var(--font-head);font-size:1.35rem;font-weight:700;color:var(--text);
+  margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.section-icon{font-size:1.1rem}
+
+/* FAQ ITEMS */
+.faq-item{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;margin-bottom:10px;overflow:hidden;
+  transition:border-color .2s;
+}
+.faq-item:hover{border-color:var(--border2)}
+.faq-q{
+  width:100%;text-align:left;background:none;border:none;cursor:pointer;
+  padding:20px 24px;display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--font-body);font-size:14.5px;font-weight:600;color:var(--text);
+  gap:16px;transition:color .2s;
+}
+.faq-q:hover{color:var(--indigo)}
+.faq-chevron{
+  width:18px;height:18px;stroke:var(--text3);fill:none;stroke-width:2.5;
+  flex-shrink:0;transition:transform .3s ease;
+}
+.faq-item.open .faq-chevron{transform:rotate(180deg);stroke:var(--indigo)}
+.faq-a{
+  max-height:0;overflow:hidden;
+  transition:max-height .35s ease,padding .3s ease;
+}
+.faq-item.open .faq-a{max-height:400px}
+.faq-a-inner{padding:0 24px 20px;color:var(--text2);font-size:14px;line-height:1.7}
+.faq-a-inner a{color:var(--indigo);text-decoration:underline;text-underline-offset:3px}
+.faq-a-inner strong{color:var(--text)}
+
+/* CONTACT CTA */
+.contact-cta{
+  background:var(--surface);border:1px solid var(--border2);border-radius:20px;
+  padding:48px 40px;text-align:center;margin:0 24px 80px;max-width:900px;
+  margin-left:auto;margin-right:auto;position:relative;overflow:hidden;
+}
+.contact-cta::before{
+  content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);
+  width:500px;height:300px;
+  background:radial-gradient(ellipse 60% 60% at 50% 0%,rgba(91,127,255,0.15),transparent 70%);
+  pointer-events:none;
+}
+.contact-cta h2{font-family:var(--font-head);font-size:1.7rem;font-weight:800;color:var(--text);margin-bottom:10px;position:relative}
+.contact-cta p{color:var(--text2);margin-bottom:28px;position:relative}
+.contact-cta a{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 30px;border-radius:11px;background:var(--grad);
+  color:#fff;font-weight:700;font-size:15px;position:relative;
+  box-shadow:0 0 40px var(--blue-glow);transition:all .2s;
+}
+.contact-cta a:hover{transform:translateY(-2px);box-shadow:0 0 60px rgba(91,127,255,0.45)}
+
+/* FOOTER */
+footer.site-footer{
+  position:relative;z-index:1;border-top:1px solid var(--border);
+  padding:28px 32px;color:var(--text3);font-size:13px;
+}
+.footer-inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.footer-links{display:flex;align-items:center;gap:20px}
+.footer-links a{color:var(--text3);transition:color .2s}
+.footer-links a:hover{color:var(--indigo)}
+
+@media(max-width:700px){
+  #navbar{padding:0 16px}.nav-links{display:none}.hamburger{display:flex}
+  .help-content{grid-template-columns:1fr}.help-sidebar{display:none}
+  .quick-links{grid-template-columns:1fr 1fr}
+  .contact-cta{padding:36px 24px;margin:0 16px 60px}
+  .footer-inner{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+<div class="bg-glass"></div>
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <div class="logo-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+      LehrstellenSniper
+    </a>
+    <div class="nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="blog/index.html">Blog</a>
+      <a href="community.html">Community</a>
+      <a href="help.html" class="active">Help</a>
+    </div>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button id="btn-de" class="active" onclick="setLang('de')">DE</button>
+        <button id="btn-en" onclick="setLang('en')">EN</button>
+      </div>
+      <a href="signin.html"><button class="btn-ghost-sm">Sign in</button></a>
+      <a href="signup.html" class="btn-nav-cta">
+        <svg viewBox="0 0 24 24" width="13" height="13"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Sign up
+      </a>
+      <button class="hamburger" id="hamburger-btn">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+<div id="mobile-menu">
+  <a href="index.html#features">Features</a>
+  <a href="index.html#pricing">Pricing</a>
+  <a href="blog/index.html">Blog</a>
+  <a href="community.html">Community</a>
+  <a href="help.html">Help</a>
+  <div class="mobile-ctas">
+    <a href="signin.html"><button class="btn-ghost-sm">Sign in</button></a>
+    <a href="signup.html" class="btn-nav-cta" style="justify-content:center">Sign up</a>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="help-hero">
+    <div class="help-eyebrow"><span></span>Help Center</div>
+    <h1 class="de">Wie können wir helfen?</h1>
+    <h1 class="en" style="display:none">How can we help?</h1>
+    <p class="de">Hier findest du Antworten auf alle häufigen Fragen rund um LehrstellenSniper.</p>
+    <p class="en" style="display:none">Find answers to all common questions about LehrstellenSniper here.</p>
+    <div class="help-search">
+      <div class="help-search-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
+      <input type="text" id="helpSearch" class="de" placeholder="Frage suchen..." onkeyup="filterFAQ(this.value)"/>
+      <input type="text" id="helpSearchEn" class="en" style="display:none" placeholder="Search for a question..." onkeyup="filterFAQ(this.value)"/>
+    </div>
+  </div>
+
+  <!-- QUICK LINKS -->
+  <div class="quick-links">
+    <a class="quick-card" href="#sec-start">
+      <div class="quick-card-icon">🚀</div>
+      <h3 class="de">Erste Schritte</h3>
+      <h3 class="en" style="display:none">Getting Started</h3>
+      <p class="de">Wie du LehrstellenSniper zum ersten Mal nutzt</p>
+      <p class="en" style="display:none">How to use LehrstellenSniper for the first time</p>
+      <span class="quick-card-arrow">→</span>
+    </a>
+    <a class="quick-card" href="#sec-search">
+      <div class="quick-card-icon">🔍</div>
+      <h3 class="de">Suche & Ergebnisse</h3>
+      <h3 class="en" style="display:none">Search & Results</h3>
+      <p class="de">Fragen zur Stellensuche und Resultaten</p>
+      <p class="en" style="display:none">Questions about search and results</p>
+      <span class="quick-card-arrow">→</span>
+    </a>
+    <a class="quick-card" href="#sec-apply">
+      <div class="quick-card-icon">✍️</div>
+      <h3 class="de">Bewerbung & KI</h3>
+      <h3 class="en" style="display:none">Application & AI</h3>
+      <p class="de">KI-Bewerbung, Motivationsschreiben und mehr</p>
+      <p class="en" style="display:none">AI applications, cover letters and more</p>
+      <span class="quick-card-arrow">→</span>
+    </a>
+    <a class="quick-card" href="#sec-account">
+      <div class="quick-card-icon">👤</div>
+      <h3 class="de">Konto & Abo</h3>
+      <h3 class="en" style="display:none">Account & Plan</h3>
+      <p class="de">Registrierung, Zahlungen und Plan-Wechsel</p>
+      <p class="en" style="display:none">Registration, payments and plan changes</p>
+      <span class="quick-card-arrow">→</span>
+    </a>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="help-content">
+    <!-- SIDEBAR -->
+    <aside class="help-sidebar">
+      <nav class="help-sidebar-nav" id="sidebarNav">
+        <a class="help-sidebar-link active-link de" href="#sec-start">🚀 Erste Schritte</a>
+        <a class="help-sidebar-link active-link en" href="#sec-start" style="display:none">🚀 Getting Started</a>
+        <a class="help-sidebar-link de" href="#sec-search">🔍 Suche</a>
+        <a class="help-sidebar-link en" href="#sec-search" style="display:none">🔍 Search</a>
+        <a class="help-sidebar-link de" href="#sec-apply">✍️ Bewerbung</a>
+        <a class="help-sidebar-link en" href="#sec-apply" style="display:none">✍️ Application</a>
+        <a class="help-sidebar-link de" href="#sec-account">👤 Konto & Abo</a>
+        <a class="help-sidebar-link en" href="#sec-account" style="display:none">👤 Account</a>
+        <a class="help-sidebar-link de" href="#sec-privacy">🔒 Datenschutz</a>
+        <a class="help-sidebar-link en" href="#sec-privacy" style="display:none">🔒 Privacy</a>
+      </nav>
+    </aside>
+
+    <!-- FAQ CONTENT -->
+    <main class="help-main">
+
+      <!-- Erste Schritte -->
+      <section class="help-section" id="sec-start">
+        <h2 class="help-section-title"><span class="section-icon">🚀</span><span class="de">Erste Schritte</span><span class="en" style="display:none">Getting Started</span></h2>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="de">Was ist LehrstellenSniper?</span>
+            <span class="en" style="display:none">What is LehrstellenSniper?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <span class="de">LehrstellenSniper ist ein KI-gestütztes Tool, das automatisch Lehrstellen in der Schweiz findet — auch solche, die auf keiner normalen Plattform wie Yousty erscheinen. Es sucht auf Firmenwebsites, Google Jobs und regionalen Portalen gleichzeitig und schreibt auf Wunsch auch gleich ein personalisiertes Motivationsschreiben.</span>
+            <span class="en" style="display:none">LehrstellenSniper is an AI-powered tool that automatically finds apprenticeship positions in Switzerland — including those that don't appear on any normal platform like Yousty. It searches company websites, Google Jobs and regional portals simultaneously and can also write a personalised cover letter on request.</span>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="de">Wie erstelle ich ein Konto?</span>
+            <span class="en" style="display:none">How do I create an account?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <span class="de">Klick oben rechts auf <strong>Sign up</strong>, gib deine E-Mail-Adresse ein und wähle ein Passwort. Die Registrierung dauert unter einer Minute — du kannst sofort mit der Suche starten.</span>
+            <span class="en" style="display:none">Click <strong>Sign up</strong> in the top right, enter your email address and choose a password. Registration takes under a minute — you can start searching immediately.</span>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="de">Ist LehrstellenSniper kostenlos?</span>
+            <span class="en" style="display:none">Is LehrstellenSniper free?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <span class="de">Ja, es gibt einen kostenlosen Einstieg mit eingeschränkten Suchen. Das volle Feature-Set — unlimitierte Suchen, KI-Bewerbungsschreiben und direkte Firmenkontakte — ist im Pro-Abo enthalten. Schau dir die <a href="index.html#pricing">Preise</a> an.</span>
+            <span class="en" style="display:none">Yes, there's a free tier with limited searches. The full feature set — unlimited searches, AI cover letters and direct company contacts — is included in the Pro subscription. Check out the <a href="index.html#pricing">pricing</a>.</span>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="de">Für wen ist LehrstellenSniper gedacht?</span>
+            <span class="en" style="display:none">Who is LehrstellenSniper for?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <span class="de">LehrstellenSniper richtet sich an Schülerinnen und Schüler in der Schweiz, die eine Lehrstelle suchen — und an ihre Eltern, die unterstützen möchten. Das Tool ist auf Deutsch und Englisch verfügbar.</span>
+            <span class="en" style="display:none">LehrstellenSniper is aimed at students in Switzerland looking for an apprenticeship — and at their parents who want to support them. The tool is available in German and English.</span>
+          </div></div>
+        </div>
+      </section>
+
+      <!-- Suche & Ergebnisse -->
+      <section class="help-section" id="sec-search">
+        <h2 class="help-section-title"><span class="section-icon">🔍</span><span class="de">Suche & Ergebnisse</span><span class="en" style="display:none">Search & Results</span></h2>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="de">Woher kommen die Stellenangebote?</span>
+            <span class="en" style="display:none">Where do the job listings come from?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <span class="de">LehrstellenSniper durchsucht gleichzeitig Google Jobs, direkte Firmenwebsites, kantonale Lehrstellenportale und weitere Quellen. So findest du auch Stellen, die nie auf Yousty oder anderen Plattformen erscheinen — besonders bei KMUs.</span>
+            <span class="en" style="display:none">LehrstellenSniper simultaneously searches Google Jobs, direct company websites, cantonal apprenticeship portals and other sources. This way you find positions that never appear on Yousty or other platforms — especially at SMEs.</span>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="de">Kann ich nach Kanton oder Beruf filtern?</span>
+            <span class="en" style="display:none">Can I filter by canton or profession?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <span class="de">Ja. Du kannst nach Beruf (z.B. Informatiker EFZ, Kaufmann/Kauffrau, Mediamatiker), Kanton und Umkreis filtern. Die Suche ist schweizweit und deckt alle 26 Kantone ab.</span>
+            <span class="en" style="display:none">Yes. You can filter by profession (e.g. IT EFZ, commercial, mediamatician), canton and radius. The search is nationwide and covers all 26 cantons.</span>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="de">Wie aktuell sind die Resultate?</span>
+            <span class="en" style="display:none">How up-to-date are the results?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <span class="de">Die Suche ruft Resultate in Echtzeit ab — du siehst immer die aktuellsten verfügbaren Stellen. Neue Inserate erscheinen bei uns oft Tage bevor sie auf anderen Plattformen landen.</span>
+            <span class="en" style="display:none">The search retrieves results in real time — you always see the most current available positions. New listings often appear with us days before they land on other platforms.</span>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="de">Warum sehe ich keine Resultate?</span>
+            <span class="en" style="display:none">Why am I seeing no results?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <span class="de">Versuche den Suchradius zu vergrössern, einen allgemeineren Berufsbegriff zu verwenden oder einen anderen Kanton auszuwählen. Für sehr seltene Berufe in kleinen Kantonen kann es auch sein, dass aktuell schlicht keine offenen Stellen vorhanden sind. Probiere es in ein paar Wochen erneut.</span>
+            <span class="en" style="display:none">Try expanding the search radius, using a more general profession term or selecting a different canton. For very rare professions in small cantons, there may simply be no open positions at the moment. Try again in a few weeks.</span>
+          </div></div>
+        </div>
+      </section>
+
+      <!-- Bewerbung & KI -->
+      <section class="help-section" id="sec-apply">
+        <h2 class="help-section-title"><span class="section-icon">✍️</span><span class="de">Bewerbung & KI</span><span class="en" style="display:none">Application & AI</span></h2>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="de">Wie funktioniert das KI-Motivationsschreiben?</span>
+            <span class="en" style="display:none">How does the AI cover letter work?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <span class="de">Für jede gefundene Stelle generiert LehrstellenSniper automatisch ein personalisiertes Motivationsschreiben — auf Basis der Stellenausschreibung und deines Profils. Du kannst es danach bearbeiten, anpassen und direkt versenden.</span>
+            <span class="en" style="display:none">For each found position, LehrstellenSniper automatically generates a personalised cover letter — based on the job listing and your profile. You can then edit, adjust and send it directly.</span>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="de">Wie finde ich die direkte E-Mail-Adresse einer Firma?</span>
+            <span class="en" style="display:none">How do I find the direct email address of a company?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <span class="de">LehrstellenSniper sucht automatisch nach direkten Kontaktadressen — nicht nur dem allgemeinen HR-Postfach. So kann deine Bewerbung direkt zur zuständigen Person gelangen und wird wahrscheinlicher gelesen.</span>
+            <span class="en" style="display:none">LehrstellenSniper automatically searches for direct contact addresses — not just the general HR inbox. This way your application can reach the right person directly and is more likely to be read.</span>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="de">In welchen Sprachen kann ich mich bewerben?</span>
+            <span class="en" style="display:none">In which languages can I apply?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <span class="de">LehrstellenSniper erstellt Bewerbungsschreiben auf <strong>Deutsch und Englisch</strong>. Gerade für internationale Firmen in Kantonen wie Zug oder Basel kann ein Englisch-Bewerbungsschreiben ein grosser Vorteil sein.</span>
+            <span class="en" style="display:none">LehrstellenSniper creates cover letters in <strong>German and English</strong>. Especially for international companies in cantons like Zug or Basel, an English cover letter can be a big advantage.</span>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="de">Merkt die Firma, dass ich KI verwendet habe?</span>
+            <span class="en" style="display:none">Will the company notice I used AI?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <span class="de">Die KI-Texte von LehrstellenSniper sind speziell auf Authentizität optimiert. Du solltest das Schreiben aber immer noch einmal lesen, persönliche Details ergänzen und sicherstellen, dass es wirklich nach <em>dir</em> klingt — nicht nach einem generischen KI-Text.</span>
+            <span class="en" style="display:none">LehrstellenSniper's AI texts are specifically optimised for authenticity. You should still read the letter once, add personal details and make sure it really sounds like <em>you</em> — not a generic AI text.</span>
+          </div></div>
+        </div>
+      </section>
+
+      <!-- Konto & Abo -->
+      <section class="help-section" id="sec-account">
+        <h2 class="help-section-title"><span class="section-icon">👤</span><span class="de">Konto & Abo</span><span class="en" style="display:none">Account & Plan</span></h2>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="de">Wie kündige ich mein Abo?</span>
+            <span class="en" style="display:none">How do I cancel my subscription?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <span class="de">Du kannst dein Abo jederzeit in deinen Kontoeinstellungen kündigen — kein Formular, keine Wartezeit. Die Kündigung gilt für die nächste Abrechnungsperiode, du behältst alle Features bis Ablauf der bezahlten Zeit.</span>
+            <span class="en" style="display:none">You can cancel your subscription at any time in your account settings — no form, no waiting. Cancellation applies to the next billing period; you retain all features until the paid period expires.</span>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="de">Welche Zahlungsmethoden werden akzeptiert?</span>
+            <span class="en" style="display:none">Which payment methods are accepted?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <span class="de">Wir akzeptieren alle gängigen Kreditkarten (Visa, Mastercard, Amex) sowie TWINT. Die Zahlung wird sicher über Stripe abgewickelt.</span>
+            <span class="en" style="display:none">We accept all major credit cards (Visa, Mastercard, Amex) as well as TWINT. Payment is processed securely via Stripe.</span>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="de">Ich habe mein Passwort vergessen — was tun?</span>
+            <span class="en" style="display:none">I've forgotten my password — what should I do?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <span class="de">Klick auf der <a href="signin.html">Anmeldeseite</a> auf "Passwort vergessen?". Du erhältst dann einen Link zum Zurücksetzen per E-Mail innerhalb weniger Minuten.</span>
+            <span class="en" style="display:none">Click "Forgot password?" on the <a href="signin.html">sign-in page</a>. You'll receive a reset link by email within a few minutes.</span>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="de">Gibt es eine Rabatt für Eltern oder Schulen?</span>
+            <span class="en" style="display:none">Is there a discount for parents or schools?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <span class="de">Wir bieten Sonderkonditionen für Schulen und Berufsberatungsstellen an. Schreib uns an <a href="mailto:hallo@lehrstellensniper.ch">hallo@lehrstellensniper.ch</a> — wir finden eine Lösung.</span>
+            <span class="en" style="display:none">We offer special rates for schools and career counselling centres. Write to us at <a href="mailto:hallo@lehrstellensniper.ch">hallo@lehrstellensniper.ch</a> — we'll find a solution.</span>
+          </div></div>
+        </div>
+      </section>
+
+      <!-- Datenschutz -->
+      <section class="help-section" id="sec-privacy">
+        <h2 class="help-section-title"><span class="section-icon">🔒</span><span class="de">Datenschutz & Sicherheit</span><span class="en" style="display:none">Privacy & Security</span></h2>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="de">Werden meine Daten an Firmen weitergegeben?</span>
+            <span class="en" style="display:none">Are my data shared with companies?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <span class="de">Nein. LehrstellenSniper gibt keine persönlichen Daten an Firmen weiter. Du entscheidest selbst, an wen du dich bewirbst und wem du deine Kontaktdaten mitteilst.</span>
+            <span class="en" style="display:none">No. LehrstellenSniper does not share personal data with companies. You decide for yourself who you apply to and who you share your contact details with.</span>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="de">Ist LehrstellenSniper DSGVO-konform?</span>
+            <span class="en" style="display:none">Is LehrstellenSniper GDPR-compliant?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <span class="de">Ja. Wir speichern nur die Daten, die wir für den Betrieb des Dienstes benötigen, und geben sie nicht an Dritte weiter. Du kannst dein Konto und alle deine Daten jederzeit vollständig löschen lassen.</span>
+            <span class="en" style="display:none">Yes. We only store the data we need to operate the service and do not pass it on to third parties. You can have your account and all your data completely deleted at any time.</span>
+          </div></div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- CONTACT CTA -->
+  <div class="contact-cta">
+    <h2 class="de">Keine Antwort gefunden?</h2>
+    <h2 class="en" style="display:none">Didn't find an answer?</h2>
+    <p class="de">Schreib uns direkt — wir antworten innerhalb von 24 Stunden.</p>
+    <p class="en" style="display:none">Write to us directly — we respond within 24 hours.</p>
+    <a href="mailto:hallo@lehrstellensniper.ch">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <span class="de">hallo@lehrstellensniper.ch</span>
+      <span class="en" style="display:none">hallo@lehrstellensniper.ch</span>
+    </a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span class="de">© 2025 LehrstellenSniper</span>
+    <span class="en" style="display:none">© 2025 LehrstellenSniper</span>
+    <div class="footer-links">
+      <a href="index.html" class="de">Startseite</a>
+      <a href="index.html" class="en" style="display:none">Home</a>
+      <a href="blog/index.html">Blog</a>
+      <a href="community.html">Community</a>
+      <a href="index.html#pricing">Pricing</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function setLang(l){
+  document.querySelectorAll('.de').forEach(e=>e.style.display=l==='de'?'':'none')
+  document.querySelectorAll('.en').forEach(e=>e.style.display=l==='en'?'':'none')
+  document.getElementById('btn-de').classList.toggle('active',l==='de')
+  document.getElementById('btn-en').classList.toggle('active',l==='en')
+  localStorage.setItem('blog-lang',l)
+}
+const saved=localStorage.getItem('blog-lang')||'de'
+setLang(saved)
+
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>20)
+  highlightSidebarLink()
+})
+
+document.getElementById('hamburger-btn').addEventListener('click',()=>{
+  document.getElementById('mobile-menu').classList.toggle('open')
+})
+
+function toggleFaq(btn){
+  const item=btn.parentElement
+  const isOpen=item.classList.contains('open')
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'))
+  if(!isOpen) item.classList.add('open')
+}
+
+function filterFAQ(val){
+  const q=val.toLowerCase()
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    const text=item.textContent.toLowerCase()
+    item.style.display=(!q||text.includes(q))?'':'none'
+  })
+  document.querySelectorAll('.help-section').forEach(sec=>{
+    const anyVisible=[...sec.querySelectorAll('.faq-item')].some(i=>i.style.display!=='none')
+    sec.style.display=anyVisible?'':'none'
+  })
+}
+
+function highlightSidebarLink(){
+  const sections=document.querySelectorAll('.help-section')
+  let current=''
+  sections.forEach(s=>{
+    if(window.scrollY>=s.offsetTop-120) current=s.id
+  })
+  document.querySelectorAll('.help-sidebar-link').forEach(a=>{
+    a.classList.toggle('active-link',a.getAttribute('href')==='#'+current)
+  })
+}
+</script>
+</body>
+</html>
