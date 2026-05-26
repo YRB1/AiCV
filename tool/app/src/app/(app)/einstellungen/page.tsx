@@ -5,8 +5,19 @@ import { useT } from '@/lib/lang-context'
 
 const MODES = [
   {
+    id: 'black',
+    label: 'Black',
+    description: 'OLED',
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <circle cx="12" cy="12" r="10"/>
+      </svg>
+    ),
+  },
+  {
     id: 'dark',
     label: 'Dark',
+    description: 'Navy',
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
@@ -16,6 +27,7 @@ const MODES = [
   {
     id: 'light',
     label: 'Light',
+    description: 'White',
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <circle cx="12" cy="12" r="5"/>
@@ -33,6 +45,7 @@ const MODES = [
   {
     id: 'system',
     label: 'System',
+    description: 'Auto',
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <rect x="2" y="3" width="20" height="14" rx="2"/>
@@ -93,20 +106,21 @@ export default function Einstellungen() {
             <p style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)' }}>Brightness Mode</p>
             <p style={{ fontSize: '12px', color: 'var(--muted)', marginTop: '2px' }}>Choose between dark, light, or follow system preference</p>
           </div>
-          <div style={{ padding: '12px', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
+          <div style={{ padding: '12px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
             {MODES.map(mode => {
               const active = activeMode === mode.id
               return (
                 <button key={mode.id} onClick={() => applyMode(mode.id)} style={{
-                  display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px',
-                  padding: '14px 10px', borderRadius: '10px',
+                  display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px',
+                  padding: '12px 8px', borderRadius: '10px',
                   background: active ? 'var(--accent-glow-2)' : 'var(--surface-2)',
                   border: `1.5px solid ${active ? 'var(--accent)' : 'var(--border)'}`,
                   cursor: 'pointer', transition: 'all 0.15s',
                   color: active ? 'var(--accent-light)' : 'var(--muted)',
                 }}>
                   <span style={{ color: active ? 'var(--accent)' : 'var(--muted-2)' }}>{mode.icon}</span>
-                  <span style={{ fontSize: '12px', fontWeight: 600 }}>{mode.label}</span>
+                  <span style={{ fontSize: '11px', fontWeight: 600 }}>{mode.label}</span>
+                  {'description' in mode && <span style={{ fontSize: '10px', color: 'var(--muted-2)' }}>{(mode as { description?: string }).description}</span>}
                 </button>
               )
             })}

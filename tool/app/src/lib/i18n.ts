@@ -58,6 +58,9 @@ export const translations = {
     search_sending: 'Sendet...',
     search_sent: 'Gesendet',
     search_no_email: 'Keine Email hinterlegt',
+    search_all_cantons: 'Alle',
+    error_daily_limit: (used: number, limit: number) => `Tageslimit erreicht (${used}/${limit}). Upgrade auf Pro für 100 Bewerbungen/Tag.`,
+    error_ai_limit: (used: number, limit: number) => `KI-Limit erreicht (${used}/${limit}). Upgrade auf Pro für unbegrenzte KI-Briefe.`,
 
     // Profile page
     profile_title: 'Benutzerprofil',
@@ -73,6 +76,16 @@ export const translations = {
     field_wohnort: 'WOHNORT',
     field_telefon: 'TELEFON',
     field_email: 'EMAIL',
+
+    // Script page
+    script_title: 'Mein Bewerbungs-Skript',
+    script_subtitle: 'Schreib dein Skript wie du es normalerweise schreiben würdest — mit deinen eigenen Worten, auch mit Schreibfehlern.',
+    script_hint: 'Die KI nimmt genau deinen Text und fügt nur 1–5 firmaspezifische Fakten ein. Dein Stil bleibt erhalten.',
+    script_label: 'DEIN HANDGESCHRIEBENES SKRIPT',
+    script_save: 'Skript speichern',
+    script_saving: 'Speichern...',
+    script_saved: '✓ Gespeichert',
+    script_auto: 'Wird automatisch für jede Bewerbung angepasst',
 
     // Settings page
     settings_title: 'Einstellungen',
@@ -138,6 +151,9 @@ export const translations = {
     search_sending: 'Sending...',
     search_sent: 'Sent',
     search_no_email: 'No email on file',
+    search_all_cantons: 'All',
+    error_daily_limit: (used: number, limit: number) => `Daily limit reached (${used}/${limit}). Upgrade to Pro for 100 applications/day.`,
+    error_ai_limit: (used: number, limit: number) => `AI limit reached (${used}/${limit}). Upgrade to Pro for unlimited AI letters.`,
 
     // Profile page
     profile_title: 'User Profile',
@@ -153,6 +169,16 @@ export const translations = {
     field_wohnort: 'CITY',
     field_telefon: 'PHONE',
     field_email: 'EMAIL',
+
+    // Script page
+    script_title: 'My Application Script',
+    script_subtitle: 'Write your script the way you normally would — in your own words, even with typos.',
+    script_hint: 'The AI takes exactly your text and adds only 1–5 company-specific facts. Your style is preserved.',
+    script_label: 'YOUR HANDWRITTEN SCRIPT',
+    script_save: 'Save Script',
+    script_saving: 'Saving...',
+    script_saved: '✓ Saved',
+    script_auto: 'Automatically adapted for every application',
 
     // Settings page
     settings_title: 'Settings',

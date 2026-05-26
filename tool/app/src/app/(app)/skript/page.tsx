@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
+import { useT, useLang } from '@/lib/lang-context'
 
 const PLACEHOLDER = `Sehr geehrte Damen und Herren,
 
@@ -15,6 +16,8 @@ Mit freundlichen Grüssen
 [Dein Name]`
 
 export default function SkriptPage() {
+  const t = useT()
+  const { lang } = useLang()
   const [script, setScript] = useState('')
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
@@ -55,19 +58,17 @@ export default function SkriptPage() {
 
   return (
     <div className="p-8 max-w-3xl">
-      <h1 className="text-2xl font-bold mb-1">Mein Bewerbungs-Skript</h1>
-      <p className="text-sm mb-2" style={{ color: 'var(--muted)' }}>
-        Schreib dein Skript wie du es normalerweise schreiben würdest — mit deinen eigenen Worten, auch mit Schreibfehlern.
-      </p>
+      <h1 className="text-2xl font-bold mb-1">{t.script_title}</h1>
+      <p className="text-sm mb-2" style={{ color: 'var(--muted)' }}>{t.script_subtitle}</p>
       <div className="flex items-center gap-2 text-xs mb-6 px-3 py-2 rounded-lg" style={{ background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.3)', color: 'var(--purple-light)' }}>
         <span>✦</span>
-        <span>Die KI nimmt <strong>genau deinen Text</strong> und fügt nur 1–5 firmaspezifische Fakten ein. Dein Stil bleibt erhalten.</span>
+        <span>{t.script_hint}</span>
       </div>
 
       <div className="rounded-xl overflow-hidden mb-4" style={{ border: '1px solid var(--border)' }}>
         <div className="px-4 py-2.5 flex items-center justify-between" style={{ background: 'var(--surface)', borderBottom: '1px solid var(--border)' }}>
-          <p className="text-xs font-medium tracking-widest" style={{ color: 'var(--muted)' }}>DEIN HANDGESCHRIEBENES SKRIPT</p>
-          <span className="text-xs" style={{ color: 'var(--muted-2)' }}>{script.length} Zeichen</span>
+          <p className="text-xs font-medium tracking-widest" style={{ color: 'var(--muted)' }}>{t.script_label}</p>
+          <span className="text-xs" style={{ color: 'var(--muted-2)' }}>{script.length} {lang === 'de' ? 'Zeichen' : 'chars'}</span>
         </div>
         <textarea
           value={loading ? '' : script}
@@ -86,11 +87,9 @@ export default function SkriptPage() {
           className="px-6 py-2.5 rounded-lg text-sm font-semibold cursor-pointer disabled:opacity-50"
           style={{ background: 'var(--purple)', color: 'white' }}
         >
-          {saving ? 'Speichern...' : saved ? '✓ Gespeichert' : 'Skript speichern'}
+          {saving ? t.script_saving : saved ? t.script_saved : t.script_save}
         </button>
-        <p className="text-xs" style={{ color: 'var(--muted)' }}>
-          Wird automatisch für jede Bewerbung angepasst
-        </p>
+        <p className="text-xs" style={{ color: 'var(--muted)' }}>{t.script_auto}</p>
       </div>
     </div>
   )

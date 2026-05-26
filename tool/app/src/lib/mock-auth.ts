@@ -26,10 +26,15 @@ const DEMO_LEADS = [
   { id: '3', user_id: 'demo-user-123', firma: 'Coiffure Bella', beruf: 'Coiffeuse EFZ', stadt: 'Bern', kanton: 'BE', status: 'antwort', created_at: new Date(Date.now() - 7*86400000).toISOString(), updated_at: new Date().toISOString() },
 ]
 
-export const isDemoMode = () =>
-  !process.env.NEXT_PUBLIC_SUPABASE_URL ||
-  process.env.NEXT_PUBLIC_SUPABASE_URL.includes('placeholder') ||
-  process.env.NEXT_PUBLIC_SUPABASE_URL.includes('abcdefgh')
+export const isDemoMode = () => {
+  if (
+    !process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    process.env.NEXT_PUBLIC_SUPABASE_URL.includes('placeholder') ||
+    process.env.NEXT_PUBLIC_SUPABASE_URL.includes('abcdefgh')
+  ) return true
+  if (typeof window !== 'undefined' && localStorage.getItem('ls_preview_mode') === '1') return true
+  return false
+}
 
 // localStorage keys
 const SESSION_KEY = 'ls_demo_session'

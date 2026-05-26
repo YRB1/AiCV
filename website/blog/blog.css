@@ -479,3 +479,12 @@ footer.site-footer a:hover{color:var(--text)}
   .help-strip-inner{flex-wrap:wrap}
   .footer-inner{flex-direction:column;text-align:center}
 }
+
+/* ── READING PROGRESS BAR ────────────────────────────────────────────────── */
+#read-progress{position:fixed;top:64px;left:0;height:3px;background:linear-gradient(90deg,#7b9fff,#3a5ce0,#a78bfa);width:0%;z-index:101;transition:width .08s linear;border-radius:0 2px 2px 0;box-shadow:0 0 8px rgba(91,127,255,0.6)}
+
+/* ── BACK TO TOP ─────────────────────────────────────────────────────────── */
+#back-to-top{position:fixed;bottom:100px;right:28px;z-index:9998;width:42px;height:42px;border-radius:12px;background:var(--surface);border:1px solid var(--border2);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(10px);transition:opacity .25s,transform .25s,border-color .2s,color .2s;pointer-events:none}
+#back-to-top.visible{opacity:1;transform:translateY(0);pointer-events:all}
+#back-to-top:hover{border-color:var(--indigo);color:var(--indigo)}
+#back-to-top svg{width:18px;height:18px}

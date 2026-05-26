@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
-/* ── BASE DARK (default) ──────────────────────────────────────────── */
+/* ── BASE DARK (true black) ───────────────────────────────────────── */
 :root {
-  --bg: #0a0d14;
-  --surface: #111520;
-  --surface-2: #171c2b;
-  --surface-3: #1d2235;
-  --border: #1e2540;
-  --border-2: #252d4a;
-  --text: #e2e8f0;
+  --bg: #000000;
+  --surface: #0d0d0d;
+  --surface-2: #141414;
+  --surface-3: #1c1c1c;
+  --border: #1e1e1e;
+  --border-2: #2a2a2a;
+  --text: #f1f5f9;
   --text-2: #94a3b8;
   --muted: #64748b;
   --muted-2: #475569;
@@ -17,8 +17,8 @@
   --red: #ef4444;
   --yellow: #f59e0b;
   --blue: #3b82f6;
-  --shadow: 0 4px 24px rgba(0,0,0,0.4);
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.25);
+  --shadow: 0 4px 32px rgba(0,0,0,0.7);
+  --shadow-sm: 0 2px 12px rgba(0,0,0,0.5);
 
   /* Default accent = Ocean */
   --accent: #06b6d4;
@@ -33,6 +33,38 @@
   --purple-light: var(--accent-light);
   --purple-glow: var(--accent-glow);
   --purple-glow-2: var(--accent-glow-2);
+}
+
+/* ── BLACK MODE (OLED, identical to :root) ────────────────────────── */
+html[data-mode="black"] {
+  --bg: #000000;
+  --surface: #0d0d0d;
+  --surface-2: #141414;
+  --surface-3: #1c1c1c;
+  --border: #1e1e1e;
+  --border-2: #2a2a2a;
+  --text: #f1f5f9;
+  --text-2: #94a3b8;
+  --muted: #64748b;
+  --muted-2: #475569;
+  --shadow: 0 4px 32px rgba(0,0,0,0.7);
+  --shadow-sm: 0 2px 12px rgba(0,0,0,0.5);
+}
+
+/* ── DARK MODE (Navy) ─────────────────────────────────────────────── */
+html[data-mode="dark"] {
+  --bg: #0f1117;
+  --surface: #181b25;
+  --surface-2: #1f2333;
+  --surface-3: #262c3e;
+  --border: #2a3048;
+  --border-2: #353d58;
+  --text: #e8edf5;
+  --text-2: #8fa3bf;
+  --muted: #5c7399;
+  --muted-2: #3d5275;
+  --shadow: 0 4px 32px rgba(0,0,0,0.55);
+  --shadow-sm: 0 2px 12px rgba(0,0,0,0.35);
 }
 
 /* ── LIGHT MODE ───────────────────────────────────────────────────── */
@@ -56,7 +88,6 @@ html[data-mode="light"] {
   --shadow-sm: 0 2px 8px rgba(0,0,0,0.07);
 }
 
-/* system mode — respects OS preference */
 @media (prefers-color-scheme: light) {
   html[data-mode="system"] {
     --bg: #f0f4f8;
@@ -81,51 +112,28 @@ html[data-mode="light"] {
 
 /* ── ACCENT THEMES ────────────────────────────────────────────────── */
 html[data-theme="ocean"] {
-  --accent: #06b6d4;
-  --accent-hover: #0891b2;
-  --accent-light: #67e8f9;
-  --accent-glow: rgba(6,182,212,0.12);
-  --accent-glow-2: rgba(6,182,212,0.22);
+  --accent: #06b6d4; --accent-hover: #0891b2; --accent-light: #67e8f9;
+  --accent-glow: rgba(6,182,212,0.12); --accent-glow-2: rgba(6,182,212,0.22);
 }
-
 html[data-theme="purple"] {
-  --accent: #7c3aed;
-  --accent-hover: #6d28d9;
-  --accent-light: #a78bfa;
-  --accent-glow: rgba(124,58,237,0.12);
-  --accent-glow-2: rgba(124,58,237,0.22);
+  --accent: #7c3aed; --accent-hover: #6d28d9; --accent-light: #a78bfa;
+  --accent-glow: rgba(124,58,237,0.12); --accent-glow-2: rgba(124,58,237,0.22);
 }
-
 html[data-theme="emerald"] {
-  --accent: #059669;
-  --accent-hover: #10b981;
-  --accent-light: #34d399;
-  --accent-glow: rgba(5,150,105,0.12);
-  --accent-glow-2: rgba(5,150,105,0.22);
+  --accent: #059669; --accent-hover: #10b981; --accent-light: #34d399;
+  --accent-glow: rgba(5,150,105,0.12); --accent-glow-2: rgba(5,150,105,0.22);
 }
-
 html[data-theme="midnight"] {
-  --accent: #6366f1;
-  --accent-hover: #818cf8;
-  --accent-light: #a5b4fc;
-  --accent-glow: rgba(99,102,241,0.12);
-  --accent-glow-2: rgba(99,102,241,0.22);
+  --accent: #6366f1; --accent-hover: #818cf8; --accent-light: #a5b4fc;
+  --accent-glow: rgba(99,102,241,0.12); --accent-glow-2: rgba(99,102,241,0.22);
 }
-
 html[data-theme="rose"] {
-  --accent: #e11d48;
-  --accent-hover: #be123c;
-  --accent-light: #fb7185;
-  --accent-glow: rgba(225,29,72,0.12);
-  --accent-glow-2: rgba(225,29,72,0.22);
+  --accent: #e11d48; --accent-hover: #be123c; --accent-light: #fb7185;
+  --accent-glow: rgba(225,29,72,0.12); --accent-glow-2: rgba(225,29,72,0.22);
 }
-
 html[data-theme="amber"] {
-  --accent: #d97706;
-  --accent-hover: #b45309;
-  --accent-light: #fbbf24;
-  --accent-glow: rgba(217,119,6,0.12);
-  --accent-glow-2: rgba(217,119,6,0.22);
+  --accent: #d97706; --accent-hover: #b45309; --accent-light: #fbbf24;
+  --accent-glow: rgba(217,119,6,0.12); --accent-glow-2: rgba(217,119,6,0.22);
 }
 
 /* ── TAILWIND BRIDGE ──────────────────────────────────────────────── */
@@ -138,13 +146,10 @@ html[data-theme="amber"] {
 
 /* ── RESET ────────────────────────────────────────────────────────── */
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
 html, body {
-  background: var(--bg);
-  color: var(--text);
+  background: var(--bg); color: var(--text);
   font-family: var(--font-geist-sans, system-ui, sans-serif);
-  -webkit-font-smoothing: antialiased;
-  height: 100%;
+  -webkit-font-smoothing: antialiased; height: 100%;
   transition: background 0.25s ease, color 0.25s ease;
 }
 
@@ -153,7 +158,6 @@ html, body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--muted-2); }
-
 input, select, textarea { font-family: inherit; }
 
 /* ── ANIMATIONS ───────────────────────────────────────────────────── */
@@ -192,6 +196,11 @@ input, select, textarea { font-family: inherit; }
 }
 .slide-up { animation: slideUp 0.3s cubic-bezier(0.16,1,0.3,1); }
 
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
 /* ── GLASS CARD ───────────────────────────────────────────────────── */
 .glass {
   background: color-mix(in srgb, var(--surface) 80%, transparent);
@@ -206,4 +215,241 @@ input, select, textarea { font-family: inherit; }
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* ── SPINNER ──────────────────────────────────────────────────────── */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+  width: 16px; height: 16px;
+  border: 2px solid var(--border-2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* ── RESPONSIVE LAYOUT SYSTEM ────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════════ */
+
+/* App shell */
+.ls-shell {
+  display: flex;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--bg);
+  transition: background 0.25s ease;
+}
+
+/* Sidebar */
+.ls-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  transition: background 0.25s ease, border-color 0.25s ease;
+  z-index: 150;
+}
+
+/* Main content area */
+.ls-main {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Topbar */
+.ls-topbar {
+  height: 52px;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 24px;
+  gap: 10px;
+  background: var(--surface);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  transition: background 0.25s, border-color 0.25s;
+}
+
+/* Content scroll area */
+.ls-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* Page padding */
+.ls-page { padding: 24px 28px; min-height: 100%; }
+
+/* Hamburger button (hidden on desktop) */
+.ls-hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border-2);
+  border-radius: 9px;
+  cursor: pointer;
+  background: var(--surface-2);
+  color: var(--text);
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.ls-hamburger:active { background: var(--surface-3); }
+
+/* Mobile brand in topbar (hidden on desktop) */
+.ls-mobile-brand {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+  flex: 1;
+}
+
+/* Desktop-only elements */
+.ls-desktop { display: flex; align-items: center; }
+
+/* Sidebar overlay */
+.ls-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 149;
+  backdrop-filter: blur(2px);
+}
+.ls-overlay.open { display: block; }
+
+/* Bottom navigation (hidden on desktop) */
+.ls-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  z-index: 100;
+  align-items: stretch;
+  padding: 0 2px;
+}
+.ls-bottom-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: color 0.15s;
+  padding: 4px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.ls-bottom-item.active { color: var(--accent); }
+.ls-bottom-item svg { transition: transform 0.15s; }
+.ls-bottom-item.active svg { transform: scale(1.1); }
+
+/* Stats grid (4-col desktop → 2-col mobile) */
+.ls-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+/* Search: table view (desktop) / card view (mobile) */
+.ls-table-view { display: block; }
+.ls-cards-view { display: none; flex-direction: column; gap: 8px; }
+
+/* Quick apply drawer: full-width on mobile */
+.ls-drawer {
+  position: fixed;
+  right: 0; top: 0; bottom: 0;
+  width: 460px;
+  z-index: 100;
+  background: var(--surface);
+  border-left: 1px solid var(--border-2);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* Filter chips scrollable row */
+.ls-filter-row {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.ls-filter-row::-webkit-scrollbar { display: none; }
+
+/* ─── MOBILE OVERRIDES (≤ 768px) ───────────────────────────────── */
+@media (max-width: 768px) {
+  /* Sidebar becomes off-canvas */
+  .ls-sidebar {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s;
+    box-shadow: none;
+  }
+  .ls-sidebar.open {
+    transform: translateX(0);
+    box-shadow: 8px 0 40px rgba(0,0,0,0.7);
+  }
+
+  /* Topbar adjustments */
+  .ls-topbar {
+    padding: 0 14px;
+    justify-content: flex-start;
+  }
+  .ls-hamburger { display: flex; }
+  .ls-mobile-brand { display: flex; }
+  .ls-desktop { display: none !important; }
+
+  /* Content needs room for bottom nav */
+  .ls-content { padding-bottom: 68px; }
+
+  /* Page padding smaller on mobile */
+  .ls-page { padding: 14px 14px 80px; }
+
+  /* Bottom nav visible */
+  .ls-bottom-nav { display: flex; }
+
+  /* Stats grid 2 columns */
+  .ls-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+  /* Search: swap table for cards */
+  .ls-table-view { display: none; }
+  .ls-cards-view { display: flex; }
+
+  /* Drawer full-width on mobile */
+  .ls-drawer { width: 100%; border-left: none; border-top: 1px solid var(--border-2); top: auto; height: 92dvh; border-radius: 20px 20px 0 0; }
+}
+
+/* ─── TABLET (769px – 1024px) ──────────────────────────────────── */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .ls-sidebar { width: 180px; }
+  .ls-page { padding: 20px; }
+  .ls-stats-grid { grid-template-columns: repeat(2, 1fr); }
 }

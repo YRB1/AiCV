@@ -153,6 +153,7 @@
 
   /* ── Logic ───────────────────────────────────────────────────────────── */
   let open = false, initiated = false;
+  const SESSION_KEY = 'cb-history';
   const L = () => localStorage.getItem('blog-lang') || 'de';
 
   function syncLang(){
@@ -173,11 +174,50 @@
     if(open) setTimeout(()=>document.getElementById('cb-inp').focus(), 300);
   }
 
+  // Close on outside click
+  document.addEventListener('click', function(e){
+    if(!open) return;
+    const wrap = document.getElementById('chatbot-wrap');
+    if(wrap && !wrap.contains(e.target)) toggle();
+  });
+
+  function saveHistory(role, html){
+    try{
+      const h = JSON.parse(sessionStorage.getItem(SESSION_KEY)||'[]');
+      h.push({role, html});
+      if(h.length > 40) h.splice(0, h.length - 40);
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(h));
+    }catch(e){}
+  }
+
+  function loadHistory(){
+    try{
+      const h = JSON.parse(sessionStorage.getItem(SESSION_KEY)||'[]');
+      const msgs = document.getElementById('cb-msgs');
+      h.forEach(({role, html})=>{
+        const d = document.createElement('div');
+        if(role==='bot'){
+          d.className='cb-msg bot';
+          d.innerHTML=`<div class="cb-msg-av"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill="white"/></svg></div><div class="cb-bubble">${html}</div>`;
+        } else {
+          d.className='cb-msg usr';
+          d.innerHTML=`<div class="cb-bubble">${html}</div>`;
+        }
+        msgs.appendChild(d);
+      });
+      scroll();
+      return h.length > 0;
+    }catch(e){ return false; }
+  }
+
   function initChat(){
+    const hasHistory = loadHistory();
+    if(hasHistory){ renderChips(); return; }
     const l = L();
     const greet = l==='de'
       ? `Hallo! 👋 Ich bin <strong>Sniper Bot</strong>. Ich beantworte sofort Fragen zu LehrstellenSniper — Suche, Bewerbung, Konto, Datenschutz und mehr.`
       : `Hi! 👋 I'm <strong>Sniper Bot</strong>. I instantly answer questions about LehrstellenSniper — search, applications, account, privacy and more.`;
+    saveHistory('bot', greet);
     addBot(greet, 350);
     setTimeout(renderChips, 800);
   }
@@ -190,7 +230,12 @@
       const btn = document.createElement('button');
       btn.className = 'cb-chip';
       btn.textContent = label;
-      btn.onclick = ()=>{ addUsr(label); el.innerHTML=''; addBot(findAns(QUICK_KEYS[l][i]), 650); };
+      btn.onclick = ()=>{
+        addUsr(label);
+        el.innerHTML='';
+        const ans = findAns(QUICK_KEYS[l][i]);
+        addBot(ans, 650);
+      };
       el.appendChild(btn);
     });
   }
@@ -202,7 +247,9 @@
     inp.value = '';
     document.getElementById('cb-chips').innerHTML = '';
     addUsr(val);
-    addBot(findAns(val), 750);
+    const ans = findAns(val);
+    const isFallback = ans.includes('mailto:hallo@lehrstellensniper.ch') && !val.toLowerCase().includes('kontakt') && !val.toLowerCase().includes('contact') && !val.toLowerCase().includes('email');
+    addBot(ans, 750, isFallback);
   }
 
   function findAns(text){
@@ -220,10 +267,11 @@
     d.className='cb-msg usr';
     d.innerHTML=`<div class="cb-bubble">${esc(text)}</div>`;
     document.getElementById('cb-msgs').appendChild(d);
+    saveHistory('usr', esc(text));
     scroll();
   }
 
-  function addBot(html, delay){
+  function addBot(html, delay, showChipsAfter){
     const msgs = document.getElementById('cb-msgs');
     const t = document.createElement('div');
     t.className='cb-msg bot';
@@ -234,7 +282,10 @@
       const d = document.createElement('div');
       d.className='cb-msg bot';
       d.innerHTML=`<div class="cb-msg-av"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill="white"/></svg></div><div class="cb-bubble">${html}</div>`;
-      msgs.appendChild(d); scroll();
+      msgs.appendChild(d);
+      saveHistory('bot', html);
+      scroll();
+      if(showChipsAfter) setTimeout(renderChips, 400);
     }, delay||700);
   }
 

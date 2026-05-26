@@ -12,7 +12,24 @@ const PHONE_RE = /(?:\+41|0)[\s\-.]?(?:\d{2})[\s\-.]?\d{3}[\s\-.]?\d{2}[\s\-.]?\
 const BAD_EMAIL = (e: string) =>
   ['yousty', 'example', 'noreply', 'sentry', 'linkedin', 'wixpress',
    'google', 'schema', 'instagram', 'facebook', 'twitter', 'whatsapp',
-   '.png', '.jpg', '.svg', 'cloudflare', 'swisstopo', '@2x'].some(b => e.includes(b))
+   '.png', '.jpg', '.svg', 'cloudflare', 'swisstopo', '@2x',
+   'no-reply', 'donotreply', 'mailer', 'bounce', 'support@stripe',
+   'newsletter', 'unsubscribe', 'notifications@', 'alerts@'].some(b => e.includes(b))
+
+// Rank emails by how likely they are the correct apprenticeship contact
+// Higher score = more likely correct
+const EMAIL_RANK = [
+  ['ausbildung', 10], ['lehrstelle', 10], ['berufsbildung', 10], ['lernende', 9],
+  ['apprentice', 9], ['hr@', 8], ['personal@', 8], ['personalwesen', 8],
+  ['recruiting', 8], ['bewerbung', 8], ['karriere', 7], ['jobs@', 7],
+  ['administration', 5], ['kontakt', 4], ['contact', 4], ['info@', 3], ['hello@', 3],
+] as [string, number][]
+
+function rankEmail(e: string): number {
+  const lower = e.toLowerCase()
+  for (const [kw, score] of EMAIL_RANK) if (lower.includes(kw)) return score
+  return 2
+}
 
 const BAD_PHONE = (p: string) => {
   const digits = p.replace(/\D/g, '')
@@ -23,7 +40,10 @@ const BAD_PHONE = (p: string) => {
 }
 
 function pickEmail(text: string): string | null {
-  return text.match(EMAIL_RE)?.find(e => !BAD_EMAIL(e)) ?? null
+  const all = (text.match(EMAIL_RE) ?? []).filter(e => !BAD_EMAIL(e))
+  if (!all.length) return null
+  // Return the highest-ranked email (most likely to be the correct contact)
+  return all.reduce((best, e) => rankEmail(e) >= rankEmail(best) ? e : best, all[0])
 }
 
 function pickPhone(text: string): string | null {
