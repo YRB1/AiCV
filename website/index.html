@@ -557,8 +557,11 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
   .dash-kpis{grid-template-columns:repeat(2,1fr)}
   .footer-top{grid-template-columns:1fr 1fr}
 }
+@media(max-width:1100px){
+  .nav-links{display:none}.hamburger{display:flex}
+}
 @media(max-width:768px){
-  #navbar{padding:0 16px}.nav-links{display:none}.hamburger{display:flex}
+  #navbar{padding:0 16px}
   .features-grid{grid-template-columns:1fr}
   .price-grid{grid-template-columns:1fr;max-width:400px}
   .testi-card{min-width:calc(100% - 0px)}
@@ -662,10 +665,10 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
   <p class="hero-note" data-i18n="hero.note">Free plan · No credit card · Cancel anytime</p>
 
   <div class="hero-stats">
-    <div class="stat-item"><div class="stat-num" data-count="50000">0</div><div class="stat-label">Applications Sent</div></div>
-    <div class="stat-item"><div class="stat-num">50/day</div><div class="stat-label">Max Applications</div></div>
-    <div class="stat-item"><div class="stat-num">40+</div><div class="stat-label">Job Boards Scanned</div></div>
-    <div class="stat-item"><div class="stat-num">98%</div><div class="stat-label">ATS Pass Rate</div></div>
+    <div class="stat-item"><div class="stat-num" data-count="50000">0</div><div class="stat-label" data-i18n="stat.sent">Applications Sent</div></div>
+    <div class="stat-item"><div class="stat-num">50/day</div><div class="stat-label" data-i18n="stat.max">Max Applications</div></div>
+    <div class="stat-item"><div class="stat-num">40+</div><div class="stat-label" data-i18n="stat.boards">Job Boards Scanned</div></div>
+    <div class="stat-item"><div class="stat-num">98%</div><div class="stat-label" data-i18n="stat.ats">ATS Pass Rate</div></div>
   </div>
 
   <!-- FLOATING DASHBOARD -->
@@ -737,7 +740,7 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
 
 <!-- TRUSTED BY -->
 <div class="trusted-bar reveal">
-  <div class="trusted-label">Students placed at</div>
+  <div class="trusted-label" data-i18n="trusted.label">Students placed at</div>
   <div class="trusted-logos">
     <span class="trusted-logo">Google</span>
     <span class="trusted-logo">Microsoft</span>
@@ -751,7 +754,7 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
 
 <!-- AS FEATURED IN -->
 <div class="press-bar reveal">
-  <div class="press-label">As featured in</div>
+  <div class="press-label" data-i18n="press.label">As featured in</div>
   <div class="press-logos">
     <span class="press-logo">ProductHunt</span>
     <span class="press-logo">Yahoo Finance</span>
@@ -767,20 +770,20 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
   <div class="divider-fade" style="max-width:1180px;margin:0 auto 64px"></div>
   <div class="section-inner">
     <div class="section-header center reveal">
-      <div class="section-tag">Features</div>
-      <h2 class="section-title">Everything you need to apply smarter</h2>
-      <p class="section-sub">Stop copy-pasting. Stop wasting evenings on applications. Let AI do the heavy lifting.</p>
+      <div class="section-tag" data-i18n="feat.tag">Features</div>
+      <h2 class="section-title" data-i18n="feat.title">Everything you need to apply smarter</h2>
+      <p class="section-sub" data-i18n="feat.sub">Stop copy-pasting. Stop wasting evenings on applications. Let AI do the heavy lifting.</p>
     </div>
     <div class="features-grid stagger">
-      <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><div class="feat-title">AI CV Matching</div><div class="feat-desc">Upload your CV once. Our AI reads every job description and rewrites your CV to highlight the most relevant skills — scored above ATS filters every time.</div></div>
-      <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><div class="feat-title">Automated Applications</div><div class="feat-desc">Set your preferences once and wake up to applications already submitted. AI monitors new listings 24/7 and applies on your behalf in under 60 seconds.</div></div>
-      <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><div class="feat-title">AI Cover Letters</div><div class="feat-desc">Generate a unique, personalised cover letter for every role in seconds. No templates. No fluff. Just compelling letters that actually get read.</div></div>
-      <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="feat-title">Application Tracking</div><div class="feat-desc">Every application in one timeline — status updates, follow-up reminders, interview prep notes, and employer responses, all in one clean dashboard.</div></div>
-      <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><div class="feat-title">Smart Job Search</div><div class="feat-desc">AI scans Indeed, LinkedIn, RateMyApprenticeship, and 40+ more sites simultaneously — filtering by your skills, location, and preferences in real time.</div></div>
-      <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><div class="feat-title">Interview Boosting</div><div class="feat-desc">Practice with AI-generated interview questions tailored to each role. Get scored feedback, suggested answers, and tips to nail your next call.</div></div>
-      <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><div class="feat-title">AI Mock Interviews</div><div class="feat-desc">Simulate a full interview with our conversational AI before the real thing. It adapts questions based on your role, CV, and performance to sharpen your answers.</div></div>
-      <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="feat-title">AI Career Advisor</div><div class="feat-desc">Get personalised advice on which apprenticeships to target, which skills to build next, and how to position yourself for the roles you actually want.</div></div>
-      <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div class="feat-title">Contact Recruiters</div><div class="feat-desc">AI identifies the right hiring manager at each company and drafts a personalised outreach message — so you get noticed before applications even close.</div></div>
+      <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><div class="feat-title" data-i18n="feat1.title">AI CV Matching</div><div class="feat-desc" data-i18n="feat1.desc">Upload your CV once. Our AI reads every job description and rewrites your CV to highlight the most relevant skills — scored above ATS filters every time.</div></div>
+      <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><div class="feat-title" data-i18n="feat2.title">Automated Applications</div><div class="feat-desc" data-i18n="feat2.desc">Set your preferences once and wake up to applications already submitted. AI monitors new listings 24/7 and applies on your behalf in under 60 seconds.</div></div>
+      <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><div class="feat-title" data-i18n="feat3.title">AI Cover Letters</div><div class="feat-desc" data-i18n="feat3.desc">Generate a unique, personalised cover letter for every role in seconds. No templates. No fluff. Just compelling letters that actually get read.</div></div>
+      <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="feat-title" data-i18n="feat4.title">Application Tracking</div><div class="feat-desc" data-i18n="feat4.desc">Every application in one timeline — status updates, follow-up reminders, interview prep notes, and employer responses, all in one clean dashboard.</div></div>
+      <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><div class="feat-title" data-i18n="feat5.title">Smart Job Search</div><div class="feat-desc" data-i18n="feat5.desc">AI scans Indeed, LinkedIn, RateMyApprenticeship, and 40+ more sites simultaneously — filtering by your skills, location, and preferences in real time.</div></div>
+      <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><div class="feat-title" data-i18n="feat6.title">Interview Boosting</div><div class="feat-desc" data-i18n="feat6.desc">Practice with AI-generated interview questions tailored to each role. Get scored feedback, suggested answers, and tips to nail your next call.</div></div>
+      <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><div class="feat-title" data-i18n="feat7.title">AI Mock Interviews</div><div class="feat-desc" data-i18n="feat7.desc">Simulate a full interview with our conversational AI before the real thing. It adapts questions based on your role, CV, and performance to sharpen your answers.</div></div>
+      <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="feat-title" data-i18n="feat8.title">AI Career Advisor</div><div class="feat-desc" data-i18n="feat8.desc">Get personalised advice on which apprenticeships to target, which skills to build next, and how to position yourself for the roles you actually want.</div></div>
+      <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div class="feat-title" data-i18n="feat9.title">Contact Recruiters</div><div class="feat-desc" data-i18n="feat9.desc">AI identifies the right hiring manager at each company and drafts a personalised outreach message — so you get noticed before applications even close.</div></div>
     </div>
   </div>
 </section>
@@ -789,33 +792,33 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
 <section id="why">
   <div class="section-inner">
     <div class="section-header center reveal">
-      <div class="section-tag">Why Blitzbewerbung</div>
-      <h2 class="section-title">More interviews.<br>Less effort.</h2>
-      <p class="section-sub">Everything manual job searching gets wrong — we fix it with AI.</p>
+      <div class="section-tag" data-i18n="nav.why">Why Blitzbewerbung</div>
+      <h2 class="section-title"><span data-i18n="why.title1">More interviews.</span><br><span data-i18n="why.title2">Less effort.</span></h2>
+      <p class="section-sub" data-i18n="why.sub">Everything manual job searching gets wrong — we fix it with AI.</p>
     </div>
     <div class="why-grid stagger">
       <div class="why-card reveal">
         <div class="why-num">50×</div>
-        <div class="why-title">More applications per day</div>
-        <div class="why-desc">The average applicant sends 2–3 applications a day. Blitzbewerbung sends up to 50 personalised applications daily — all tailored to the specific role, not a copy-paste blast.</div>
+        <div class="why-title" data-i18n="why1.title">More applications per day</div>
+        <div class="why-desc" data-i18n="why1.desc">The average applicant sends 2–3 applications a day. Blitzbewerbung sends up to 50 personalised applications daily — all tailored to the specific role, not a copy-paste blast.</div>
         <svg class="why-card-bg" viewBox="0 0 120 120" fill="none" stroke="white" stroke-width="1"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
       </div>
       <div class="why-card reveal">
         <div class="why-num">40+</div>
-        <div class="why-title">Job boards scanned 24/7</div>
-        <div class="why-desc">Most people only check one or two boards. Our AI monitors Indeed, LinkedIn, RateMyApprenticeship, Glassdoor, Reed, Totaljobs, and 35+ more — around the clock, every day.</div>
+        <div class="why-title" data-i18n="why2.title">Job boards scanned 24/7</div>
+        <div class="why-desc" data-i18n="why2.desc">Most people only check one or two boards. Our AI monitors Indeed, LinkedIn, RateMyApprenticeship, Glassdoor, Reed, Totaljobs, and 35+ more — around the clock, every day.</div>
         <svg class="why-card-bg" viewBox="0 0 120 120" fill="none" stroke="white" stroke-width="1"><circle cx="60" cy="60" r="40"/><line x1="60" y1="20" x2="60" y2="100"/><line x1="20" y1="60" x2="100" y2="60"/></svg>
       </div>
       <div class="why-card reveal">
         <div class="why-num">8h+</div>
-        <div class="why-title">Saved every single week</div>
-        <div class="why-desc">Researching roles, tailoring CVs, writing cover letters — all of that disappears. Students report saving 8 or more hours per week they'd otherwise spend on manual applications.</div>
+        <div class="why-title" data-i18n="why3.title">Saved every single week</div>
+        <div class="why-desc" data-i18n="why3.desc">Researching roles, tailoring CVs, writing cover letters — all of that disappears. Students report saving 8 or more hours per week they'd otherwise spend on manual applications.</div>
         <svg class="why-card-bg" viewBox="0 0 120 120" fill="none" stroke="white" stroke-width="1"><circle cx="60" cy="60" r="40"/><polyline points="60 35 60 60 78 70"/></svg>
       </div>
       <div class="why-card reveal">
         <div class="why-num">98%</div>
-        <div class="why-title">ATS pass rate</div>
-        <div class="why-desc">Most CVs are filtered out before a human sees them. Blitzbewerbung rewrites your CV using the exact keywords from each job description, so you clear Applicant Tracking Systems every time.</div>
+        <div class="why-title" data-i18n="why4.title">ATS pass rate</div>
+        <div class="why-desc" data-i18n="why4.desc">Most CVs are filtered out before a human sees them. Blitzbewerbung rewrites your CV using the exact keywords from each job description, so you clear Applicant Tracking Systems every time.</div>
         <svg class="why-card-bg" viewBox="0 0 120 120" fill="none" stroke="white" stroke-width="1"><polyline points="20 70 45 45 65 60 95 25"/></svg>
       </div>
     </div>
@@ -828,15 +831,15 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
     <div class="how-grid">
       <div>
         <div class="section-header reveal">
-          <div class="section-tag">How it works</div>
-          <h2 class="section-title">From CV to interview<br>in 4 steps</h2>
-          <p class="section-sub">No technical knowledge needed. If you can upload a file, you can land an apprenticeship with Blitzbewerbung.</p>
+          <div class="section-tag" data-i18n="how.tag">How it works</div>
+          <h2 class="section-title"><span data-i18n="how.title1">From CV to interview</span><br><span data-i18n="how.title2">in 4 steps</span></h2>
+          <p class="section-sub" data-i18n="how.sub">No technical knowledge needed. If you can upload a file, you can land an apprenticeship with Blitzbewerbung.</p>
         </div>
         <div class="how-steps">
-          <div class="step reveal"><div class="step-num">1</div><div class="step-content"><div class="step-title">Upload Your CV</div><div class="step-desc">Drop in your existing CV — PDF, Word, or plain text. Our AI reads it, understands your skills, and builds your profile in seconds.</div></div></div>
-          <div class="step reveal"><div class="step-num">2</div><div class="step-content"><div class="step-title">AI Finds Apprenticeships</div><div class="step-desc">We scan 40+ job boards in real time, match listings to your profile, and show you a ranked shortlist every morning.</div></div></div>
-          <div class="step reveal"><div class="step-num">3</div><div class="step-content"><div class="step-title">Personalised Applications Sent</div><div class="step-desc">For each role you approve, AI tailors your CV and writes a custom cover letter — then submits automatically on your behalf.</div></div></div>
-          <div class="step reveal"><div class="step-num">4</div><div class="step-content"><div class="step-title">Get Interview Responses</div><div class="step-desc">Track responses in real time. When an interview comes in, Blitzbewerbung preps you with company research and predicted questions.</div></div></div>
+          <div class="step reveal"><div class="step-num">1</div><div class="step-content"><div class="step-title" data-i18n="step1.title">Upload Your CV</div><div class="step-desc" data-i18n="step1.desc">Drop in your existing CV — PDF, Word, or plain text. Our AI reads it, understands your skills, and builds your profile in seconds.</div></div></div>
+          <div class="step reveal"><div class="step-num">2</div><div class="step-content"><div class="step-title" data-i18n="step2.title">AI Finds Apprenticeships</div><div class="step-desc" data-i18n="step2.desc">We scan 40+ job boards in real time, match listings to your profile, and show you a ranked shortlist every morning.</div></div></div>
+          <div class="step reveal"><div class="step-num">3</div><div class="step-content"><div class="step-title" data-i18n="step3.title">Personalised Applications Sent</div><div class="step-desc" data-i18n="step3.desc">For each role you approve, AI tailors your CV and writes a custom cover letter — then submits automatically on your behalf.</div></div></div>
+          <div class="step reveal"><div class="step-num">4</div><div class="step-content"><div class="step-title" data-i18n="step4.title">Get Interview Responses</div><div class="step-desc" data-i18n="step4.desc">Track responses in real time. When an interview comes in, Blitzbewerbung preps you with company research and predicted questions.</div></div></div>
         </div>
       </div>
       <div class="how-visual reveal-right">
@@ -860,9 +863,9 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
 <section id="demo">
   <div class="section-inner">
     <div class="section-header center reveal">
-      <div class="section-tag">Product Demo</div>
-      <h2 class="section-title">See it in action</h2>
-      <p class="section-sub">Watch how students go from CV upload to interview invite in under 10 minutes.</p>
+      <div class="section-tag" data-i18n="demo.tag">Product Demo</div>
+      <h2 class="section-title" data-i18n="demo.title">See it in action</h2>
+      <p class="section-sub" data-i18n="demo.sub">Watch how students go from CV upload to interview invite in under 10 minutes.</p>
     </div>
     <div class="demo-video-wrap reveal" onclick="openDemo()">
       <div class="demo-video-thumb">
@@ -889,7 +892,7 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
       </div>
       <div class="demo-overlay">
         <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
-        <div class="demo-label">Watch 2-min demo</div>
+        <div class="demo-label" data-i18n="demo.watchbtn">Watch 2-min demo</div>
       </div>
     </div>
   </div>
@@ -899,9 +902,9 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
 <section id="testimonials">
   <div class="section-inner">
     <div class="section-header center reveal">
-      <div class="section-tag">Testimonials</div>
-      <h2 class="section-title">Students love Blitzbewerbung</h2>
-      <p class="section-sub">Real results from real people who were tired of applying manually.</p>
+      <div class="section-tag" data-i18n="testi.tag">Testimonials</div>
+      <h2 class="section-title" data-i18n="testi.title">Students love Blitzbewerbung</h2>
+      <p class="section-sub" data-i18n="testi.sub">Real results from real people who were tired of applying manually.</p>
     </div>
   </div>
   <div style="max-width:1180px;margin:0 auto;padding:0 24px" class="reveal">
@@ -951,65 +954,65 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
 <section id="pricing">
   <div class="section-inner">
     <div class="section-header center reveal">
-      <div class="section-tag">Pricing</div>
-      <h2 class="section-title">Start free. Scale when ready.</h2>
-      <p class="section-sub">No hidden fees. Cancel anytime.</p>
+      <div class="section-tag" data-i18n="pricing.tag">Pricing</div>
+      <h2 class="section-title" data-i18n="pricing.title">Start free. Scale when ready.</h2>
+      <p class="section-sub" data-i18n="pricing.sub">No hidden fees. Cancel anytime.</p>
     </div>
     <div class="pricing-toggle reveal">
-      <span class="toggle-label active" id="lblMonthly">Monthly</span>
+      <span class="toggle-label active" id="lblMonthly" data-i18n="billing.monthly">Monthly</span>
       <label class="toggle-switch">
         <input type="checkbox" id="billingToggle" onchange="switchBilling()"/>
         <div class="toggle-track"></div>
       </label>
-      <span class="toggle-label" id="lblAnnual">Annual</span>
-      <span class="save-badge">Save 20%</span>
+      <span class="toggle-label" id="lblAnnual" data-i18n="billing.annual">Annual</span>
+      <span class="save-badge" data-i18n="billing.save">Save 20%</span>
     </div>
     <div class="price-grid stagger">
       <div class="price-card reveal">
-        <div class="price-plan">Free</div>
+        <div class="price-plan" data-i18n="plan.free">Free</div>
         <div class="price-amount"><span class="price-currency">£</span><span class="price-val" data-monthly="0" data-annual="0">0</span><span class="price-period-label">/mo</span></div>
         <div class="price-og" id="og0">&nbsp;</div>
-        <div class="price-desc">Perfect for getting started and landing your first few interviews.</div>
+        <div class="price-desc" data-i18n="plan.free.desc">Perfect for getting started and landing your first few interviews.</div>
         <div class="price-features">
-          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>5 AI applications/month</div>
-          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Basic CV optimisation</div>
-          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Job board search</div>
-          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Application tracker</div>
-          <div class="price-feat off"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>AI cover letters</div>
-          <div class="price-feat off"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Auto-apply</div>
+          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pfeat.free1">5 AI applications/month</span></div>
+          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pfeat.free2">Basic CV optimisation</span></div>
+          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pfeat.free3">Job board search</span></div>
+          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pfeat.free4">Application tracker</span></div>
+          <div class="price-feat off"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pfeat.free5">AI cover letters</span></div>
+          <div class="price-feat off"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pfeat.free6">Auto-apply</span></div>
         </div>
-        <a href="signup.html"><button class="btn-price outline">Get started free</button></a>
+        <a href="signup.html"><button class="btn-price outline" data-i18n="price.free.cta">Get started free</button></a>
       </div>
       <div class="price-card popular reveal">
-        <div class="popular-badge">POPULAR</div>
-        <div class="price-plan">Pro</div>
+        <div class="popular-badge" data-i18n="popular.badge">POPULAR</div>
+        <div class="price-plan" data-i18n="plan.pro">Pro</div>
         <div class="price-amount"><span class="price-currency">£</span><span class="price-val" data-monthly="20" data-annual="16">20</span><span class="price-period-label">/mo</span></div>
         <div class="price-og" id="og1">&nbsp;</div>
-        <div class="price-desc">For serious applicants who want to maximise their chances fast.</div>
+        <div class="price-desc" data-i18n="plan.pro.desc">For serious applicants who want to maximise their chances fast.</div>
         <div class="price-features">
-          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Unlimited applications</div>
-          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Full AI CV tailoring</div>
-          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Unlimited cover letters</div>
-          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Auto-apply to matches</div>
-          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Interview prep AI</div>
-          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Priority support</div>
+          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pfeat.pro1">Unlimited applications</span></div>
+          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pfeat.pro2">Full AI CV tailoring</span></div>
+          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pfeat.pro3">Unlimited cover letters</span></div>
+          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pfeat.pro4">Auto-apply to matches</span></div>
+          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pfeat.pro5">Interview prep AI</span></div>
+          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pfeat.pro6">Priority support</span></div>
         </div>
-        <a href="signup.html"><button class="btn-price filled" id="proBtnLabel">Start Pro — £20/mo</button></a>
+        <a href="signup.html"><button class="btn-price filled" id="proBtnLabel" data-i18n="price.pro.cta">Start Pro — £20/mo</button></a>
       </div>
       <div class="price-card reveal">
-        <div class="price-plan">Student</div>
+        <div class="price-plan" data-i18n="plan.student">Student</div>
         <div class="price-amount"><span class="price-currency">£</span><span class="price-val" data-monthly="15" data-annual="12">15</span><span class="price-period-label">/mo</span></div>
         <div class="price-og" id="og2">&nbsp;</div>
-        <div class="price-desc">Everything in Pro at a discounted rate — verified students only.</div>
+        <div class="price-desc" data-i18n="plan.student.desc">Everything in Pro at a discounted rate — verified students only.</div>
         <div class="price-features">
-          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Everything in Pro</div>
-          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Student verification</div>
-          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>University job board access</div>
-          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Graduate scheme matching</div>
-          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Campus career fair alerts</div>
-          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Priority support</div>
+          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pfeat.s1">Everything in Pro</span></div>
+          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pfeat.s2">Student verification</span></div>
+          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pfeat.s3">University job board access</span></div>
+          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pfeat.s4">Graduate scheme matching</span></div>
+          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pfeat.s5">Campus career fair alerts</span></div>
+          <div class="price-feat"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="pfeat.s6">Priority support</span></div>
         </div>
-        <a href="signup.html"><button class="btn-price outline" id="studentBtnLabel">Student Plan — £15/mo</button></a>
+        <a href="signup.html"><button class="btn-price outline" id="studentBtnLabel" data-i18n="price.student.cta">Student Plan — £15/mo</button></a>
       </div>
     </div>
   </div>
@@ -1019,16 +1022,16 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
 <section id="faq">
   <div class="section-inner">
     <div class="section-header center reveal">
-      <div class="section-tag">FAQ</div>
-      <h2 class="section-title">Questions? Answered.</h2>
+      <div class="section-tag" data-i18n="faq.tag">FAQ</div>
+      <h2 class="section-title" data-i18n="faq.title">Questions? Answered.</h2>
     </div>
     <div class="faq-list reveal">
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is Blitzbewerbung free to start?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><div class="faq-a-inner">Yes — the Free plan lets you send up to 5 AI-assisted applications per month with no credit card required. Upgrade to Pro at any time to unlock unlimited applications, auto-apply, and cover letter generation.</div></div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How does the AI personalise my CV for each role?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><div class="faq-a-inner">Our AI reads the job description and identifies the key skills, keywords, and requirements the employer is looking for. It then rewrites relevant sections of your CV to match — keeping your real experience intact. Nothing is invented.</div></div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Will employers know I used AI?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><div class="faq-a-inner">No. Blitzbewerbung outputs clean, natural writing based entirely on your real experience. It sounds like you because it's built from your words and history — think of it as a personal career coach helping you communicate more clearly.</div></div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Which job boards does Blitzbewerbung search?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><div class="faq-a-inner">We pull listings from over 40 sources including Indeed, LinkedIn, RateMyApprenticeship, Glassdoor, Totaljobs, Reed, and direct employer portals. New sources are added monthly.</div></div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is my CV data kept private?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><div class="faq-a-inner">Absolutely. Your CV and personal data are encrypted at rest and in transit. We never sell your data, never share it without your explicit approval, and never use it to train our AI models.</div></div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I cancel my subscription at any time?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><div class="faq-a-inner">Yes — cancel from your account settings with one click, no questions asked. If you cancel mid-month you keep access until your billing period ends.</div></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq1.q">Is Blitzbewerbung free to start?</span><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><div class="faq-a-inner" data-i18n="faq1.a">Yes — the Free plan lets you send up to 5 AI-assisted applications per month with no credit card required. Upgrade to Pro at any time to unlock unlimited applications, auto-apply, and cover letter generation.</div></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq2.q">How does the AI personalise my CV for each role?</span><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><div class="faq-a-inner" data-i18n="faq2.a">Our AI reads the job description and identifies the key skills, keywords, and requirements the employer is looking for. It then rewrites relevant sections of your CV to match — keeping your real experience intact. Nothing is invented.</div></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq3.q">Will employers know I used AI?</span><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><div class="faq-a-inner" data-i18n="faq3.a">No. Blitzbewerbung outputs clean, natural writing based entirely on your real experience. It sounds like you because it's built from your words and history — think of it as a personal career coach helping you communicate more clearly.</div></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq4.q">Which job boards does Blitzbewerbung search?</span><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><div class="faq-a-inner" data-i18n="faq4.a">We pull listings from over 40 sources including Indeed, LinkedIn, RateMyApprenticeship, Glassdoor, Totaljobs, Reed, and direct employer portals. New sources are added monthly.</div></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq5.q">Is my CV data kept private?</span><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><div class="faq-a-inner" data-i18n="faq5.a">Absolutely. Your CV and personal data are encrypted at rest and in transit. We never sell your data, never share it without your explicit approval, and never use it to train our AI models.</div></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq6.q">Can I cancel my subscription at any time?</span><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><div class="faq-a-inner" data-i18n="faq6.a">Yes — cancel from your account settings with one click, no questions asked. If you cancel mid-month you keep access until your billing period ends.</div></div></div>
     </div>
   </div>
 </section>
@@ -1037,13 +1040,13 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
 <section id="cta-final">
   <div class="section-inner">
     <div class="cta-box-final reveal">
-      <h2 class="cta-title-final">Ready to Automate<br><span class="grad-text">Your Apprenticeship Search?</span></h2>
-      <p class="cta-sub-final">Join 50,000+ students already using Blitzbewerbung. Upload your CV today and start getting 10× more interviews — on autopilot.</p>
+      <h2 class="cta-title-final"><span data-i18n="cta.final.title1">Ready to Automate</span><br><span class="grad-text" data-i18n="cta.final.title2">Your Apprenticeship Search?</span></h2>
+      <p class="cta-sub-final" data-i18n="cta.final.sub">Join 50,000+ students already using Blitzbewerbung. Upload your CV today and start getting 10× more interviews — on autopilot.</p>
       <div class="cta-actions">
-        <a href="signup.html"><button class="btn-hero"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Get Started Free</button></a>
-        <a href="signin.html"><button class="btn-hero-outline">Already have an account?</button></a>
+        <a href="signup.html"><button class="btn-hero"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg><span data-i18n="cta.final.btn1">Get Started Free</span></button></a>
+        <a href="signin.html"><button class="btn-hero-outline" data-i18n="cta.final.btn2">Already have an account?</button></a>
       </div>
-      <p class="cta-note">Free plan · No credit card · Takes 2 minutes to set up</p>
+      <p class="cta-note" data-i18n="cta.final.note">Free plan · No credit card · Takes 2 minutes to set up</p>
     </div>
   </div>
 </section>
@@ -1054,14 +1057,14 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
     <div class="footer-top">
       <div>
         <div class="footer-logo"><div class="logo-icon" style="width:28px;height:28px;border-radius:7px"><svg viewBox="0 0 18 18" style="width:15px;height:15px;fill:white"><path d="M9 1l2.5 5.5L17 7.5l-4 4 1 5.5L9 14l-5 3 1-5.5-4-4 5.5-1L9 1z"/></svg></div>Blitzbewerbung</div>
-        <div class="footer-desc">The AI-powered platform helping students and young people land apprenticeships faster than ever before.</div>
+        <div class="footer-desc" data-i18n="footer.desc">The AI-powered platform helping students and young people land apprenticeships faster than ever before.</div>
       </div>
-      <div><div class="footer-col-title">Product</div><div class="footer-links"><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#demo">Demo</a><a href="blog/index.html">Blog</a></div></div>
-      <div><div class="footer-col-title">Company</div><div class="footer-links"><a href="community.html">Community</a><a href="help.html">Help</a></div></div>
-      <div><div class="footer-col-title">Legal</div><div class="footer-links"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="privacy.html#cookies">Cookie Policy</a></div></div>
+      <div><div class="footer-col-title" data-i18n="footer.product">Product</div><div class="footer-links"><a href="#features" data-i18n="footer.features">Features</a><a href="#pricing" data-i18n="footer.pricing">Pricing</a><a href="#demo" data-i18n="footer.demo">Demo</a><a href="blog/index.html" data-i18n="footer.blog">Blog</a></div></div>
+      <div><div class="footer-col-title" data-i18n="footer.company">Company</div><div class="footer-links"><a href="community.html" data-i18n="footer.community">Community</a><a href="help.html" data-i18n="footer.help">Help</a></div></div>
+      <div><div class="footer-col-title" data-i18n="footer.legal">Legal</div><div class="footer-links"><a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a><a href="terms.html" data-i18n="footer.terms">Terms of Service</a><a href="privacy.html#cookies" data-i18n="footer.cookies">Cookie Policy</a></div></div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 Blitzbewerbung · Made with ❤️ in the UK</span>
+      <span data-i18n="footer.bottom">© 2025 Blitzbewerbung · Made with ❤️ in the UK</span>
       <div class="footer-socials">
         <a href="https://twitter.com/blitzbewerbung" class="social-link"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>
         <a href="https://linkedin.com/company/blitzbewerbung" class="social-link"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
@@ -1363,10 +1366,16 @@ function switchBilling() {
     const el = document.getElementById(o.id);
     if (el) el.textContent = annual ? o.annual : ' ';
   });
+  const lang = localStorage.getItem('site-lang') || 'en';
+  const isDE = lang === 'de';
   const proBtn = document.getElementById('proBtnLabel');
-  if (proBtn) proBtn.textContent = annual ? 'Start Pro — £16/mo billed annually' : 'Start Pro — £20/mo';
+  if (proBtn) proBtn.textContent = annual
+    ? (isDE ? 'Pro starten — £16/Mt. jährlich' : 'Start Pro — £16/mo billed annually')
+    : (isDE ? 'Pro starten — £20/Mt.' : 'Start Pro — £20/mo');
   const stuBtn = document.getElementById('studentBtnLabel');
-  if (stuBtn) stuBtn.textContent = annual ? 'Student Plan — £12/mo billed annually' : 'Student Plan — £15/mo';
+  if (stuBtn) stuBtn.textContent = annual
+    ? (isDE ? 'Student-Plan — £12/Mt. jährlich' : 'Student Plan — £12/mo billed annually')
+    : (isDE ? 'Student-Plan — £15/Mt.' : 'Student Plan — £15/mo');
 }
 
 // ── FAQ ────────────────────────────────────────────────────────────────────
