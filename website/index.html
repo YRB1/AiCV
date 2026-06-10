@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>LehrstellenSniper — Land More Apprenticeships With AI</title>
+<title>Blitzbewerbung — Land More Apprenticeships With AI</title>
 <meta name="description" content="Upload your CV once and let AI find opportunities, personalise applications, and help you apply faster than ever."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -108,6 +108,9 @@ a{color:inherit;text-decoration:none}
 .nav-links{display:flex;align-items:center;gap:28px;font-size:14px;color:var(--text2)}
 .nav-links a{transition:color .2s}.nav-links a:hover{color:var(--text)}
 .nav-right{display:flex;align-items:center;gap:10px}
+.lang-toggle{display:flex;gap:2px;background:rgba(255,255,255,0.06);border:1px solid rgba(100,130,255,0.2);border-radius:8px;padding:3px;flex-shrink:0}
+.lang-btn{padding:4px 12px;border-radius:5px;border:none;background:transparent;color:var(--text2);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;font-family:var(--font-body);white-space:nowrap}
+.lang-btn.active{background:rgba(91,127,255,0.22);color:var(--text);box-shadow:0 0 8px rgba(91,127,255,0.15)}
 .btn-ghost-sm{padding:8px 18px;border-radius:8px;font-size:13px;font-weight:500;border:1px solid var(--border2);color:var(--text2);background:transparent;cursor:pointer;font-family:var(--font-body);transition:all .2s}
 .btn-ghost-sm:hover{color:var(--text);border-color:rgba(255,255,255,0.28);background:rgba(255,255,255,0.05)}
 .btn-nav-cta{padding:8px 18px;border-radius:8px;font-size:13px;font-weight:600;background:var(--grad);color:#fff;border:none;cursor:pointer;font-family:var(--font-body);transition:all .2s;box-shadow:0 0 20px var(--blue-glow)}
@@ -581,19 +584,23 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
       <div class="logo-icon"><svg viewBox="0 0 18 18"><path d="M9 1l2.5 5.5L17 7.5l-4 4 1 5.5L9 14l-5 3 1-5.5-4-4 5.5-1L9 1z"/></svg></div>
-      LehrstellenSniper
+      Blitzbewerbung
     </a>
     <div class="nav-links">
-      <a href="#features">Features</a><a href="#why">Why LehrstellenSniper</a>
-      <a href="#how">How it works</a><a href="#demo">Demo</a>
-      <a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
-      <a href="blog/index.html">Blog</a>
-      <a href="community.html">Community</a>
-      <a href="help.html">Help</a>
+      <a href="#features" data-i18n="nav.features">Features</a><a href="#why" data-i18n="nav.why">Why Blitzbewerbung</a>
+      <a href="#how" data-i18n="nav.how">How it works</a><a href="#demo" data-i18n="nav.demo">Demo</a>
+      <a href="#pricing" data-i18n="nav.pricing">Pricing</a><a href="#faq" data-i18n="nav.faq">FAQ</a>
+      <a href="blog/index.html" data-i18n="nav.blog">Blog</a>
+      <a href="community.html" data-i18n="nav.community">Community</a>
+      <a href="help.html" data-i18n="nav.help">Help</a>
     </div>
     <div class="nav-right">
-      <a href="signin.html"><button class="btn-ghost-sm">Sign in</button></a>
-      <a href="signup.html"><button class="btn-nav-cta">Sign up</button></a>
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" data-lang="de" onclick="setLang('de')">DE</button>
+      </div>
+      <a href="signin.html"><button class="btn-ghost-sm" data-i18n="nav.signin">Sign in</button></a>
+      <a href="signup.html"><button class="btn-nav-cta" data-i18n="nav.signup">Sign up</button></a>
       <button class="hamburger" id="hamburger-btn" aria-label="Menu">
         <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
@@ -601,12 +608,12 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
   </div>
 </nav>
 <div id="mobile-menu">
-  <a href="#features">Features</a><a href="#why">Why LehrstellenSniper</a>
-  <a href="#how">How it works</a><a href="#demo">Demo</a>
-  <a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
-  <a href="blog/index.html">Blog</a>
-  <a href="community.html">Community</a>
-  <a href="help.html">Help</a>
+  <a href="#features" data-i18n="nav.features">Features</a><a href="#why" data-i18n="nav.why">Why Blitzbewerbung</a>
+  <a href="#how" data-i18n="nav.how">How it works</a><a href="#demo" data-i18n="nav.demo">Demo</a>
+  <a href="#pricing" data-i18n="nav.pricing">Pricing</a><a href="#faq" data-i18n="nav.faq">FAQ</a>
+  <a href="blog/index.html" data-i18n="nav.blog">Blog</a>
+  <a href="community.html" data-i18n="nav.community">Community</a>
+  <a href="help.html" data-i18n="nav.help">Help</a>
   <div class="mobile-ctas">
     <a href="signin.html"><button class="btn-ghost-sm">Sign in</button></a>
     <a href="signup.html"><button class="btn-nav-cta">Sign up</button></a>
@@ -642,18 +649,17 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
     <div class="hero-bg-aurora"></div>
   </div>
 
-  <div class="hero-badge"><span></span> 50,000+ students · 40+ job boards · 24/7 AI</div>
+  <div class="hero-badge"><span></span> <span data-i18n="hero.badge">50,000+ students · 40+ job boards · 24/7 AI</span></div>
   <h1 class="hero-title">
-    <span class="word">Get</span> <span class="word">10×</span>
-    <span class="word">More</span><br>
-    <span class="word grad-text">Apprenticeship</span> <span class="word grad-text">Interviews</span>
+    <span class="word" data-i18n="hero.title1">Get 10× More</span><br>
+    <span class="word grad-text" data-i18n="hero.title2">Apprenticeship Interviews</span>
   </h1>
-  <p class="hero-sub">Upload your CV once. AI scans 40+ job boards, tailors every application, and applies on your behalf — automatically, every day.</p>
+  <p class="hero-sub" data-i18n="hero.sub">Upload your CV once. AI scans 40+ job boards, tailors every application, and applies on your behalf — automatically, every day.</p>
   <div class="hero-actions">
-    <a href="signup.html"><button class="btn-hero"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Start Free — No Card Needed</button></a>
-    <button class="btn-hero-outline" onclick="openDemo()"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>Watch Demo</button>
+    <a href="signup.html"><button class="btn-hero"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg><span data-i18n="hero.cta1">Start Free — No Card Needed</span></button></a>
+    <button class="btn-hero-outline" onclick="openDemo()"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg><span data-i18n="hero.cta2">Watch Demo</span></button>
   </div>
-  <p class="hero-note">Free plan · No credit card · Cancel anytime</p>
+  <p class="hero-note" data-i18n="hero.note">Free plan · No credit card · Cancel anytime</p>
 
   <div class="hero-stats">
     <div class="stat-item"><div class="stat-num" data-count="50000">0</div><div class="stat-label">Applications Sent</div></div>
@@ -668,7 +674,7 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
     <div class="dash-frame">
       <div class="dash-topbar">
         <div class="dash-dot red"></div><div class="dash-dot yellow"></div><div class="dash-dot green"></div>
-        <div class="dash-title-bar">LehrstellenSniper — Dashboard</div>
+        <div class="dash-title-bar">Blitzbewerbung — Dashboard</div>
         <div class="dash-live"><div class="dash-live-dot"></div>Live</div>
       </div>
       <div class="dash-body">
@@ -783,7 +789,7 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
 <section id="why">
   <div class="section-inner">
     <div class="section-header center reveal">
-      <div class="section-tag">Why LehrstellenSniper</div>
+      <div class="section-tag">Why Blitzbewerbung</div>
       <h2 class="section-title">More interviews.<br>Less effort.</h2>
       <p class="section-sub">Everything manual job searching gets wrong — we fix it with AI.</p>
     </div>
@@ -791,7 +797,7 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
       <div class="why-card reveal">
         <div class="why-num">50×</div>
         <div class="why-title">More applications per day</div>
-        <div class="why-desc">The average applicant sends 2–3 applications a day. LehrstellenSniper sends up to 50 personalised applications daily — all tailored to the specific role, not a copy-paste blast.</div>
+        <div class="why-desc">The average applicant sends 2–3 applications a day. Blitzbewerbung sends up to 50 personalised applications daily — all tailored to the specific role, not a copy-paste blast.</div>
         <svg class="why-card-bg" viewBox="0 0 120 120" fill="none" stroke="white" stroke-width="1"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
       </div>
       <div class="why-card reveal">
@@ -809,7 +815,7 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
       <div class="why-card reveal">
         <div class="why-num">98%</div>
         <div class="why-title">ATS pass rate</div>
-        <div class="why-desc">Most CVs are filtered out before a human sees them. LehrstellenSniper rewrites your CV using the exact keywords from each job description, so you clear Applicant Tracking Systems every time.</div>
+        <div class="why-desc">Most CVs are filtered out before a human sees them. Blitzbewerbung rewrites your CV using the exact keywords from each job description, so you clear Applicant Tracking Systems every time.</div>
         <svg class="why-card-bg" viewBox="0 0 120 120" fill="none" stroke="white" stroke-width="1"><polyline points="20 70 45 45 65 60 95 25"/></svg>
       </div>
     </div>
@@ -824,13 +830,13 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
         <div class="section-header reveal">
           <div class="section-tag">How it works</div>
           <h2 class="section-title">From CV to interview<br>in 4 steps</h2>
-          <p class="section-sub">No technical knowledge needed. If you can upload a file, you can land an apprenticeship with LehrstellenSniper.</p>
+          <p class="section-sub">No technical knowledge needed. If you can upload a file, you can land an apprenticeship with Blitzbewerbung.</p>
         </div>
         <div class="how-steps">
           <div class="step reveal"><div class="step-num">1</div><div class="step-content"><div class="step-title">Upload Your CV</div><div class="step-desc">Drop in your existing CV — PDF, Word, or plain text. Our AI reads it, understands your skills, and builds your profile in seconds.</div></div></div>
           <div class="step reveal"><div class="step-num">2</div><div class="step-content"><div class="step-title">AI Finds Apprenticeships</div><div class="step-desc">We scan 40+ job boards in real time, match listings to your profile, and show you a ranked shortlist every morning.</div></div></div>
           <div class="step reveal"><div class="step-num">3</div><div class="step-content"><div class="step-title">Personalised Applications Sent</div><div class="step-desc">For each role you approve, AI tailors your CV and writes a custom cover letter — then submits automatically on your behalf.</div></div></div>
-          <div class="step reveal"><div class="step-num">4</div><div class="step-content"><div class="step-title">Get Interview Responses</div><div class="step-desc">Track responses in real time. When an interview comes in, LehrstellenSniper preps you with company research and predicted questions.</div></div></div>
+          <div class="step reveal"><div class="step-num">4</div><div class="step-content"><div class="step-title">Get Interview Responses</div><div class="step-desc">Track responses in real time. When an interview comes in, Blitzbewerbung preps you with company research and predicted questions.</div></div></div>
         </div>
       </div>
       <div class="how-visual reveal-right">
@@ -894,7 +900,7 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
   <div class="section-inner">
     <div class="section-header center reveal">
       <div class="section-tag">Testimonials</div>
-      <h2 class="section-title">Students love LehrstellenSniper</h2>
+      <h2 class="section-title">Students love Blitzbewerbung</h2>
       <p class="section-sub">Real results from real people who were tired of applying manually.</p>
     </div>
   </div>
@@ -903,7 +909,7 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
       <div class="carousel-track" id="carouselTrack">
         <div class="testi-card">
           <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <div class="testi-text">"I spent 3 months applying manually with zero responses. Within a week of using LehrstellenSniper, I had 4 interviews booked. The AI cover letters are insanely good — they genuinely sound like me."</div>
+          <div class="testi-text">"I spent 3 months applying manually with zero responses. Within a week of using Blitzbewerbung, I had 4 interviews booked. The AI cover letters are insanely good — they genuinely sound like me."</div>
           <div class="testi-author"><div class="testi-avatar">JT</div><div><div class="testi-name">Jamie T.</div><div class="testi-role">Software Engineering Apprentice, Google</div></div></div>
         </div>
         <div class="testi-card">
@@ -913,12 +919,12 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
         </div>
         <div class="testi-card">
           <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <div class="testi-text">"As someone with no connections and no idea where to start, LehrstellenSniper levelled the playing field. The AI found opportunities I never would've found myself. Landed at HSBC in my first month!"</div>
+          <div class="testi-text">"As someone with no connections and no idea where to start, Blitzbewerbung levelled the playing field. The AI found opportunities I never would've found myself. Landed at HSBC in my first month!"</div>
           <div class="testi-author"><div class="testi-avatar">MK</div><div><div class="testi-name">Marcus K.</div><div class="testi-role">Data Science Apprentice, HSBC</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <div class="testi-text">"I'm not the most confident writer but LehrstellenSniper makes every application sound polished and professional. Got 6 interviews in 2 weeks — my friends couldn't believe it."</div>
+          <div class="testi-text">"I'm not the most confident writer but Blitzbewerbung makes every application sound polished and professional. Got 6 interviews in 2 weeks — my friends couldn't believe it."</div>
           <div class="testi-author"><div class="testi-avatar">PL</div><div><div class="testi-name">Priya L.</div><div class="testi-role">Marketing Apprentice, PwC</div></div></div>
         </div>
         <div class="testi-card">
@@ -1017,10 +1023,10 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
       <h2 class="section-title">Questions? Answered.</h2>
     </div>
     <div class="faq-list reveal">
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is LehrstellenSniper free to start?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><div class="faq-a-inner">Yes — the Free plan lets you send up to 5 AI-assisted applications per month with no credit card required. Upgrade to Pro at any time to unlock unlimited applications, auto-apply, and cover letter generation.</div></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is Blitzbewerbung free to start?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><div class="faq-a-inner">Yes — the Free plan lets you send up to 5 AI-assisted applications per month with no credit card required. Upgrade to Pro at any time to unlock unlimited applications, auto-apply, and cover letter generation.</div></div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How does the AI personalise my CV for each role?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><div class="faq-a-inner">Our AI reads the job description and identifies the key skills, keywords, and requirements the employer is looking for. It then rewrites relevant sections of your CV to match — keeping your real experience intact. Nothing is invented.</div></div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Will employers know I used AI?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><div class="faq-a-inner">No. LehrstellenSniper outputs clean, natural writing based entirely on your real experience. It sounds like you because it's built from your words and history — think of it as a personal career coach helping you communicate more clearly.</div></div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Which job boards does LehrstellenSniper search?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><div class="faq-a-inner">We pull listings from over 40 sources including Indeed, LinkedIn, RateMyApprenticeship, Glassdoor, Totaljobs, Reed, and direct employer portals. New sources are added monthly.</div></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Will employers know I used AI?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><div class="faq-a-inner">No. Blitzbewerbung outputs clean, natural writing based entirely on your real experience. It sounds like you because it's built from your words and history — think of it as a personal career coach helping you communicate more clearly.</div></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Which job boards does Blitzbewerbung search?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><div class="faq-a-inner">We pull listings from over 40 sources including Indeed, LinkedIn, RateMyApprenticeship, Glassdoor, Totaljobs, Reed, and direct employer portals. New sources are added monthly.</div></div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is my CV data kept private?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><div class="faq-a-inner">Absolutely. Your CV and personal data are encrypted at rest and in transit. We never sell your data, never share it without your explicit approval, and never use it to train our AI models.</div></div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I cancel my subscription at any time?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a"><div class="faq-a-inner">Yes — cancel from your account settings with one click, no questions asked. If you cancel mid-month you keep access until your billing period ends.</div></div></div>
     </div>
@@ -1032,7 +1038,7 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
   <div class="section-inner">
     <div class="cta-box-final reveal">
       <h2 class="cta-title-final">Ready to Automate<br><span class="grad-text">Your Apprenticeship Search?</span></h2>
-      <p class="cta-sub-final">Join 50,000+ students already using LehrstellenSniper. Upload your CV today and start getting 10× more interviews — on autopilot.</p>
+      <p class="cta-sub-final">Join 50,000+ students already using Blitzbewerbung. Upload your CV today and start getting 10× more interviews — on autopilot.</p>
       <div class="cta-actions">
         <a href="signup.html"><button class="btn-hero"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Get Started Free</button></a>
         <a href="signin.html"><button class="btn-hero-outline">Already have an account?</button></a>
@@ -1047,21 +1053,21 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
   <div class="footer-inner">
     <div class="footer-top">
       <div>
-        <div class="footer-logo"><div class="logo-icon" style="width:28px;height:28px;border-radius:7px"><svg viewBox="0 0 18 18" style="width:15px;height:15px;fill:white"><path d="M9 1l2.5 5.5L17 7.5l-4 4 1 5.5L9 14l-5 3 1-5.5-4-4 5.5-1L9 1z"/></svg></div>LehrstellenSniper</div>
+        <div class="footer-logo"><div class="logo-icon" style="width:28px;height:28px;border-radius:7px"><svg viewBox="0 0 18 18" style="width:15px;height:15px;fill:white"><path d="M9 1l2.5 5.5L17 7.5l-4 4 1 5.5L9 14l-5 3 1-5.5-4-4 5.5-1L9 1z"/></svg></div>Blitzbewerbung</div>
         <div class="footer-desc">The AI-powered platform helping students and young people land apprenticeships faster than ever before.</div>
       </div>
-      <div><div class="footer-col-title">Product</div><div class="footer-links"><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#demo">Demo</a><a href="#">Changelog</a></div></div>
-      <div><div class="footer-col-title">Company</div><div class="footer-links"><a href="#">About</a><a href="#">Blog</a><a href="#">Careers</a><a href="#">Press</a></div></div>
-      <div><div class="footer-col-title">Legal</div><div class="footer-links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Cookie Policy</a><a href="#">GDPR</a></div></div>
+      <div><div class="footer-col-title">Product</div><div class="footer-links"><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#demo">Demo</a><a href="blog/index.html">Blog</a></div></div>
+      <div><div class="footer-col-title">Company</div><div class="footer-links"><a href="community.html">Community</a><a href="help.html">Help</a></div></div>
+      <div><div class="footer-col-title">Legal</div><div class="footer-links"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="privacy.html#cookies">Cookie Policy</a></div></div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 LehrstellenSniper Ltd · Made with ❤️ in the UK</span>
+      <span>© 2025 Blitzbewerbung · Made with ❤️ in the UK</span>
       <div class="footer-socials">
-        <a href="#" class="social-link"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>
-        <a href="#" class="social-link"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
-        <a href="#" class="social-link"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg></a>
+        <a href="https://twitter.com/blitzbewerbung" class="social-link"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>
+        <a href="https://linkedin.com/company/blitzbewerbung" class="social-link"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="https://github.com/blitzbewerbung" class="social-link"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg></a>
       </div>
-      <span>hello@applyflow.ai</span>
+      <span>hallo@blitzbewerbung.ch</span>
     </div>
   </div>
 </footer>
@@ -1072,9 +1078,9 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
     <div class="modal-topbar">
       <div style="display:flex;align-items:center;gap:10px">
         <div style="display:flex;gap:5px"><div class="mdot" style="background:#ff5f56"></div><div class="mdot" style="background:#ffbd2e"></div><div class="mdot" style="background:#27c93f"></div></div>
-        <span style="font-size:11px;color:#444;font-family:monospace">app.applyflow.ai/dashboard</span>
+        <span style="font-size:11px;color:#444;font-family:monospace">app.blitzbewerbung.ch/dashboard</span>
       </div>
-      <span style="font-size:13px;font-weight:500;color:#666">LehrstellenSniper — Live Demo</span>
+      <span style="font-size:13px;font-weight:500;color:#666">Blitzbewerbung — Live Demo</span>
       <button class="modal-close" onclick="closeModalBtn()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="demo-progress"><div class="demo-progress-fill" id="demoProgressFill"></div></div>
@@ -1454,5 +1460,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 </script>
 <script src="chatbot.js"></script>
 <script src="cookie.js"></script>
+<script src="lang.js"></script>
+<style>.lang-btn.active{background:rgba(100,130,255,0.25)!important;color:#f0f0fa!important}</style>
 </body>
 </html>

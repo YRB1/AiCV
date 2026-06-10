@@ -37,7 +37,7 @@
   styleEl.textContent = css;
   document.head.appendChild(styleEl);
 
-  const l = localStorage.getItem('blog-lang') || 'de';
+  const l = localStorage.getItem('site-lang') || localStorage.getItem('blog-lang') || 'en';
   const isDE = l === 'de';
 
   const banner = document.createElement('div');
