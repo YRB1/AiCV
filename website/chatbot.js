@@ -10,44 +10,44 @@
   function KB(){
     return {
       de:[
-        {k:['hallo','hi','hey','guten','morgen','tag'],a:`Hallo! 👋 Ich bin <strong>Sniper Bot</strong> — ich beantworte Fragen zu LehrstellenSniper sofort. Was möchtest du wissen?`},
+        {k:['hallo','hi','hey','guten','morgen','tag'],a:`Hallo! 👋 Ich bin <strong>Blitz Bot</strong> — ich beantworte Fragen zu Blitzbewerbung sofort. Was möchtest du wissen?`},
         {k:['kostenlos','gratis','preis','kosten','abo','plan','pro','zahlen','bezahl'],a:`Es gibt einen <strong>kostenlosen Einstieg</strong>. Das volle Feature-Set (unlimitierte Suchen, KI-Bewerbungen, direkte Kontakte) ist im Pro-Abo. Schau dir die <a href="${r('index.html')}#pricing">Preise</a> an.`},
         {k:['kündigen','kündigung','cancel'],a:`Du kannst dein Abo <strong>jederzeit</strong> in den Kontoeinstellungen kündigen — kein Formular, keine Wartezeit.`},
         {k:['passwort','password','vergessen','reset'],a:`Klick auf der <a href="${r('signin.html')}">Anmeldeseite</a> auf <strong>"Passwort vergessen?"</strong> — du bekommst sofort einen Reset-Link per E-Mail.`},
         {k:['konto','registrieren','sign up','erstellen','account'],a:`Klick oben rechts auf <strong>Sign up</strong> und gib deine E-Mail ein — fertig in unter einer Minute.`},
-        {k:['suche','stellen','jobs','finden','resultate','quellen'],a:`LehrstellenSniper durchsucht gleichzeitig <strong>Google Jobs, Firmenwebsites und kantonale Portale</strong>. So findest du auch Stellen, die nie auf Yousty erscheinen.`},
+        {k:['suche','stellen','jobs','finden','resultate','quellen'],a:`Blitzbewerbung durchsucht gleichzeitig <strong>Google Jobs, Firmenwebsites und kantonale Portale</strong>. So findest du auch Stellen, die nie auf Yousty erscheinen.`},
         {k:['ki','ai','gpt','chatgpt','motivationsschreiben','bewerbungsschreiben','automatisch'],a:`Für jede Stelle wird <strong>automatisch ein personalisiertes Motivationsschreiben</strong> auf Deutsch oder Englisch generiert — du kannst es danach bearbeiten und versenden.`},
-        {k:['englisch','sprache','language'],a:`LehrstellenSniper ist auf <strong>Deutsch und Englisch</strong> verfügbar — Suche, Bewerbungsschreiben und die ganze App.`},
+        {k:['englisch','sprache','language'],a:`Blitzbewerbung ist auf <strong>Deutsch und Englisch</strong> verfügbar — Suche, Bewerbungsschreiben und die ganze App.`},
         {k:['zahlung','payment','kreditkarte','twint','stripe'],a:`Wir akzeptieren <strong>Visa, Mastercard, Amex und TWINT</strong>. Zahlung sicher über Stripe.`},
-        {k:['yousty','vergleich','unterschied'],a:`Yousty zeigt nur bezahlte Inserate. Wir finden zusätzlich Stellen auf Firmenwebsites — <strong>über 40% der Lehrstellen erscheinen nie auf Yousty</strong>. Lies den <a href="${b('lehrstellensniper-vs-yousty.html')}">Vergleich</a>.`},
+        {k:['yousty','vergleich','unterschied'],a:`Yousty zeigt nur bezahlte Inserate. Wir finden zusätzlich Stellen auf Firmenwebsites — <strong>über 40% der Lehrstellen erscheinen nie auf Yousty</strong>. Lies den <a href="${b('blitzbewerbung-vs-yousty.html')}">Vergleich</a>.`},
         {k:['datenschutz','daten','privacy','dsgvo','gdpr'],a:`Deine Daten werden <strong>nicht an Firmen weitergegeben</strong>. Lies unsere <a href="${r('privacy.html')}">Datenschutzerklärung</a>.`},
         {k:['cookie','cookies','zustimmung'],a:`Wir nutzen nur notwendige Cookies für die Anmeldung und deine Spracheinstellung. Details in der <a href="${r('privacy.html')}">Datenschutzerklärung</a>.`},
         {k:['zürich','bern','basel','zug','kanton','region'],a:`Die Suche ist <strong>schweizweit — alle 26 Kantone</strong>. Für Kantonstipps schau in den <a href="${b('index.html')}">Blog</a>.`},
         {k:['schnupperlehre','schnupper'],a:`Dazu haben wir einen ganzen Artikel! Lies: <a href="${b('schnupperlehre-organisieren.html')}">Schnupperlehre organisieren</a>.`},
         {k:['lebenslauf','cv','curriculum'],a:`Dazu haben wir einen Guide: <a href="${b('lebenslauf-vorlage-lernende.html')}">Lebenslauf Vorlage für Lernende</a>.`},
         {k:['interview','vorstellungsgespräch','gespräch','tipps'],a:`Lies unseren Ratgeber: <a href="${b('interview-tipps.html')}">10 Interview-Tipps für die Lehrstelle</a>.`},
-        {k:['kontakt','email','mail','hilfe','support'],a:`Schreib uns an <a href="mailto:hallo@lehrstellensniper.ch">hallo@lehrstellensniper.ch</a> — wir antworten innerhalb von <strong>24 Stunden</strong>. 📧`},
+        {k:['kontakt','email','mail','hilfe','support'],a:`Schreib uns an <a href="mailto:hallo@blitzbewerbung.ch">hallo@blitzbewerbung.ch</a> — wir antworten innerhalb von <strong>24 Stunden</strong>. 📧`},
         {k:['danke','thanks','super','top','toll','perfekt'],a:`Freut mich! 😊 Noch weitere Fragen? Ich bin hier.`},
         {k:['agb','nutzungsbedingungen','terms'],a:`Unsere <a href="${r('terms.html')}">Nutzungsbedingungen</a> findest du hier.`},
       ],
       en:[
-        {k:['hello','hi','hey','good'],a:`Hi! 👋 I'm <strong>Sniper Bot</strong> — I instantly answer questions about LehrstellenSniper. What would you like to know?`},
+        {k:['hello','hi','hey','good'],a:`Hi! 👋 I'm <strong>Blitz Bot</strong> — I instantly answer questions about Blitzbewerbung. What would you like to know?`},
         {k:['free','cost','price','plan','pro','pay','subscription'],a:`There's a <strong>free tier</strong> with limited searches. The full feature set is in the Pro subscription. Check <a href="${r('index.html')}#pricing">pricing</a>.`},
         {k:['cancel','cancellation'],a:`You can cancel <strong>any time</strong> in account settings — no forms, no waiting.`},
         {k:['password','forgot','reset'],a:`Click <strong>"Forgot password?"</strong> on the <a href="${r('signin.html')}">sign-in page</a> — you'll get a reset link instantly.`},
         {k:['account','register','signup','sign up','create'],a:`Click <strong>Sign up</strong> top right and enter your email — done in under a minute.`},
-        {k:['search','jobs','find','results','sources'],a:`LehrstellenSniper searches <strong>Google Jobs, company websites and cantonal portals simultaneously</strong>. You find positions that never appear on Yousty.`},
+        {k:['search','jobs','find','results','sources'],a:`Blitzbewerbung searches <strong>Google Jobs, company websites and cantonal portals simultaneously</strong>. You find positions that never appear on Yousty.`},
         {k:['ai','gpt','chatgpt','cover letter','application','automatic'],a:`For every position, a <strong>personalised cover letter is automatically generated</strong> in German or English — edit and send directly.`},
-        {k:['english','language','bilingual'],a:`LehrstellenSniper is available in <strong>German and English</strong> — search, cover letters and the entire app.`},
+        {k:['english','language','bilingual'],a:`Blitzbewerbung is available in <strong>German and English</strong> — search, cover letters and the entire app.`},
         {k:['payment','credit card','twint','stripe'],a:`We accept <strong>Visa, Mastercard, Amex and TWINT</strong>, processed securely via Stripe.`},
-        {k:['yousty','compare','difference'],a:`Yousty only shows paid listings. We additionally find positions on company websites — <strong>over 40% of apprenticeships never appear on Yousty</strong>. Read the <a href="${b('lehrstellensniper-vs-yousty.html')}">comparison</a>.`},
+        {k:['yousty','compare','difference'],a:`Yousty only shows paid listings. We additionally find positions on company websites — <strong>over 40% of apprenticeships never appear on Yousty</strong>. Read the <a href="${b('blitzbewerbung-vs-yousty.html')}">comparison</a>.`},
         {k:['privacy','data','gdpr','secure'],a:`Your data is <strong>never shared with companies</strong>. Read our <a href="${r('privacy.html')}">Privacy Policy</a>.`},
         {k:['cookie','cookies'],a:`We only use essential cookies for login and language preference. Details in our <a href="${r('privacy.html')}">Privacy Policy</a>.`},
         {k:['zurich','bern','basel','zug','canton','region'],a:`The search is <strong>nationwide — all 26 cantons</strong>. For canton-specific guides check the <a href="${b('index.html')}">Blog</a>.`},
         {k:['trial day','schnupperlehre'],a:`We have a full guide: <a href="${b('schnupperlehre-organisieren.html')}">Organising a Trial Day</a>.`},
         {k:['cv','resume','curriculum'],a:`Check our guide: <a href="${b('lebenslauf-vorlage-lernende.html')}">CV Template for Apprentices</a>.`},
         {k:['interview','tips'],a:`Read our guide: <a href="${b('interview-tipps.html')}">10 Interview Tips for Apprenticeships</a>.`},
-        {k:['contact','email','support','help'],a:`Write to <a href="mailto:hallo@lehrstellensniper.ch">hallo@lehrstellensniper.ch</a> — we reply within <strong>24 hours</strong>. 📧`},
+        {k:['contact','email','support','help'],a:`Write to <a href="mailto:hallo@blitzbewerbung.ch">hallo@blitzbewerbung.ch</a> — we reply within <strong>24 hours</strong>. 📧`},
         {k:['thanks','thank','great','perfect'],a:`Glad I could help! 😊 Any other questions? I'm right here.`},
         {k:['terms','terms of service'],a:`Find our <a href="${r('terms.html')}">Terms of Service</a> here.`},
       ]
@@ -137,7 +137,7 @@
       <div class="cb-header">
         <div class="cb-avatar"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill="white"/></svg></div>
         <div>
-          <div class="cb-hname">Sniper Bot</div>
+          <div class="cb-hname">Blitz Bot</div>
           <div class="cb-hstatus"><span class="cb-dot"></span><span id="cb-status-txt">Online — antwortet sofort</span></div>
         </div>
         <button class="cb-close" onclick="window._cb.toggle()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
@@ -154,7 +154,7 @@
   /* ── Logic ───────────────────────────────────────────────────────────── */
   let open = false, initiated = false;
   const SESSION_KEY = 'cb-history';
-  const L = () => localStorage.getItem('blog-lang') || 'de';
+  const L = () => localStorage.getItem('site-lang') || localStorage.getItem('blog-lang') || 'en';
 
   function syncLang(){
     const l = L();
@@ -215,8 +215,8 @@
     if(hasHistory){ renderChips(); return; }
     const l = L();
     const greet = l==='de'
-      ? `Hallo! 👋 Ich bin <strong>Sniper Bot</strong>. Ich beantworte sofort Fragen zu LehrstellenSniper — Suche, Bewerbung, Konto, Datenschutz und mehr.`
-      : `Hi! 👋 I'm <strong>Sniper Bot</strong>. I instantly answer questions about LehrstellenSniper — search, applications, account, privacy and more.`;
+      ? `Hallo! 👋 Ich bin <strong>Blitz Bot</strong>. Ich beantworte sofort Fragen zu Blitzbewerbung — Suche, Bewerbung, Konto, Datenschutz und mehr.`
+      : `Hi! 👋 I'm <strong>Blitz Bot</strong>. I instantly answer questions about Blitzbewerbung — search, applications, account, privacy and more.`;
     saveHistory('bot', greet);
     addBot(greet, 350);
     setTimeout(renderChips, 800);
@@ -248,7 +248,7 @@
     document.getElementById('cb-chips').innerHTML = '';
     addUsr(val);
     const ans = findAns(val);
-    const isFallback = ans.includes('mailto:hallo@lehrstellensniper.ch') && !val.toLowerCase().includes('kontakt') && !val.toLowerCase().includes('contact') && !val.toLowerCase().includes('email');
+    const isFallback = ans.includes('mailto:hallo@blitzbewerbung.ch') && !val.toLowerCase().includes('kontakt') && !val.toLowerCase().includes('contact') && !val.toLowerCase().includes('email');
     addBot(ans, 750, isFallback);
   }
 
@@ -258,8 +258,8 @@
     const kb = KB()[l];
     for(const e of kb){ if(e.k.some(k=>t.includes(k))) return e.a; }
     return l==='de'
-      ? `Gute Frage! Dazu habe ich leider keine Antwort. Schreib uns direkt an <a href="mailto:hallo@lehrstellensniper.ch">hallo@lehrstellensniper.ch</a> — wir helfen innerhalb von 24h. 📧`
-      : `Good question! I don't have an answer for that. Write to <a href="mailto:hallo@lehrstellensniper.ch">hallo@lehrstellensniper.ch</a> — we reply within 24h. 📧`;
+      ? `Gute Frage! Dazu habe ich leider keine Antwort. Schreib uns direkt an <a href="mailto:hallo@blitzbewerbung.ch">hallo@blitzbewerbung.ch</a> — wir helfen innerhalb von 24h. 📧`
+      : `Good question! I don't have an answer for that. Write to <a href="mailto:hallo@blitzbewerbung.ch">hallo@blitzbewerbung.ch</a> — we reply within 24h. 📧`;
   }
 
   function addUsr(text){
@@ -292,5 +292,9 @@
   function scroll(){ const m=document.getElementById('cb-msgs'); setTimeout(()=>m.scrollTop=m.scrollHeight,50); }
   function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-  window._cb = { toggle, send };
+  // sync label on load + whenever lang changes
+  document.addEventListener('DOMContentLoaded', syncLang);
+  window.addEventListener('storage', e => { if(e.key==='site-lang'||e.key==='blog-lang') syncLang(); });
+
+  window._cb = { toggle, send, syncLang };
 })();

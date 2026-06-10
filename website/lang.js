@@ -203,6 +203,8 @@ function setLang(l) {
     btn.classList.toggle('active', btn.getAttribute('data-lang') === l)
   })
   localStorage.setItem('site-lang', l)
+  // notify same-tab listeners (chatbot, etc.)
+  if (window._cb && window._cb.syncLang) window._cb.syncLang()
 }
 
 function initLang() {
