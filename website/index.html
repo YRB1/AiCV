@@ -139,7 +139,8 @@ a{color:inherit;text-decoration:none}
 .hero{position:relative;padding:96px 24px 0;display:flex;flex-direction:column;align-items:center;text-align:center;min-height:100vh}
 .hero>*:not(.hero-bg){position:relative;z-index:1}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 16px;border-radius:100px;border:1px solid var(--border2);background:rgba(255,255,255,0.04);font-size:12px;color:var(--indigo);margin-bottom:32px;letter-spacing:.3px;font-weight:500;animation:fadeUp .7s ease both}
-.hero-badge span{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.7);animation:pulse 2s ease-in-out infinite;flex-shrink:0}
+.hero-badge span:first-child{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.7);animation:pulse 2s ease-in-out infinite;flex-shrink:0}
+.hero-badge span:last-child{white-space:nowrap}
 .hero-title{font-family:var(--font-head);font-size:clamp(44px,7.5vw,88px);font-weight:800;line-height:1.04;letter-spacing:-2.5px;max-width:900px;margin-bottom:24px}
 .hero-title .word{display:inline-block;animation:wordIn .7s ease both;opacity:0}
 .hero-title .word:nth-child(1){animation-delay:.1s}
@@ -920,33 +921,33 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
       <div class="carousel-track" id="carouselTrack">
         <div class="testi-card">
           <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <div class="testi-text">"I spent 3 months applying manually with zero responses. Within a week of using Blitzbewerbung, I had 4 interviews booked. The AI cover letters are insanely good — they genuinely sound like me."</div>
-          <div class="testi-author"><div class="testi-avatar">JT</div><div><div class="testi-name">Jamie T.</div><div class="testi-role">Software Engineering Apprentice, Google</div></div></div>
+          <div class="testi-text" data-i18n="testi1.text">"I spent 3 months applying manually with zero responses. Within a week of using Blitzbewerbung, I had 4 interviews booked. The AI cover letters are insanely good — they genuinely sound like me."</div>
+          <div class="testi-author"><div class="testi-avatar">JT</div><div><div class="testi-name">Jamie T.</div><div class="testi-role" data-i18n="testi1.role">Software Engineering Apprentice, Google</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <div class="testi-text">"The time I save is insane. I used to spend 2–3 hours writing one cover letter. Now I approve 10 applications before breakfast. Just got my offer from Deloitte — couldn't have done it without this."</div>
-          <div class="testi-author"><div class="testi-avatar">SR</div><div><div class="testi-name">Sara R.</div><div class="testi-role">Business Analyst Apprentice, Deloitte</div></div></div>
+          <div class="testi-text" data-i18n="testi2.text">"The time I save is insane. I used to spend 2–3 hours writing one cover letter. Now I approve 10 applications before breakfast. Just got my offer from Deloitte — couldn't have done it without this."</div>
+          <div class="testi-author"><div class="testi-avatar">SR</div><div><div class="testi-name">Sara R.</div><div class="testi-role" data-i18n="testi2.role">Business Analyst Apprentice, Deloitte</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <div class="testi-text">"As someone with no connections and no idea where to start, Blitzbewerbung levelled the playing field. The AI found opportunities I never would've found myself. Landed at HSBC in my first month!"</div>
-          <div class="testi-author"><div class="testi-avatar">MK</div><div><div class="testi-name">Marcus K.</div><div class="testi-role">Data Science Apprentice, HSBC</div></div></div>
+          <div class="testi-text" data-i18n="testi3.text">"As someone with no connections and no idea where to start, Blitzbewerbung levelled the playing field. The AI found opportunities I never would've found myself. Landed at HSBC in my first month!"</div>
+          <div class="testi-author"><div class="testi-avatar">MK</div><div><div class="testi-name">Marcus K.</div><div class="testi-role" data-i18n="testi3.role">Data Science Apprentice, HSBC</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <div class="testi-text">"I'm not the most confident writer but Blitzbewerbung makes every application sound polished and professional. Got 6 interviews in 2 weeks — my friends couldn't believe it."</div>
-          <div class="testi-author"><div class="testi-avatar">PL</div><div><div class="testi-name">Priya L.</div><div class="testi-role">Marketing Apprentice, PwC</div></div></div>
+          <div class="testi-text" data-i18n="testi4.text">"I'm not the most confident writer but Blitzbewerbung makes every application sound polished and professional. Got 6 interviews in 2 weeks — my friends couldn't believe it."</div>
+          <div class="testi-author"><div class="testi-avatar">PL</div><div><div class="testi-name">Priya L.</div><div class="testi-role" data-i18n="testi4.role">Marketing Apprentice, PwC</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <div class="testi-text">"The interview prep feature alone is worth the Pro price. It gave me exact questions that came up in my Amazon interview. Walked in confident and got the offer."</div>
-          <div class="testi-author"><div class="testi-avatar">RW</div><div><div class="testi-name">Ryan W.</div><div class="testi-role">Cloud Support Apprentice, Amazon</div></div></div>
+          <div class="testi-text" data-i18n="testi5.text">"The interview prep feature alone is worth the Pro price. It gave me exact questions that came up in my Amazon interview. Walked in confident and got the offer."</div>
+          <div class="testi-author"><div class="testi-avatar">RW</div><div><div class="testi-name">Ryan W.</div><div class="testi-role" data-i18n="testi5.role">Cloud Support Apprentice, Amazon</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <div class="testi-text">"I was applying for finance apprenticeships and the AI completely transformed my cover letters. They sounded so much more professional than anything I could write myself. IBM offered me the role within 3 weeks."</div>
-          <div class="testi-author"><div class="testi-avatar">AN</div><div><div class="testi-name">Aisha N.</div><div class="testi-role">Finance Technology Apprentice, IBM</div></div></div>
+          <div class="testi-text" data-i18n="testi6.text">"I was applying for finance apprenticeships and the AI completely transformed my cover letters. They sounded so much more professional than anything I could write myself. IBM offered me the role within 3 weeks."</div>
+          <div class="testi-author"><div class="testi-avatar">AN</div><div><div class="testi-name">Aisha N.</div><div class="testi-role" data-i18n="testi6.role">Finance Technology Apprentice, IBM</div></div></div>
         </div>
       </div>
     </div>
@@ -1100,11 +1101,11 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
 
         <!-- Scene 1: Upload CV -->
         <div class="demo-scene" id="dscene-0">
-          <div class="ds-label">Step 1 of 4 — Upload your CV</div>
+          <div class="ds-label" data-i18n="demo.step1">Step 1 of 4 — Upload your CV</div>
           <div class="ds-upload-zone">
             <svg width="44" height="44" viewBox="0 0 48 48"><rect x="8" y="4" width="28" height="36" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="28 4 36 12 36 40" fill="none" stroke="currentColor" stroke-width="2"/><line x1="14" y1="20" x2="30" y2="20" stroke="currentColor" stroke-width="2"/><line x1="14" y1="26" x2="30" y2="26" stroke="currentColor" stroke-width="2"/><line x1="14" y1="32" x2="22" y2="32" stroke="currentColor" stroke-width="2"/></svg>
-            <div class="ds-upload-title">Drop your CV here</div>
-            <div class="ds-upload-sub">Supports PDF, DOCX, and TXT</div>
+            <div class="ds-upload-title" data-i18n="demo.dropzone">Drop your CV here</div>
+            <div class="ds-upload-sub" data-i18n="demo.dropsub">Supports PDF, DOCX, and TXT</div>
           </div>
           <div class="ds-file-card">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
@@ -1113,16 +1114,16 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
           <div class="ds-upload-bar"><div class="ds-upload-bar-fill"></div></div>
           <div class="ds-upload-done">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#4ade80" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
-            Profile built — 12 skills detected
+            <span data-i18n="demo.profilebuilt">Profile built — 12 skills detected</span>
           </div>
         </div>
 
         <!-- Scene 2: AI Scan -->
         <div class="demo-scene" id="dscene-1">
-          <div class="ds-label">Step 2 of 4 — AI scans 40+ job boards</div>
+          <div class="ds-label" data-i18n="demo.step2">Step 2 of 4 — AI scans 40+ job boards</div>
           <div class="ds-scan-grid">
             <div>
-              <div class="ds-scan-title">Your Skills</div>
+              <div class="ds-scan-title" data-i18n="demo.yourskills">Your Skills</div>
               <div class="ds-skill-grid">
                 <span class="ds-skill" style="--d:.1s">Python</span>
                 <span class="ds-skill" style="--d:.25s">JavaScript</span>
@@ -1137,7 +1138,7 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
               </div>
             </div>
             <div>
-              <div class="ds-scan-title">Scanning Boards</div>
+              <div class="ds-scan-title" data-i18n="demo.scanboards">Scanning Boards</div>
               <div class="ds-board-list">
                 <div class="ds-board" style="--d:.2s"><span class="ds-board-dot"></span>Indeed<span class="ds-board-count">2,847 roles</span></div>
                 <div class="ds-board" style="--d:.6s"><span class="ds-board-dot"></span>LinkedIn<span class="ds-board-count">1,203 roles</span></div>
@@ -1145,15 +1146,15 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
                 <div class="ds-board" style="--d:1.4s"><span class="ds-board-dot"></span>Glassdoor<span class="ds-board-count">673 roles</span></div>
                 <div class="ds-board" style="--d:1.8s"><span class="ds-board-dot"></span>+38 more boards...</div>
               </div>
-              <div class="ds-scan-result">🎯 12 perfect matches found</div>
+              <div class="ds-scan-result" data-i18n="demo.matchesfound">🎯 12 perfect matches found</div>
             </div>
           </div>
         </div>
 
         <!-- Scene 3: Matches -->
         <div class="demo-scene" id="dscene-2">
-          <div class="ds-label">Step 3 of 4 — Review your matches</div>
-          <div class="ds-match-header"><span class="ds-match-count">12 new opportunities</span><span class="ds-match-sub">Ranked by AI match score</span></div>
+          <div class="ds-label" data-i18n="demo.step3">Step 3 of 4 — Review your matches</div>
+          <div class="ds-match-header"><span class="ds-match-count" data-i18n="demo.opportunities">12 new opportunities</span><span class="ds-match-sub" data-i18n="demo.ranked">Ranked by AI match score</span></div>
           <div class="ds-match-list">
             <div class="ds-match-row" style="--d:.1s">
               <div class="ds-match-logo" style="background:linear-gradient(135deg,#4285f4,#0f9d58)">G</div>
@@ -1180,7 +1181,7 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
 
         <!-- Scene 4: Application Generated -->
         <div class="demo-scene" id="dscene-3">
-          <div class="ds-label">Step 4 of 4 — AI writes your application</div>
+          <div class="ds-label" data-i18n="demo.step4">Step 4 of 4 — AI writes your application</div>
           <div class="ds-apply-role">
             <div class="ds-apply-logo" style="background:linear-gradient(135deg,#4285f4,#0f9d58)">G</div>
             <div><div class="ds-apply-co">Google</div><div class="ds-apply-job">Software Engineering Apprentice</div></div>
@@ -1191,23 +1192,23 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
             My project work in data analysis and machine learning has given me a solid foundation in algorithmic thinking and problem-solving that I am excited to apply...<span class="ds-letter-cursor"></span>
           </div>
           <div class="ds-apply-row">
-            <span>Personalising application</span>
+            <span data-i18n="demo.personalising">Personalising application</span>
             <div class="ds-apply-bar"><div class="ds-apply-bar-fill"></div></div>
             <span class="ds-apply-pct" id="ds-apply-pct">0%</span>
           </div>
           <div class="ds-apply-done">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#4ade80" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
-            Application submitted to Google ✓
+            <span data-i18n="demo.submitted">Application submitted to Google ✓</span>
           </div>
         </div>
 
         <!-- Scene 5: Dashboard -->
         <div class="demo-scene" id="dscene-4">
-          <div class="ds-label">Your dashboard — all applications tracked</div>
+          <div class="ds-label" data-i18n="demo.step5">Your dashboard — all applications tracked</div>
           <div class="ds-dash-kpis">
-            <div class="ds-dash-kpi"><div class="ds-dash-val" data-demo-target="47">0</div><div class="ds-dash-key">Applications</div></div>
-            <div class="ds-dash-kpi"><div class="ds-dash-val" data-demo-target="8">0</div><div class="ds-dash-key">Interviews</div></div>
-            <div class="ds-dash-kpi"><div class="ds-dash-val ds-pct-val" data-demo-target="94">0</div><div class="ds-dash-key">CV Score</div></div>
+            <div class="ds-dash-kpi"><div class="ds-dash-val" data-demo-target="47">0</div><div class="ds-dash-key" data-i18n="demo.kpi.apps">Applications</div></div>
+            <div class="ds-dash-kpi"><div class="ds-dash-val" data-demo-target="8">0</div><div class="ds-dash-key" data-i18n="demo.kpi.interviews">Interviews</div></div>
+            <div class="ds-dash-kpi"><div class="ds-dash-val ds-pct-val" data-demo-target="94">0</div><div class="ds-dash-key" data-i18n="demo.kpi.cvscore">CV Score</div></div>
           </div>
           <div class="ds-dash-apps">
             <div class="ds-dash-app" style="--d:.2s"><span>Google — Engineering Apprentice</span><span class="ds-dash-badge int">Interview</span></div>
@@ -1217,17 +1218,17 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
           </div>
           <div class="ds-notif">
             <svg viewBox="0 0 24 24" width="15" height="15" stroke-width="1.5"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
-            🎉 Interview booked with Google — Monday 9am
+            <span data-i18n="demo.interview">🎉 Interview booked with Google — Monday 9am</span>
           </div>
         </div>
 
       </div>
       <div class="demo-scene-nav">
-        <button class="dsn-btn" onclick="demoGoScene(0)">1. Upload</button>
-        <button class="dsn-btn" onclick="demoGoScene(1)">2. AI Scan</button>
-        <button class="dsn-btn" onclick="demoGoScene(2)">3. Matches</button>
-        <button class="dsn-btn" onclick="demoGoScene(3)">4. Apply</button>
-        <button class="dsn-btn" onclick="demoGoScene(4)">Results</button>
+        <button class="dsn-btn" onclick="demoGoScene(0)" data-i18n="demo.nav1">1. Upload</button>
+        <button class="dsn-btn" onclick="demoGoScene(1)" data-i18n="demo.nav2">2. AI Scan</button>
+        <button class="dsn-btn" onclick="demoGoScene(2)" data-i18n="demo.nav3">3. Matches</button>
+        <button class="dsn-btn" onclick="demoGoScene(3)" data-i18n="demo.nav4">4. Apply</button>
+        <button class="dsn-btn" onclick="demoGoScene(4)" data-i18n="demo.nav5">Results</button>
       </div>
     </div>
   </div>
