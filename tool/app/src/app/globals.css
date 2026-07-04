@@ -1,31 +1,31 @@
 @import "tailwindcss";
 
-/* ── BASE DARK (true black) ───────────────────────────────────────── */
+/* ── BASE DARK (Navy — matches dashboard theme) ───────────────────── */
 :root {
-  --bg: #000000;
-  --surface: #0d0d0d;
-  --surface-2: #141414;
-  --surface-3: #1c1c1c;
-  --border: #1e1e1e;
-  --border-2: #2a2a2a;
-  --text: #f1f5f9;
-  --text-2: #94a3b8;
-  --muted: #64748b;
-  --muted-2: #475569;
+  --bg: #0f1117;
+  --surface: #181b25;
+  --surface-2: #1f2333;
+  --surface-3: #262c3e;
+  --border: #2a3048;
+  --border-2: #353d58;
+  --text: #e8edf5;
+  --text-2: #8fa3bf;
+  --muted: #5c7399;
+  --muted-2: #3d5275;
   --green: #10b981;
   --green-glow: rgba(16,185,129,0.15);
   --red: #ef4444;
   --yellow: #f59e0b;
   --blue: #3b82f6;
-  --shadow: 0 4px 32px rgba(0,0,0,0.7);
-  --shadow-sm: 0 2px 12px rgba(0,0,0,0.5);
+  --shadow: 0 4px 32px rgba(0,0,0,0.6);
+  --shadow-sm: 0 2px 12px rgba(0,0,0,0.4);
 
-  /* Default accent = Ocean */
-  --accent: #06b6d4;
-  --accent-hover: #0891b2;
-  --accent-light: #67e8f9;
-  --accent-glow: rgba(6,182,212,0.12);
-  --accent-glow-2: rgba(6,182,212,0.22);
+  /* Default accent = Indigo (matches dashboard screenshot) */
+  --accent: #6366f1;
+  --accent-hover: #818cf8;
+  --accent-light: #a5b4fc;
+  --accent-glow: rgba(99,102,241,0.12);
+  --accent-glow-2: rgba(99,102,241,0.22);
 
   /* Legacy aliases */
   --purple: var(--accent);
@@ -279,6 +279,8 @@ input, select, textarea { font-family: inherit; }
   transition: background 0.25s, border-color 0.25s;
 }
 
+/* Centered title inside topbar */
+
 /* Content scroll area */
 .ls-content {
   flex: 1;
@@ -452,4 +454,66 @@ input, select, textarea { font-family: inherit; }
   .ls-sidebar { width: 180px; }
   .ls-page { padding: 20px; }
   .ls-stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ─── PLAN GRID (upgrade page) ─────────────────────────────────── */
+.ls-plan-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+@media (max-width: 768px) {
+  .ls-plan-grid { grid-template-columns: 1fr; max-width: 380px; margin-left: auto; margin-right: auto; }
+}
+@media (min-width: 769px) and (max-width: 900px) {
+  .ls-plan-grid { grid-template-columns: 1fr; max-width: 380px; margin-left: auto; margin-right: auto; }
+}
+
+/* ─── PAGE PADDING (responsive) ────────────────────────────────── */
+.ls-padded {
+  padding: clamp(16px, 4vw, 32px);
+}
+
+/* ─── 2-col grid (dashboard bottom row) ────────────────────────── */
+.ls-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 580px) {
+  .ls-2col { grid-template-columns: 1fr; }
+}
+
+/* ─── Dashboard middle row (activity + cv score) ────────────────── */
+.ls-dash-mid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+@media (max-width: 640px) {
+  .ls-dash-mid { grid-template-columns: 1fr; }
+}
+
+/* ─── MODE GRID (einstellungen page) ───────────────────────────── */
+.ls-mode-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 12px;
+}
+@media (max-width: 480px) {
+  .ls-mode-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ─── PROFIL FORM FIELD ROW ─────────────────────────────────────── */
+.ls-field-row {
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 480px) {
+  .ls-field-row { flex-direction: column; align-items: stretch; }
+  .ls-field-label { width: 100% !important; padding: 10px 14px 4px !important; border-bottom: none !important; }
+  .ls-field-input { border-left: none !important; border-top: 1px solid var(--border) !important; }
 }

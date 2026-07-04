@@ -104,10 +104,10 @@ a{color:inherit;text-decoration:none}
 #navbar{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 32px;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
 #navbar.scrolled{background:rgba(0,0,0,0.8);border-color:var(--border);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
 .nav-inner{max-width:1180px;margin:0 auto;height:64px;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{font-family:var(--font-head);font-size:20px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:flex;align-items:center;gap:8px}
+.nav-logo{font-family:var(--font-head);font-size:20px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:flex;align-items:center;gap:8px;flex-shrink:0}
 .logo-icon{width:32px;height:32px;background:linear-gradient(135deg,#7b9fff,#3a5ce0);border-radius:8px;display:flex;align-items:center;justify-content:center;-webkit-text-fill-color:initial;flex-shrink:0;box-shadow:0 0 14px rgba(91,127,255,0.35)}
 .logo-icon svg{width:18px;height:18px;fill:white}
-.nav-links{display:flex;align-items:center;gap:28px;font-size:14px;color:var(--text2)}
+.nav-links{display:flex;align-items:center;gap:22px;font-size:13.5px;color:var(--text2);flex:1;justify-content:center;margin:0 24px}
 .nav-links a{transition:color .2s}.nav-links a:hover{color:var(--text)}
 .nav-right{display:flex;align-items:center;gap:10px}
 .lang-toggle{display:flex;gap:2px;background:rgba(255,255,255,0.06);border:1px solid rgba(100,130,255,0.2);border-radius:8px;padding:3px;flex-shrink:0}
@@ -438,14 +438,14 @@ section{position:relative;z-index:1}
 
 /* ── TESTIMONIALS CAROUSEL ───────────────────────────────────────────────── */
 #testimonials{padding:96px 0;overflow:hidden}
-.carousel-wrap{position:relative;overflow:hidden;margin:0 -24px;padding:0 24px}
-.carousel-track{display:flex;gap:16px;transition:transform .5s cubic-bezier(.4,0,.2,1)}
-.testi-card{min-width:calc(33.333% - 11px);background:rgba(13,13,13,0.7);border:1px solid var(--border);border-radius:20px;padding:28px;backdrop-filter:blur(12px);flex-shrink:0;transition:all .3s}
-.testi-card.active-slide{border-color:var(--border2);box-shadow:0 0 40px rgba(255,255,255,0.04)}
+.carousel-wrap{position:relative;overflow:hidden}
+.carousel-track{display:flex;gap:0;transition:transform .5s cubic-bezier(.4,0,.2,1);will-change:transform}
+.testi-card{min-width:100%;width:100%;background:rgba(13,13,13,0.7);border-radius:20px;padding:40px 48px;backdrop-filter:blur(12px);flex-shrink:0;transition:all .3s;display:flex;flex-direction:column;box-sizing:border-box}
+.testi-card.active-slide{}
 .testi-stars{display:flex;gap:3px;margin-bottom:16px}
 .testi-stars svg{width:13px;height:13px;fill:#fbbf24;stroke:none}
-.testi-text{font-size:14px;color:var(--text2);line-height:1.75;margin-bottom:20px;font-style:italic;font-weight:300}
-.testi-author{display:flex;align-items:center;gap:12px}
+.testi-text{font-size:14px;color:var(--text2);line-height:1.75;margin-bottom:20px;font-style:italic;font-weight:300;flex:1}
+.testi-author{display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:20px}
 .testi-avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;background:rgba(255,255,255,0.08);border:1px solid var(--border2);color:var(--text)}
 .testi-name{font-size:14px;font-weight:600}
 .testi-role{font-size:12px;color:var(--text3)}
@@ -554,17 +554,16 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
 /* ── RESPONSIVE ──────────────────────────────────────────────────────────── */
 @media(max-width:1024px){
   .features-grid{grid-template-columns:repeat(2,1fr)}
-  .testi-card{min-width:calc(50% - 8px)}
   .how-grid{grid-template-columns:1fr}.how-visual{display:none}
   .dash-body{grid-template-columns:1fr}.dash-sidebar{display:none}
   .dash-kpis{grid-template-columns:repeat(2,1fr)}
   .footer-top{grid-template-columns:1fr 1fr}
 }
 @media(max-width:1400px){
-  .nav-links{gap:14px;font-size:13px}
+  .nav-links{gap:14px;font-size:13px;margin:0 16px}
 }
 @media(max-width:1200px){
-  .nav-links{gap:8px;font-size:12px}
+  .nav-links{gap:8px;font-size:12px;margin:0 12px}
 }
 @media(max-width:1100px){
   .nav-links{display:none}.hamburger{display:flex}
@@ -573,7 +572,6 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
   #navbar{padding:0 16px}
   .features-grid{grid-template-columns:1fr}
   .price-grid{grid-template-columns:1fr;max-width:400px}
-  .testi-card{min-width:calc(100% - 0px)}
   .hero-stats{display:grid;grid-template-columns:1fr 1fr}
   .stat-item+.stat-item{border-left:none}
   .stat-item:nth-child(odd){border-right:1px solid var(--border)}
@@ -599,12 +597,12 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
       Blitzbewerbung
     </a>
     <div class="nav-links">
-      <a href="#features" data-i18n="nav.features">Features</a><a href="#why" data-i18n="nav.why">Why Blitzbewerbung</a>
-      <a href="#how" data-i18n="nav.how">How it works</a><a href="#demo" data-i18n="nav.demo">Demo</a>
-      <a href="#pricing" data-i18n="nav.pricing">Pricing</a><a href="#faq" data-i18n="nav.faq">FAQ</a>
+      <a href="#features" data-i18n="nav.features">Features</a>
+      <a href="#why" data-i18n="nav.why">Why Blitzbewerbung</a>
+      <a href="#how" data-i18n="nav.how">How it works</a>
+      <a href="#pricing" data-i18n="nav.pricing">Pricing</a>
       <a href="blog/index.html" data-i18n="nav.blog">Blog</a>
-      <a href="community.html" data-i18n="nav.community">Community</a>
-      <a href="help.html" data-i18n="nav.help">Help</a>
+      <a href="contact.html" data-i18n="nav.contact">Contact</a>
     </div>
     <div class="nav-right">
       <div class="lang-toggle">
@@ -620,12 +618,12 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
   </div>
 </nav>
 <div id="mobile-menu">
-  <a href="#features" data-i18n="nav.features">Features</a><a href="#why" data-i18n="nav.why">Why Blitzbewerbung</a>
-  <a href="#how" data-i18n="nav.how">How it works</a><a href="#demo" data-i18n="nav.demo">Demo</a>
-  <a href="#pricing" data-i18n="nav.pricing">Pricing</a><a href="#faq" data-i18n="nav.faq">FAQ</a>
+  <a href="#features" data-i18n="nav.features">Features</a>
+  <a href="#why" data-i18n="nav.why">Why Blitzbewerbung</a>
+  <a href="#how" data-i18n="nav.how">How it works</a>
+  <a href="#pricing" data-i18n="nav.pricing">Pricing</a>
   <a href="blog/index.html" data-i18n="nav.blog">Blog</a>
-  <a href="community.html" data-i18n="nav.community">Community</a>
-  <a href="help.html" data-i18n="nav.help">Help</a>
+  <a href="contact.html" data-i18n="nav.contact">Contact</a>
   <div class="mobile-ctas">
     <a href="signin.html"><button class="btn-ghost-sm">Sign in</button></a>
     <a href="signup.html"><button class="btn-nav-cta">Sign up</button></a>
@@ -661,7 +659,7 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
     <div class="hero-bg-aurora"></div>
   </div>
 
-  <div class="hero-badge"><span></span> <span data-i18n="hero.badge">50,000+ students · 40+ job boards · 24/7 AI</span></div>
+  <div class="hero-badge"><span></span> <span data-i18n="hero.badge">40+ job portals · All 26 cantons · AI cover letters</span></div>
   <h1 class="hero-title">
     <span class="word" data-i18n="hero.title1">Get 10× More</span><br>
     <span class="word grad-text" data-i18n="hero.title2">Apprenticeship Interviews</span>
@@ -670,14 +668,15 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
   <div class="hero-actions">
     <a href="signup.html"><button class="btn-hero"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg><span data-i18n="hero.cta1">Start Free — No Card Needed</span></button></a>
     <button class="btn-hero-outline" onclick="openDemo()"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg><span data-i18n="hero.cta2">Watch Demo</span></button>
+    <a href="blog/index.html"><button class="btn-hero-outline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg><span data-i18n="hero.blog">Read the Blog</span></button></a>
   </div>
   <p class="hero-note" data-i18n="hero.note">Free plan · No credit card · Cancel anytime</p>
 
   <div class="hero-stats">
-    <div class="stat-item"><div class="stat-num" data-count="50000">0</div><div class="stat-label" data-i18n="stat.sent">Applications Sent</div></div>
-    <div class="stat-item"><div class="stat-num">50/day</div><div class="stat-label" data-i18n="stat.max">Max Applications</div></div>
-    <div class="stat-item"><div class="stat-num">40+</div><div class="stat-label" data-i18n="stat.boards">Job Boards Scanned</div></div>
-    <div class="stat-item"><div class="stat-num">98%</div><div class="stat-label" data-i18n="stat.ats">ATS Pass Rate</div></div>
+    <div class="stat-item"><div class="stat-num">100/day</div><div class="stat-label" data-i18n="stat.max">Max Applications</div></div>
+    <div class="stat-item"><div class="stat-num">40+</div><div class="stat-label" data-i18n="stat.boards">Swiss Job Portals</div></div>
+    <div class="stat-item"><div class="stat-num">26</div><div class="stat-label" data-i18n="stat.cantons">Cantons Covered</div></div>
+    <div class="stat-item"><div class="stat-num">60s</div><div class="stat-label" data-i18n="stat.speed">Per Application</div></div>
   </div>
 
   <!-- FLOATING DASHBOARD -->
@@ -691,24 +690,24 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
       </div>
       <div class="dash-body">
         <div class="dash-sidebar">
-          <div class="dash-nav-item active"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Overview</div>
-          <div class="dash-nav-item"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>My CV</div>
-          <div class="dash-nav-item"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Matches</div>
-          <div class="dash-nav-item"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Applications</div>
-          <div class="dash-nav-item"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Messages</div>
+          <div class="dash-nav-item active"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><span data-i18n="dash.nav.overview">Overview</span></div>
+          <div class="dash-nav-item"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span data-i18n="dash.nav.mycv">My CV</span></div>
+          <div class="dash-nav-item"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span data-i18n="dash.nav.matches">Matches</span></div>
+          <div class="dash-nav-item"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span data-i18n="dash.nav.apps">Applications</span></div>
+          <div class="dash-nav-item"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg><span data-i18n="dash.nav.messages">Messages</span></div>
           <div style="flex:1"></div>
-          <div class="dash-nav-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Profile</div>
+          <div class="dash-nav-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span data-i18n="dash.nav.profile">Profile</span></div>
         </div>
         <div class="dash-main">
           <div class="dash-kpis">
-            <div class="kpi"><div class="kpi-shimmer"></div><div class="kpi-val" data-target="47">0</div><div class="kpi-label">Applications Sent</div><div class="kpi-change">↑ 12 this week</div></div>
-            <div class="kpi"><div class="kpi-shimmer"></div><div class="kpi-val" data-target="8">0</div><div class="kpi-label">Interviews</div><div class="kpi-change">↑ 3 new</div></div>
-            <div class="kpi"><div class="kpi-shimmer"></div><div class="kpi-val" data-target="124">0</div><div class="kpi-label">Job Matches</div><div class="kpi-change">↑ 24 today</div></div>
-            <div class="kpi"><div class="kpi-shimmer"></div><div class="kpi-val">94%</div><div class="kpi-label">CV Score</div><div class="kpi-change">Top 6%</div></div>
+            <div class="kpi"><div class="kpi-shimmer"></div><div class="kpi-val" data-target="47">0</div><div class="kpi-label" data-i18n="dash.kpi.sent">Applications Sent</div><div class="kpi-change" data-i18n="dash.kpi.sent.delta">↑ 12 this week</div></div>
+            <div class="kpi"><div class="kpi-shimmer"></div><div class="kpi-val" data-target="8">0</div><div class="kpi-label">Interviews</div><div class="kpi-change" data-i18n="dash.kpi.int.delta">↑ 3 new</div></div>
+            <div class="kpi"><div class="kpi-shimmer"></div><div class="kpi-val" data-target="124">0</div><div class="kpi-label" data-i18n="dash.kpi.matches">Job Matches</div><div class="kpi-change" data-i18n="dash.kpi.matches.delta">↑ 24 today</div></div>
+            <div class="kpi"><div class="kpi-shimmer"></div><div class="kpi-val">94%</div><div class="kpi-label" data-i18n="dash.kpi.cvscore">CV Score</div><div class="kpi-change">Top 6%</div></div>
           </div>
           <div class="dash-row">
             <div class="dash-card">
-              <div class="dash-card-title">Activity — Last 7 Days<span class="ai-typing"><span class="ai-typing-dot"></span><span class="ai-typing-dot"></span><span class="ai-typing-dot"></span></span></div>
+              <div class="dash-card-title"><span data-i18n="dash.card.activity">Activity — Last 7 Days</span><span class="ai-typing"><span class="ai-typing-dot"></span><span class="ai-typing-dot"></span><span class="ai-typing-dot"></span></span></div>
               <div class="mini-bars">
                 <div class="mini-bar" style="height:30%;animation-delay:.2s"></div>
                 <div class="mini-bar" style="height:55%;animation-delay:.3s"></div>
@@ -721,24 +720,24 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
               <div class="bar-labels"><div class="bar-label">M</div><div class="bar-label">T</div><div class="bar-label">W</div><div class="bar-label">T</div><div class="bar-label">F</div><div class="bar-label">S</div><div class="bar-label">S</div></div>
             </div>
             <div class="dash-card">
-              <div class="dash-card-title">CV Score</div>
+              <div class="dash-card-title" data-i18n="dash.card.cvscore">CV Score</div>
               <div class="score-wrap">
                 <svg class="score-ring-svg" viewBox="0 0 80 80">
                   <defs><linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#7b9fff"/><stop offset="100%" stop-color="#3a5ce0"/></linearGradient></defs>
                   <circle class="score-ring-bg" cx="40" cy="40" r="30"/>
                   <circle class="score-ring-fill" id="scoreRing" cx="40" cy="40" r="30" transform="rotate(-90 40 40)"/>
                   <text class="score-text" x="40" y="38" text-anchor="middle" dominant-baseline="middle">94%</text>
-                  <text class="score-sub" x="40" y="50" text-anchor="middle" dominant-baseline="middle">Excellent</text>
+                  <text class="score-sub" x="40" y="50" text-anchor="middle" dominant-baseline="middle" data-i18n="dash.excellent">Excellent</text>
                 </svg>
               </div>
             </div>
           </div>
           <div class="dash-card">
-            <div class="dash-card-title">Recent Applications</div>
+            <div class="dash-card-title" data-i18n="dash.card.recent">Recent Applications</div>
             <div class="app-list">
-              <div class="app-item"><span class="app-name">Google — Software Engineering Apprentice</span><span class="app-badge interview">Interview</span></div>
-              <div class="app-item"><span class="app-name">Deloitte — Business Analyst Apprentice</span><span class="app-badge sent">Applied</span></div>
-              <div class="app-item"><span class="app-name">HSBC — Data Science Apprentice</span><span class="app-badge pending">Pending</span></div>
+              <div class="app-item"><span class="app-name">Swisscom — Informatiker EFZ</span><span class="app-badge interview" data-i18n="dash.badge.interview">Interview</span></div>
+              <div class="app-item"><span class="app-name">Migros — Kauffrau EFZ</span><span class="app-badge sent" data-i18n="dash.badge.applied">Applied</span></div>
+              <div class="app-item"><span class="app-name">UBS — Fachmann Finanzen EFZ</span><span class="app-badge pending" data-i18n="dash.badge.pending">Pending</span></div>
             </div>
           </div>
         </div>
@@ -749,27 +748,15 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
 
 <!-- TRUSTED BY -->
 <div class="trusted-bar reveal">
-  <div class="trusted-label" data-i18n="trusted.label">Students placed at</div>
+  <div class="trusted-label" data-i18n="trusted.label">Used by students applying to</div>
   <div class="trusted-logos">
-    <span class="trusted-logo">Google</span>
-    <span class="trusted-logo">Microsoft</span>
-    <span class="trusted-logo">Deloitte</span>
-    <span class="trusted-logo">HSBC</span>
-    <span class="trusted-logo">Amazon</span>
-    <span class="trusted-logo">PwC</span>
-    <span class="trusted-logo">IBM</span>
-  </div>
-</div>
-
-<!-- AS FEATURED IN -->
-<div class="press-bar reveal">
-  <div class="press-label" data-i18n="press.label">As featured in</div>
-  <div class="press-logos">
-    <span class="press-logo">ProductHunt</span>
-    <span class="press-logo">Yahoo Finance</span>
-    <span class="press-logo">Business Insider</span>
-    <span class="press-logo">TechCrunch</span>
-    <span class="press-logo">MarketWatch</span>
+    <span class="trusted-logo">Swisscom</span>
+    <span class="trusted-logo">Migros</span>
+    <span class="trusted-logo">SBB</span>
+    <span class="trusted-logo">UBS</span>
+    <span class="trusted-logo">Roche</span>
+    <span class="trusted-logo">Nestlé</span>
+    <span class="trusted-logo">Coop</span>
   </div>
 </div>
 
@@ -785,7 +772,7 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
     </div>
     <div class="features-grid stagger">
       <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><div class="feat-title" data-i18n="feat1.title">AI CV Matching</div><div class="feat-desc" data-i18n="feat1.desc">Upload your CV once. Our AI reads every job description and rewrites your CV to highlight the most relevant skills — scored above ATS filters every time.</div></div>
-      <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><div class="feat-title" data-i18n="feat2.title">Automated Applications</div><div class="feat-desc" data-i18n="feat2.desc">Set your preferences once and wake up to applications already submitted. AI monitors new listings 24/7 and applies on your behalf in under 60 seconds.</div></div>
+      <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><div class="feat-title" data-i18n="feat2.title">Auto-Apply</div><div class="feat-desc" data-i18n="feat2.desc">Click ⚡ Auto-Apply on any listing. AI writes a personalised cover letter, finds the company email, and sends your application in one go — no copy-pasting, no tabs, no wasted time.</div></div>
       <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><div class="feat-title" data-i18n="feat3.title">AI Cover Letters</div><div class="feat-desc" data-i18n="feat3.desc">Generate a unique, personalised cover letter for every role in seconds. No templates. No fluff. Just compelling letters that actually get read.</div></div>
       <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="feat-title" data-i18n="feat4.title">Application Tracking</div><div class="feat-desc" data-i18n="feat4.desc">Every application in one timeline — status updates, follow-up reminders, interview prep notes, and employer responses, all in one clean dashboard.</div></div>
       <div class="feat-card reveal"><div class="feat-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><div class="feat-title" data-i18n="feat5.title">Smart Job Search</div><div class="feat-desc" data-i18n="feat5.desc">AI scans Indeed, LinkedIn, RateMyApprenticeship, and 40+ more sites simultaneously — filtering by your skills, location, and preferences in real time.</div></div>
@@ -825,9 +812,9 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
         <svg class="why-card-bg" viewBox="0 0 120 120" fill="none" stroke="white" stroke-width="1"><circle cx="60" cy="60" r="40"/><polyline points="60 35 60 60 78 70"/></svg>
       </div>
       <div class="why-card reveal">
-        <div class="why-num">98%</div>
-        <div class="why-title" data-i18n="why4.title">ATS pass rate</div>
-        <div class="why-desc" data-i18n="why4.desc">Most CVs are filtered out before a human sees them. Blitzbewerbung rewrites your CV using the exact keywords from each job description, so you clear Applicant Tracking Systems every time.</div>
+        <div class="why-num">✓</div>
+        <div class="why-title" data-i18n="why4.title">Personalised, not generic</div>
+        <div class="why-desc" data-i18n="why4.desc">Every cover letter is written around the actual job listing — company name, role details, and your personal pitch. Recruiters can immediately tell the difference between a real letter and a mass-blast template.</div>
         <svg class="why-card-bg" viewBox="0 0 120 120" fill="none" stroke="white" stroke-width="1"><polyline points="20 70 45 45 65 60 95 25"/></svg>
       </div>
     </div>
@@ -858,9 +845,9 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
             <div><div class="phone-greeting">Good morning, Alex 👋</div><div class="phone-sub">12 new matches found overnight</div></div>
           </div>
           <div class="match-list">
-            <div class="match-item"><div class="match-logo" style="background:linear-gradient(135deg,#4285f4,#0f9d58)">G</div><div class="match-info"><div class="match-company">Google</div><div class="match-role">Software Engineering Apprentice · London</div></div><div class="match-score">98%</div></div>
-            <div class="match-item"><div class="match-logo" style="background:linear-gradient(135deg,#0078d4,#50e6ff)">MS</div><div class="match-info"><div class="match-company">Microsoft</div><div class="match-role">Cloud Engineering Apprentice · Reading</div></div><div class="match-score">95%</div></div>
-            <div class="match-item"><div class="match-logo" style="background:linear-gradient(135deg,#86BC25,#005EB8)">D</div><div class="match-info"><div class="match-company">Deloitte</div><div class="match-role">Data Analytics Apprentice · Manchester</div></div><div class="match-score">91%</div></div>
+            <div class="match-item"><div class="match-logo" style="background:linear-gradient(135deg,#e60028,#0066cc)">S</div><div class="match-info"><div class="match-company">Swisscom</div><div class="match-role">Informatiker EFZ · Zürich</div></div><div class="match-score">97%</div></div>
+            <div class="match-item"><div class="match-logo" style="background:linear-gradient(135deg,#e84e1b,#f5a623)">M</div><div class="match-info"><div class="match-company">Migros</div><div class="match-role">Kauffrau EFZ · Bern</div></div><div class="match-score">95%</div></div>
+            <div class="match-item"><div class="match-logo" style="background:linear-gradient(135deg,#ee1c25,#222222)">SBB</div><div class="match-info"><div class="match-company">SBB</div><div class="match-role">Logistiker EFZ · Luzern</div></div><div class="match-score">91%</div></div>
           </div>
         </div>
       </div>
@@ -880,21 +867,21 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
       <div class="demo-video-thumb">
         <div class="demo-thumb-inner">
           <div class="demo-thumb-sidebar">
-            <div class="dt-item active">📊 Overview</div><div class="dt-item">📄 My CV</div>
-            <div class="dt-item">🔍 Matches</div><div class="dt-item">📬 Applications</div>
-            <div class="dt-item">💬 Messages</div><div class="dt-item" style="margin-top:auto">⚙️ Settings</div>
+            <div class="dt-item active">📊 <span data-i18n="dt.nav.overview">Overview</span></div><div class="dt-item">📄 <span data-i18n="dt.nav.mycv">My CV</span></div>
+            <div class="dt-item">🔍 <span data-i18n="dt.nav.matches">Matches</span></div><div class="dt-item">📬 <span data-i18n="dt.nav.apps">Applications</span></div>
+            <div class="dt-item">💬 <span data-i18n="dt.nav.messages">Messages</span></div><div class="dt-item" style="margin-top:auto">⚙️ <span data-i18n="dt.nav.settings">Settings</span></div>
           </div>
           <div class="demo-thumb-main">
             <div class="dt-kpi-row">
-              <div class="dt-kpi"><div class="dt-kpi-val">47</div><div class="dt-kpi-label">Applications</div></div>
+              <div class="dt-kpi"><div class="dt-kpi-val">47</div><div class="dt-kpi-label" data-i18n="dt.kpi.apps">Applications</div></div>
               <div class="dt-kpi"><div class="dt-kpi-val">8</div><div class="dt-kpi-label">Interviews</div></div>
-              <div class="dt-kpi"><div class="dt-kpi-val">94%</div><div class="dt-kpi-label">CV Score</div></div>
+              <div class="dt-kpi"><div class="dt-kpi-val">94%</div><div class="dt-kpi-label" data-i18n="dt.kpi.cvscore">CV Score</div></div>
             </div>
             <div class="dt-app-list">
-              <div class="dt-app-row"><span class="dt-app-name">Google — Engineering Apprentice</span><span class="dt-status i">Interview</span></div>
-              <div class="dt-app-row"><span class="dt-app-name">Deloitte — Business Analyst</span><span class="dt-status s">Applied</span></div>
-              <div class="dt-app-row"><span class="dt-app-name">HSBC — Data Science</span><span class="dt-status p">Pending</span></div>
-              <div class="dt-app-row"><span class="dt-app-name">Amazon — Cloud Support</span><span class="dt-status s">Applied</span></div>
+              <div class="dt-app-row"><span class="dt-app-name">Swisscom — Informatiker EFZ</span><span class="dt-status i" data-i18n="dt.badge.interview">Interview</span></div>
+              <div class="dt-app-row"><span class="dt-app-name">Migros — Kauffrau EFZ</span><span class="dt-status s" data-i18n="dt.badge.applied">Applied</span></div>
+              <div class="dt-app-row"><span class="dt-app-name">UBS — Fachmann Finanzen EFZ</span><span class="dt-status p" data-i18n="dt.badge.pending">Pending</span></div>
+              <div class="dt-app-row"><span class="dt-app-name">SBB — Logistiker EFZ</span><span class="dt-status s" data-i18n="dt.badge.applied">Applied</span></div>
             </div>
           </div>
         </div>
@@ -921,33 +908,33 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
       <div class="carousel-track" id="carouselTrack">
         <div class="testi-card">
           <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <div class="testi-text" data-i18n="testi1.text">"I spent 3 months applying manually with zero responses. Within a week of using Blitzbewerbung, I had 4 interviews booked. The AI cover letters are insanely good — they genuinely sound like me."</div>
-          <div class="testi-author"><div class="testi-avatar">JT</div><div><div class="testi-name">Jamie T.</div><div class="testi-role" data-i18n="testi1.role">Software Engineering Apprentice, Google</div></div></div>
+          <div class="testi-text" data-i18n="testi1.text">"I spent months applying manually and barely heard back. Within two weeks of using Blitzbewerbung I had three interviews lined up — and the cover letters actually sounded like me."</div>
+          <div class="testi-author"><div class="testi-avatar">LB</div><div><div class="testi-name">Luca B.</div><div class="testi-role" data-i18n="testi1.role">Apprentice Informatiker EFZ, Swisscom</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <div class="testi-text" data-i18n="testi2.text">"The time I save is insane. I used to spend 2–3 hours writing one cover letter. Now I approve 10 applications before breakfast. Just got my offer from Deloitte — couldn't have done it without this."</div>
-          <div class="testi-author"><div class="testi-avatar">SR</div><div><div class="testi-name">Sara R.</div><div class="testi-role" data-i18n="testi2.role">Business Analyst Apprentice, Deloitte</div></div></div>
+          <div class="testi-text" data-i18n="testi2.text">"The AI found open positions directly on company websites that never showed up on Yousty. That's where I got my offer — a listing I'd have completely missed."</div>
+          <div class="testi-author"><div class="testi-avatar">NR</div><div><div class="testi-name">Nina R.</div><div class="testi-role" data-i18n="testi2.role">Apprentice Kauffrau EFZ, Migros</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <div class="testi-text" data-i18n="testi3.text">"As someone with no connections and no idea where to start, Blitzbewerbung levelled the playing field. The AI found opportunities I never would've found myself. Landed at HSBC in my first month!"</div>
-          <div class="testi-author"><div class="testi-avatar">MK</div><div><div class="testi-name">Marcus K.</div><div class="testi-role" data-i18n="testi3.role">Data Science Apprentice, HSBC</div></div></div>
+          <div class="testi-text" data-i18n="testi3.text">"I was sceptical about AI cover letters, but my trainer told me mine stood out. She thought I'd spent hours on it. The whole thing took me about 10 minutes."</div>
+          <div class="testi-author"><div class="testi-avatar">TH</div><div><div class="testi-name">Tobias H.</div><div class="testi-role" data-i18n="testi3.role">Apprentice Mediamatiker EFZ, Zühlke Engineering</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <div class="testi-text" data-i18n="testi4.text">"I'm not the most confident writer but Blitzbewerbung makes every application sound polished and professional. Got 6 interviews in 2 weeks — my friends couldn't believe it."</div>
-          <div class="testi-author"><div class="testi-avatar">PL</div><div><div class="testi-name">Priya L.</div><div class="testi-role" data-i18n="testi4.role">Marketing Apprentice, PwC</div></div></div>
+          <div class="testi-text" data-i18n="testi4.text">"After getting rejected everywhere I nearly gave up. Blitzbewerbung helped me reach far more companies and finally strike the right tone. Now I'm doing what I always wanted."</div>
+          <div class="testi-author"><div class="testi-avatar">AM</div><div><div class="testi-name">Aline M.</div><div class="testi-role" data-i18n="testi4.role">Apprentice Fachfrau Gesundheit EFZ, Inselspital Bern</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <div class="testi-text" data-i18n="testi5.text">"The interview prep feature alone is worth the Pro price. It gave me exact questions that came up in my Amazon interview. Walked in confident and got the offer."</div>
-          <div class="testi-author"><div class="testi-avatar">RW</div><div><div class="testi-name">Ryan W.</div><div class="testi-role" data-i18n="testi5.role">Cloud Support Apprentice, Amazon</div></div></div>
+          <div class="testi-text" data-i18n="testi5.text">"In one week I reached 30+ companies — that would have taken me months before. Eight of them wrote back. The search alone is worth it."</div>
+          <div class="testi-author"><div class="testi-avatar">KZ</div><div><div class="testi-name">Kevin Z.</div><div class="testi-role" data-i18n="testi5.role">Apprentice Polymechaniker EFZ, Bühler AG</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <div class="testi-text" data-i18n="testi6.text">"I was applying for finance apprenticeships and the AI completely transformed my cover letters. They sounded so much more professional than anything I could write myself. IBM offered me the role within 3 weeks."</div>
-          <div class="testi-author"><div class="testi-avatar">AN</div><div><div class="testi-name">Aisha N.</div><div class="testi-role" data-i18n="testi6.role">Finance Technology Apprentice, IBM</div></div></div>
+          <div class="testi-text" data-i18n="testi6.text">"The interview prep gave me questions that actually came up in my interview. I walked in calmer than I'd ever been and it showed."</div>
+          <div class="testi-author"><div class="testi-avatar">SW</div><div><div class="testi-name">Sophie W.</div><div class="testi-role" data-i18n="testi6.role">Apprentice Kauffrau EFZ, PostFinance</div></div></div>
         </div>
       </div>
     </div>
@@ -979,7 +966,7 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
     <div class="price-grid stagger">
       <div class="price-card reveal">
         <div class="price-plan" data-i18n="plan.free">Free</div>
-        <div class="price-amount"><span class="price-currency">£</span><span class="price-val" data-monthly="0" data-annual="0">0</span><span class="price-period-label">/mo</span></div>
+        <div class="price-amount"><span class="price-currency">£</span><span class="price-val" data-monthly="0" data-annual="0" data-monthly-chf="0" data-annual-chf="0">0</span><span class="price-period-label">/mo</span></div>
         <div class="price-og" id="og0">&nbsp;</div>
         <div class="price-desc" data-i18n="plan.free.desc">Perfect for getting started and landing your first few interviews.</div>
         <div class="price-features">
@@ -995,7 +982,7 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
       <div class="price-card popular reveal">
         <div class="popular-badge" data-i18n="popular.badge">POPULAR</div>
         <div class="price-plan" data-i18n="plan.pro">Pro</div>
-        <div class="price-amount"><span class="price-currency">£</span><span class="price-val" data-monthly="20" data-annual="16">20</span><span class="price-period-label">/mo</span></div>
+        <div class="price-amount"><span class="price-currency">£</span><span class="price-val" data-monthly="20" data-annual="16" data-monthly-chf="25" data-annual-chf="20">20</span><span class="price-period-label">/mo</span></div>
         <div class="price-og" id="og1">&nbsp;</div>
         <div class="price-desc" data-i18n="plan.pro.desc">For serious applicants who want to maximise their chances fast.</div>
         <div class="price-features">
@@ -1010,7 +997,7 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
       </div>
       <div class="price-card reveal">
         <div class="price-plan" data-i18n="plan.student">Student</div>
-        <div class="price-amount"><span class="price-currency">£</span><span class="price-val" data-monthly="15" data-annual="12">15</span><span class="price-period-label">/mo</span></div>
+        <div class="price-amount"><span class="price-currency">£</span><span class="price-val" data-monthly="15" data-annual="12" data-monthly-chf="19" data-annual-chf="15">15</span><span class="price-period-label">/mo</span></div>
         <div class="price-og" id="og2">&nbsp;</div>
         <div class="price-desc" data-i18n="plan.student.desc">Everything in Pro at a discounted rate — verified students only.</div>
         <div class="price-features">
@@ -1045,12 +1032,28 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
   </div>
 </section>
 
+<!-- TECH TRUST STRIP -->
+<section id="tech-strip" style="padding:48px 0 0;border-top:1px solid var(--border)">
+  <div class="section-inner" style="text-align:center">
+    <p style="font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--text3);margin-bottom:20px" data-i18n="tech.built">Built on trusted infrastructure</p>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:24px 40px;margin-bottom:24px">
+      <span style="font-size:13px;font-weight:600;color:var(--text3)">Anthropic Claude</span>
+      <span style="font-size:13px;font-weight:600;color:var(--text3)">Supabase</span>
+      <span style="font-size:13px;font-weight:600;color:var(--text3)">Stripe</span>
+      <span style="font-size:13px;font-weight:600;color:var(--text3)">Resend</span>
+      <span style="font-size:13px;font-weight:600;color:var(--text3)">Vercel</span>
+      <span style="font-size:13px;font-weight:600;color:var(--text3)">Google Jobs</span>
+    </div>
+    <a href="business.html" style="font-size:12px;color:var(--blue);text-decoration:none;font-weight:500" data-i18n="tech.apilink">API providers &amp; partners — view our business &amp; use-case documentation →</a>
+  </div>
+</section>
+
 <!-- FINAL CTA -->
 <section id="cta-final">
   <div class="section-inner">
     <div class="cta-box-final reveal">
       <h2 class="cta-title-final"><span data-i18n="cta.final.title1">Ready to Automate</span><br><span class="grad-text" data-i18n="cta.final.title2">Your Apprenticeship Search?</span></h2>
-      <p class="cta-sub-final" data-i18n="cta.final.sub">Join 50,000+ students already using Blitzbewerbung. Upload your CV today and start getting 10× more interviews — on autopilot.</p>
+      <p class="cta-sub-final" data-i18n="cta.final.sub">Set up your profile in 5 minutes and start applying to Swiss apprenticeships faster than everyone else in your class.</p>
       <div class="cta-actions">
         <a href="signup.html"><button class="btn-hero"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg><span data-i18n="cta.final.btn1">Get Started Free</span></button></a>
         <a href="signin.html"><button class="btn-hero-outline" data-i18n="cta.final.btn2">Already have an account?</button></a>
@@ -1069,7 +1072,7 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
         <div class="footer-desc" data-i18n="footer.desc">The AI-powered platform helping students and young people land apprenticeships faster than ever before.</div>
       </div>
       <div><div class="footer-col-title" data-i18n="footer.product">Product</div><div class="footer-links"><a href="#features" data-i18n="footer.features">Features</a><a href="#pricing" data-i18n="footer.pricing">Pricing</a><a href="#demo" data-i18n="footer.demo">Demo</a><a href="blog/index.html" data-i18n="footer.blog">Blog</a></div></div>
-      <div><div class="footer-col-title" data-i18n="footer.company">Company</div><div class="footer-links"><a href="community.html" data-i18n="footer.community">Community</a><a href="help.html" data-i18n="footer.help">Help</a></div></div>
+      <div><div class="footer-col-title" data-i18n="footer.company">Company</div><div class="footer-links"><a href="community.html" data-i18n="footer.community">Community</a><a href="help.html" data-i18n="footer.help">Help</a><a href="contact.html" data-i18n="footer.contact">Contact</a><a href="business.html" data-i18n="footer.business">Business &amp; API</a></div></div>
       <div><div class="footer-col-title" data-i18n="footer.legal">Legal</div><div class="footer-links"><a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a><a href="terms.html" data-i18n="footer.terms">Terms of Service</a><a href="privacy.html#cookies" data-i18n="footer.cookies">Cookie Policy</a></div></div>
     </div>
     <div class="footer-bottom">
@@ -1157,23 +1160,23 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
           <div class="ds-match-header"><span class="ds-match-count" data-i18n="demo.opportunities">12 new opportunities</span><span class="ds-match-sub" data-i18n="demo.ranked">Ranked by AI match score</span></div>
           <div class="ds-match-list">
             <div class="ds-match-row" style="--d:.1s">
-              <div class="ds-match-logo" style="background:linear-gradient(135deg,#4285f4,#0f9d58)">G</div>
-              <div class="ds-match-info"><div class="ds-match-co">Google</div><div class="ds-match-role">Software Engineering Apprentice · London</div></div>
+              <div class="ds-match-logo" style="background:linear-gradient(135deg,#e60028,#0066cc)">S</div>
+              <div class="ds-match-info"><div class="ds-match-co">Swisscom</div><div class="ds-match-role">Informatiker EFZ · Zürich</div></div>
               <div class="ds-match-score-wrap"><div class="ds-match-bar"><div class="ds-match-fill" style="--w:98%;--d:.4s"></div></div><span class="ds-match-pct">98%</span></div>
             </div>
             <div class="ds-match-row" style="--d:.4s">
-              <div class="ds-match-logo" style="background:linear-gradient(135deg,#0078d4,#50e6ff)">MS</div>
-              <div class="ds-match-info"><div class="ds-match-co">Microsoft</div><div class="ds-match-role">Cloud Engineering Apprentice · Reading</div></div>
+              <div class="ds-match-logo" style="background:linear-gradient(135deg,#e84e1b,#f5a623)">M</div>
+              <div class="ds-match-info"><div class="ds-match-co">Migros</div><div class="ds-match-role">Kauffrau EFZ · Bern</div></div>
               <div class="ds-match-score-wrap"><div class="ds-match-bar"><div class="ds-match-fill" style="--w:95%;--d:.7s"></div></div><span class="ds-match-pct">95%</span></div>
             </div>
             <div class="ds-match-row" style="--d:.7s">
-              <div class="ds-match-logo" style="background:linear-gradient(135deg,#86BC25,#005EB8)">D</div>
-              <div class="ds-match-info"><div class="ds-match-co">Deloitte</div><div class="ds-match-role">Data Analytics Apprentice · Manchester</div></div>
+              <div class="ds-match-logo" style="background:linear-gradient(135deg,#e30613,#999999)">U</div>
+              <div class="ds-match-info"><div class="ds-match-co">UBS</div><div class="ds-match-role">Fachmann Finanzen EFZ · Basel</div></div>
               <div class="ds-match-score-wrap"><div class="ds-match-bar"><div class="ds-match-fill" style="--w:91%;--d:1s"></div></div><span class="ds-match-pct">91%</span></div>
             </div>
             <div class="ds-match-row" style="--d:1s">
-              <div class="ds-match-logo" style="background:linear-gradient(135deg,#ff9900,#1a1a2e)">A</div>
-              <div class="ds-match-info"><div class="ds-match-co">Amazon</div><div class="ds-match-role">Cloud Support Apprentice · Edinburgh</div></div>
+              <div class="ds-match-logo" style="background:linear-gradient(135deg,#ee1c25,#222222)">SBB</div>
+              <div class="ds-match-info"><div class="ds-match-co">SBB</div><div class="ds-match-role">Logistiker EFZ · Luzern</div></div>
               <div class="ds-match-score-wrap"><div class="ds-match-bar"><div class="ds-match-fill" style="--w:89%;--d:1.3s"></div></div><span class="ds-match-pct">89%</span></div>
             </div>
           </div>
@@ -1183,13 +1186,13 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
         <div class="demo-scene" id="dscene-3">
           <div class="ds-label" data-i18n="demo.step4">Step 4 of 4 — AI writes your application</div>
           <div class="ds-apply-role">
-            <div class="ds-apply-logo" style="background:linear-gradient(135deg,#4285f4,#0f9d58)">G</div>
-            <div><div class="ds-apply-co">Google</div><div class="ds-apply-job">Software Engineering Apprentice</div></div>
+            <div class="ds-apply-logo" style="background:linear-gradient(135deg,#e60028,#0066cc)">S</div>
+            <div><div class="ds-apply-co">Swisscom</div><div class="ds-apply-job">Informatiker EFZ</div></div>
           </div>
           <div class="ds-letter-box">
-            Dear Hiring Team,<br><br>
-            I am writing to express my strong interest in the Software Engineering Apprenticeship at Google. With hands-on experience in Python, JavaScript, and React, I am eager to contribute to your engineering teams while developing my skills in a world-class environment.<br><br>
-            My project work in data analysis and machine learning has given me a solid foundation in algorithmic thinking and problem-solving that I am excited to apply...<span class="ds-letter-cursor"></span>
+            Sehr geehrte Damen und Herren,<br><br>
+            Mit grossem Interesse bewerbe ich mich für die Lehrstelle als Informatiker EFZ bei Swisscom. Technologie und Netzwerke faszinieren mich schon lange, und Swisscom ist genau das Unternehmen, bei dem ich mein Wissen praxisnah vertiefen möchte.<br><br>
+            In der Schule habe ich erste Programmiererfahrungen mit Python gesammelt und an eigenen Web-Projekten gearbeitet. Ich bin lernbereit, zuverlässig und freue mich auf die Herausforderungen...<span class="ds-letter-cursor"></span>
           </div>
           <div class="ds-apply-row">
             <span data-i18n="demo.personalising">Personalising application</span>
@@ -1198,7 +1201,7 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
           </div>
           <div class="ds-apply-done">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#4ade80" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
-            <span data-i18n="demo.submitted">Application submitted to Google ✓</span>
+            <span data-i18n="demo.submitted">Application submitted to Swisscom ✓</span>
           </div>
         </div>
 
@@ -1211,14 +1214,15 @@ footer.main-footer{position:relative;z-index:1;border-top:1px solid var(--border
             <div class="ds-dash-kpi"><div class="ds-dash-val ds-pct-val" data-demo-target="94">0</div><div class="ds-dash-key" data-i18n="demo.kpi.cvscore">CV Score</div></div>
           </div>
           <div class="ds-dash-apps">
-            <div class="ds-dash-app" style="--d:.2s"><span>Google — Engineering Apprentice</span><span class="ds-dash-badge int">Interview</span></div>
-            <div class="ds-dash-app" style="--d:.5s"><span>Deloitte — Business Analyst</span><span class="ds-dash-badge app">Applied</span></div>
-            <div class="ds-dash-app" style="--d:.8s"><span>HSBC — Data Science</span><span class="ds-dash-badge pen">Pending</span></div>
-            <div class="ds-dash-app" style="--d:1.1s"><span>Amazon — Cloud Support</span><span class="ds-dash-badge app">Applied</span></div>
+            <div class="ds-dash-app" style="--d:.2s"><span>Swisscom — Informatiker EFZ</span><span class="ds-dash-badge int">Interview</span></div>
+            <div class="ds-dash-app" style="--d:.5s"><span>Migros — Kauffrau EFZ</span><span class="ds-dash-badge app">Applied</span></div>
+            <div class="ds-dash-app" style="--d:.8s"><span>UBS — Fachmann Finanzen EFZ</span><span class="ds-dash-badge pen">Pending</span></div>
+            <div class="ds-dash-app" style="--d:1.1s"><span>SBB — Logistiker EFZ</span><span class="ds-dash-badge app">Applied</span></div>
           </div>
           <div class="ds-notif">
             <svg viewBox="0 0 24 24" width="15" height="15" stroke-width="1.5"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
-            <span data-i18n="demo.interview">🎉 Interview booked with Google — Monday 9am</span>
+            <span data-i18n="demo.interview">🎉 Interview booked with Swisscom — Monday 9am</span>
+          </div>
           </div>
         </div>
 
@@ -1310,15 +1314,18 @@ if (dashEl) dashObs.observe(dashEl);
   if (!track) return;
   const cards = track.querySelectorAll('.testi-card');
   const total = cards.length;
-  let perView = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
-  let maxIdx = total - perView;
+  const maxIdx = total - 1;
   let current = 0;
   let autoTimer;
 
+  function setCardWidths() {
+    const wrapW = track.parentElement.offsetWidth;
+    cards.forEach(c => { c.style.minWidth = wrapW + 'px'; c.style.maxWidth = wrapW + 'px'; });
+  }
+
   function buildDots() {
     dots.innerHTML = '';
-    const numDots = maxIdx + 1;
-    for (let i = 0; i <= maxIdx; i++) {
+    for (let i = 0; i < total; i++) {
       const d = document.createElement('div');
       d.className = 'c-dot' + (i === 0 ? ' active' : '');
       d.addEventListener('click', () => goTo(i));
@@ -1328,7 +1335,7 @@ if (dashEl) dashObs.observe(dashEl);
 
   function goTo(idx) {
     current = Math.max(0, Math.min(idx, maxIdx));
-    const cardW = cards[0].offsetWidth + 16;
+    const cardW = cards[0].offsetWidth;
     track.style.transform = `translateX(-${current * cardW}px)`;
     dots.querySelectorAll('.c-dot').forEach((d, i) => d.classList.toggle('active', i === current));
     cards.forEach((c, i) => c.classList.toggle('active-slide', i === current));
@@ -1343,13 +1350,11 @@ if (dashEl) dashObs.observe(dashEl);
   document.getElementById('carouselPrev').addEventListener('click', prev);
 
   window.addEventListener('resize', () => {
-    perView = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
-    maxIdx = total - perView;
-    current = Math.min(current, maxIdx);
-    buildDots();
+    setCardWidths();
     goTo(current);
   });
 
+  setCardWidths();
   buildDots();
   goTo(0);
   resetAuto();
@@ -1368,30 +1373,35 @@ function switchBilling() {
   const annual = document.getElementById('billingToggle').checked;
   document.getElementById('lblMonthly').classList.toggle('active', !annual);
   document.getElementById('lblAnnual').classList.toggle('active', annual);
+  const lang = localStorage.getItem('site-lang') || 'en';
+  const isDE = lang === 'de';
   document.querySelectorAll('.price-val').forEach(el => {
-    const v = annual ? el.dataset.annual : el.dataset.monthly;
+    const v = annual
+      ? (isDE ? el.dataset.annualChf  : el.dataset.annual)
+      : (isDE ? el.dataset.monthlyChf : el.dataset.monthly);
     el.textContent = v;
+  });
+  document.querySelectorAll('.price-currency').forEach(el => {
+    el.textContent = isDE ? 'CHF ' : '£';
   });
   // show/hide original prices
   const ogs = [
     { id: 'og0', monthly: '', annual: '' },
-    { id: 'og1', monthly: '', annual: '£20/mo' },
-    { id: 'og2', monthly: '', annual: '£15/mo' },
+    { id: 'og1', monthly: '', annual: isDE ? 'CHF 25/Mt.' : '£20/mo' },
+    { id: 'og2', monthly: '', annual: isDE ? 'CHF 19/Mt.' : '£15/mo' },
   ];
   ogs.forEach(o => {
     const el = document.getElementById(o.id);
-    if (el) el.textContent = annual ? o.annual : ' ';
+    if (el) el.textContent = annual ? o.annual : ' ';
   });
-  const lang = localStorage.getItem('site-lang') || 'en';
-  const isDE = lang === 'de';
   const proBtn = document.getElementById('proBtnLabel');
   if (proBtn) proBtn.textContent = annual
-    ? (isDE ? 'Pro starten — £16/Mt. jährlich' : 'Start Pro — £16/mo billed annually')
-    : (isDE ? 'Pro starten — £20/Mt.' : 'Start Pro — £20/mo');
+    ? (isDE ? 'Pro starten — CHF 20/Mt. jährlich' : 'Start Pro — £16/mo billed annually')
+    : (isDE ? 'Pro starten — CHF 25/Mt.' : 'Start Pro — £20/mo');
   const stuBtn = document.getElementById('studentBtnLabel');
   if (stuBtn) stuBtn.textContent = annual
-    ? (isDE ? 'Student-Plan — £12/Mt. jährlich' : 'Student Plan — £12/mo billed annually')
-    : (isDE ? 'Student-Plan — £15/Mt.' : 'Student Plan — £15/mo');
+    ? (isDE ? 'Student-Plan — CHF 15/Mt. jährlich' : 'Student Plan — £12/mo billed annually')
+    : (isDE ? 'Student-Plan — CHF 19/Mt.' : 'Student Plan — £15/mo');
 }
 
 // ── FAQ ────────────────────────────────────────────────────────────────────

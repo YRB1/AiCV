@@ -480,6 +480,11 @@ footer.site-footer a:hover{color:var(--text)}
   .footer-inner{flex-direction:column;text-align:center}
 }
 
+/* ── BACK TO ALL ARTICLES BUTTON ─────────────────────────────────────────── */
+.back-btn-wrap{max-width:740px;margin:0 auto 28px;padding:0 24px}
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--text2);background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:8px 16px;transition:all .2s}
+.back-btn:hover{color:var(--text);border-color:var(--border2);background:rgba(255,255,255,0.07)}
+
 /* ── READING PROGRESS BAR ────────────────────────────────────────────────── */
 #read-progress{position:fixed;top:64px;left:0;height:3px;background:linear-gradient(90deg,#7b9fff,#3a5ce0,#a78bfa);width:0%;z-index:101;transition:width .08s linear;border-radius:0 2px 2px 0;box-shadow:0 0 8px rgba(91,127,255,0.6)}
 

@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase'
 import { useLang } from '@/lib/lang-context'
 
 interface QA { question: string; answer: string; tip?: string }
+interface Feedback { score: number; feedback: string; strengths: string[]; improvements: string[] }
 
 const CATEGORIES = [
   { id: 'kaufmann',     label: 'Kaufmann / KV',      emoji: '💼', color: '#60a5fa' },
@@ -64,18 +65,52 @@ const MOCK_QA: Record<string, QA[]> = {
   ],
 }
 
+function ScoreRing({ score }: { score: number }) {
+  const r = 22
+  const circ = 2 * Math.PI * r
+  const pct = Math.max(0, Math.min(100, score))
+  const color = pct >= 75 ? '#4ade80' : pct >= 50 ? '#facc15' : '#f87171'
+  return (
+    <svg width="56" height="56" viewBox="0 0 56 56">
+      <circle cx="28" cy="28" r={r} fill="none" stroke="var(--border-2)" strokeWidth="4" />
+      <circle cx="28" cy="28" r={r} fill="none" stroke={color} strokeWidth="4"
+        strokeDasharray={circ} strokeDashoffset={circ * (1 - pct / 100)}
+        strokeLinecap="round" transform="rotate(-90 28 28)" style={{ transition: 'stroke-dashoffset 0.6s ease' }} />
+      <text x="28" y="32" textAnchor="middle" fill={color} fontSize="12" fontWeight="700">{pct}</text>
+    </svg>
+  )
+}
+
 export default function InterviewPage() {
   const { lang } = useLang()
+  const [mode, setMode] = useState<'prep' | 'mock'>('prep')
   const [selectedCat, setSelectedCat] = useState<string | null>(null)
   const [questions, setQuestions] = useState<QA[]>([])
   const [revealed, setRevealed] = useState<Set<number>>(new Set())
   const [customBeruf, setCustomBeruf] = useState('')
   const [generating, setGenerating] = useState(false)
 
+  // Mock mode state
+  const [mockIdx, setMockIdx] = useState(0)
+  const [userAnswer, setUserAnswer] = useState('')
+  const [feedback, setFeedback] = useState<Feedback | null>(null)
+  const [gradingAnswer, setGradingAnswer] = useState(false)
+  const [mockScores, setMockScores] = useState<number[]>([])
+  const [mockDone, setMockDone] = useState(false)
+
   function loadQuestions(catId: string) {
     setSelectedCat(catId)
     setRevealed(new Set())
     setQuestions(MOCK_QA[catId] ?? MOCK_QA.kaufmann)
+    resetMock()
+  }
+
+  function resetMock() {
+    setMockIdx(0)
+    setUserAnswer('')
+    setFeedback(null)
+    setMockScores([])
+    setMockDone(false)
   }
 
   async function generateCustom() {
@@ -83,6 +118,7 @@ export default function InterviewPage() {
     setGenerating(true)
     setSelectedCat('custom')
     setRevealed(new Set())
+    resetMock()
     try {
       const { data: { user } } = await supabase.auth.getUser()
       const res = await fetch('/api/interview', {
@@ -102,6 +138,37 @@ export default function InterviewPage() {
     setGenerating(false)
   }
 
+  async function gradeAnswer() {
+    if (!userAnswer.trim() || gradingAnswer) return
+    setGradingAnswer(true)
+    try {
+      const q = questions[mockIdx]
+      const res = await fetch('/api/interview-feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: q.question, answer: userAnswer, beruf: customBeruf || selectedCat }),
+      })
+      if (res.ok) {
+        const data = await res.json()
+        setFeedback(data)
+        setMockScores(prev => [...prev, data.score ?? 0])
+      }
+    } catch {
+      setFeedback({ score: 0, feedback: 'Fehler beim Bewerten.', strengths: [], improvements: [] })
+    }
+    setGradingAnswer(false)
+  }
+
+  function nextMockQuestion() {
+    if (mockIdx + 1 >= questions.length) {
+      setMockDone(true)
+    } else {
+      setMockIdx(prev => prev + 1)
+      setUserAnswer('')
+      setFeedback(null)
+    }
+  }
+
   function toggleReveal(i: number) {
     setRevealed(prev => {
       const next = new Set(prev)
@@ -111,20 +178,38 @@ export default function InterviewPage() {
   }
 
   const cat = CATEGORIES.find(c => c.id === selectedCat)
+  const avgScore = mockScores.length > 0 ? Math.round(mockScores.reduce((a, b) => a + b, 0) / mockScores.length) : 0
 
   return (
     <div className="ls-page fade-in">
-      <div style={{ marginBottom: '20px' }}>
+      <div style={{ marginBottom: '16px' }}>
         <h1 style={{ fontSize: '20px', fontWeight: 700, marginBottom: '3px' }}>
           {lang === 'de' ? 'Interview Vorbereitung' : 'Interview Preparation'}
         </h1>
         <p style={{ fontSize: '13px', color: 'var(--muted)' }}>
-          {lang === 'de' ? 'Übe typische Vorstellungsgespräch-Fragen mit Musterantworten' : 'Practice typical interview questions with model answers'}
+          {lang === 'de' ? 'Fragen durchlesen oder dich im KI-Probeinterview testen' : 'Study questions or test yourself with AI mock interview'}
         </p>
       </div>
 
+      {/* Mode toggle */}
+      <div style={{ display: 'flex', gap: '6px', marginBottom: '16px', padding: '4px', borderRadius: '10px', background: 'var(--surface)', border: '1px solid var(--border)', width: 'fit-content' }}>
+        {(['prep', 'mock'] as const).map(m => (
+          <button key={m} onClick={() => { setMode(m); resetMock() }} style={{
+            padding: '7px 16px', borderRadius: '7px', fontSize: '12px', fontWeight: 600,
+            background: mode === m ? 'var(--accent-glow-2)' : 'transparent',
+            color: mode === m ? 'var(--accent-light)' : 'var(--muted)',
+            border: mode === m ? '1px solid var(--accent)' : '1px solid transparent',
+            cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s',
+          }}>
+            {m === 'prep'
+              ? (lang === 'de' ? '📚 Vorbereitung' : '📚 Study')
+              : (lang === 'de' ? '🎤 KI-Probeinterview' : '🎤 AI Mock Interview')}
+          </button>
+        ))}
+      </div>
+
       {/* AI custom input */}
-      <div style={{ marginBottom: '20px', padding: '14px 16px', borderRadius: '12px', background: 'var(--surface)', border: '1px solid var(--border)' }}>
+      <div style={{ marginBottom: '16px', padding: '14px 16px', borderRadius: '12px', background: 'var(--surface)', border: '1px solid var(--border)' }}>
         <p style={{ fontSize: '10px', fontWeight: 700, color: 'var(--accent-light)', letterSpacing: '0.07em', marginBottom: '8px', textTransform: 'uppercase' }}>
           ✦ {lang === 'de' ? 'KI-Fragen für deinen Beruf generieren' : 'Generate AI questions for your profession'}
         </p>
@@ -164,7 +249,6 @@ export default function InterviewPage() {
         </>
       )}
 
-      {/* Generating spinner */}
       {generating && (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px', padding: '48px 0' }}>
           <span className="spinner" style={{ width: '28px', height: '28px', borderWidth: '3px' }} />
@@ -174,8 +258,8 @@ export default function InterviewPage() {
         </div>
       )}
 
-      {/* Questions view */}
-      {selectedCat && questions.length > 0 && !generating && (
+      {/* PREP MODE: Questions view */}
+      {mode === 'prep' && selectedCat && questions.length > 0 && !generating && (
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
             <button onClick={() => { setSelectedCat(null); setQuestions([]) }} style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 12px', borderRadius: '8px', fontSize: '12px', fontWeight: 600, background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--muted)', cursor: 'pointer', fontFamily: 'inherit' }}>
@@ -187,14 +271,11 @@ export default function InterviewPage() {
             </h2>
           </div>
 
-          {/* Progress bar */}
           <div style={{ marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{ flex: 1, height: '5px', borderRadius: '3px', background: 'var(--border-2)', overflow: 'hidden' }}>
               <div style={{ height: '100%', borderRadius: '3px', background: 'var(--accent)', width: `${questions.length > 0 ? (revealed.size / questions.length) * 100 : 0}%`, transition: 'width 0.3s' }} />
             </div>
-            <span style={{ fontSize: '11px', color: 'var(--muted)', fontWeight: 600, whiteSpace: 'nowrap' }}>
-              {revealed.size}/{questions.length}
-            </span>
+            <span style={{ fontSize: '11px', color: 'var(--muted)', fontWeight: 600, whiteSpace: 'nowrap' }}>{revealed.size}/{questions.length}</span>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -238,13 +319,127 @@ export default function InterviewPage() {
                 {lang === 'de' ? 'Alle Fragen geübt!' : 'All questions practiced!'}
               </p>
               <p style={{ fontSize: '12px', color: 'var(--muted)', marginBottom: '12px' }}>
-                {lang === 'de' ? 'Du bist bereit für dein Interview.' : 'You are ready for your interview.'}
+                {lang === 'de' ? 'Bereit für dein Interview. Oder teste dich im KI-Probeinterview.' : 'Ready for your interview. Or test yourself with AI mock interview.'}
               </p>
-              <button onClick={() => setRevealed(new Set())} style={{ padding: '8px 18px', borderRadius: '8px', fontSize: '12px', fontWeight: 600, background: 'var(--accent)', color: '#000', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
-                {lang === 'de' ? 'Nochmal üben' : 'Practice again'}
+              <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <button onClick={() => setRevealed(new Set())} style={{ padding: '8px 18px', borderRadius: '8px', fontSize: '12px', fontWeight: 600, background: 'var(--surface)', color: 'var(--text)', border: '1px solid var(--border)', cursor: 'pointer', fontFamily: 'inherit' }}>
+                  {lang === 'de' ? 'Nochmal üben' : 'Practice again'}
+                </button>
+                <button onClick={() => { setMode('mock'); resetMock() }} style={{ padding: '8px 18px', borderRadius: '8px', fontSize: '12px', fontWeight: 600, background: 'var(--accent)', color: '#000', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+                  🎤 {lang === 'de' ? 'KI-Probeinterview starten' : 'Start AI mock interview'}
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* MOCK INTERVIEW MODE */}
+      {mode === 'mock' && selectedCat && questions.length > 0 && !generating && !mockDone && (
+        <div className="fade-in">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+            <button onClick={() => { setSelectedCat(null); setQuestions([]) }} style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 12px', borderRadius: '8px', fontSize: '12px', fontWeight: 600, background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--muted)', cursor: 'pointer', fontFamily: 'inherit' }}>
+              ← {lang === 'de' ? 'Zurück' : 'Back'}
+            </button>
+            <div style={{ flex: 1, height: '4px', borderRadius: '2px', background: 'var(--border-2)', overflow: 'hidden' }}>
+              <div style={{ height: '100%', borderRadius: '2px', background: 'var(--accent)', width: `${((mockIdx) / questions.length) * 100}%`, transition: 'width 0.3s' }} />
+            </div>
+            <span style={{ fontSize: '11px', color: 'var(--muted)', fontWeight: 600, whiteSpace: 'nowrap' }}>{mockIdx + 1}/{questions.length}</span>
+          </div>
+
+          {/* Question */}
+          <div style={{ padding: '18px', borderRadius: '14px', background: 'var(--surface)', border: '1px solid var(--border-2)', marginBottom: '14px' }}>
+            <p style={{ fontSize: '10px', fontWeight: 700, color: 'var(--accent-light)', letterSpacing: '0.07em', marginBottom: '8px', textTransform: 'uppercase' }}>
+              🎤 {lang === 'de' ? `Frage ${mockIdx + 1}` : `Question ${mockIdx + 1}`}
+            </p>
+            <p style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text)', lineHeight: 1.5 }}>
+              {questions[mockIdx].question}
+            </p>
+          </div>
+
+          {/* Answer input */}
+          {!feedback && (
+            <div style={{ marginBottom: '12px' }}>
+              <textarea
+                value={userAnswer}
+                onChange={e => setUserAnswer(e.target.value)}
+                placeholder={lang === 'de' ? 'Schreibe deine Antwort hier…' : 'Write your answer here…'}
+                rows={4}
+                style={{ width: '100%', padding: '12px', borderRadius: '10px', fontSize: '13px', outline: 'none', background: 'var(--surface)', border: '1px solid var(--border-2)', color: 'var(--text)', fontFamily: 'inherit', resize: 'vertical', lineHeight: 1.6, boxSizing: 'border-box' }}
+              />
+              <button
+                onClick={gradeAnswer}
+                disabled={!userAnswer.trim() || gradingAnswer}
+                style={{ marginTop: '8px', display: 'flex', alignItems: 'center', gap: '6px', padding: '10px 20px', borderRadius: '10px', fontSize: '13px', fontWeight: 600, background: 'var(--accent)', color: '#000', border: 'none', cursor: 'pointer', opacity: !userAnswer.trim() || gradingAnswer ? 0.5 : 1, fontFamily: 'inherit' }}>
+                {gradingAnswer
+                  ? <><span className="spinner" style={{ width: '13px', height: '13px', borderTopColor: '#000', borderColor: 'rgba(0,0,0,0.2)' }} />{lang === 'de' ? 'KI bewertet…' : 'AI grading…'}</>
+                  : `✦ ${lang === 'de' ? 'Antwort bewerten lassen' : 'Get AI feedback'}`}
               </button>
             </div>
           )}
+
+          {/* Feedback */}
+          {feedback && (
+            <div className="fade-in" style={{ marginBottom: '14px' }}>
+              <div style={{ padding: '16px', borderRadius: '14px', background: 'var(--surface)', border: '1px solid var(--border)' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '14px', marginBottom: '12px' }}>
+                  <ScoreRing score={feedback.score} />
+                  <div>
+                    <p style={{ fontSize: '11px', fontWeight: 700, color: 'var(--muted)', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '4px' }}>
+                      {lang === 'de' ? 'KI-Feedback' : 'AI Feedback'}
+                    </p>
+                    <p style={{ fontSize: '13px', color: 'var(--text-2)', lineHeight: 1.6 }}>{feedback.feedback}</p>
+                  </div>
+                </div>
+                {feedback.strengths.length > 0 && (
+                  <div style={{ marginBottom: '8px' }}>
+                    <p style={{ fontSize: '11px', fontWeight: 700, color: '#4ade80', marginBottom: '4px' }}>✓ {lang === 'de' ? 'Stärken' : 'Strengths'}</p>
+                    {feedback.strengths.map((s, i) => (
+                      <p key={i} style={{ fontSize: '12px', color: 'var(--text-2)', lineHeight: 1.5, paddingLeft: '10px' }}>· {s}</p>
+                    ))}
+                  </div>
+                )}
+                {feedback.improvements.length > 0 && (
+                  <div>
+                    <p style={{ fontSize: '11px', fontWeight: 700, color: '#facc15', marginBottom: '4px' }}>→ {lang === 'de' ? 'Verbesserungen' : 'Improvements'}</p>
+                    {feedback.improvements.map((s, i) => (
+                      <p key={i} style={{ fontSize: '12px', color: 'var(--text-2)', lineHeight: 1.5, paddingLeft: '10px' }}>· {s}</p>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <button onClick={nextMockQuestion} style={{ marginTop: '10px', padding: '10px 20px', borderRadius: '10px', fontSize: '13px', fontWeight: 600, background: 'var(--accent)', color: '#000', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+                {mockIdx + 1 >= questions.length
+                  ? (lang === 'de' ? '📊 Ergebnis anzeigen' : '📊 See results')
+                  : (lang === 'de' ? 'Nächste Frage →' : 'Next question →')}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Mock done / results */}
+      {mode === 'mock' && mockDone && (
+        <div className="fade-in" style={{ padding: '24px', borderRadius: '16px', background: 'var(--surface)', border: '1px solid var(--border)', textAlign: 'center' }}>
+          <ScoreRing score={avgScore} />
+          <p style={{ fontSize: '22px', fontWeight: 800, color: 'var(--text)', margin: '12px 0 4px' }}>
+            {avgScore >= 75
+              ? (lang === 'de' ? '🎉 Stark!' : '🎉 Strong!')
+              : avgScore >= 50
+              ? (lang === 'de' ? '👍 Gut gemacht' : '👍 Good effort')
+              : (lang === 'de' ? '📚 Noch üben' : '📚 Keep practicing')}
+          </p>
+          <p style={{ fontSize: '13px', color: 'var(--muted)', marginBottom: '16px' }}>
+            {lang === 'de' ? `Durchschnittliche Punktzahl: ${avgScore}/100` : `Average score: ${avgScore}/100`}
+          </p>
+          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <button onClick={() => { resetMock(); }} style={{ padding: '9px 18px', borderRadius: '9px', fontSize: '12px', fontWeight: 600, background: 'var(--accent)', color: '#000', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+              {lang === 'de' ? '🔄 Nochmal' : '🔄 Try again'}
+            </button>
+            <button onClick={() => { setSelectedCat(null); setQuestions([]); resetMock() }} style={{ padding: '9px 18px', borderRadius: '9px', fontSize: '12px', fontWeight: 600, background: 'var(--surface-2)', color: 'var(--text)', border: '1px solid var(--border)', cursor: 'pointer', fontFamily: 'inherit' }}>
+              {lang === 'de' ? 'Neues Thema' : 'New topic'}
+            </button>
+          </div>
         </div>
       )}
     </div>

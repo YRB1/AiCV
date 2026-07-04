@@ -41,7 +41,7 @@ function buildHtml(subject: string, message: string, applicantInfo: ApplicantInf
     <div style="background:white;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
 
       <div style="background:linear-gradient(135deg,#7c3aed,#6d28d9);padding:24px 28px;">
-        <p style="margin:0 0 6px;font-size:11px;color:rgba(255,255,255,0.65);letter-spacing:0.06em;text-transform:uppercase;">Bewerbung via LehrstellenSniper.ch</p>
+        <p style="margin:0 0 6px;font-size:11px;color:rgba(255,255,255,0.65);letter-spacing:0.06em;text-transform:uppercase;">Bewerbung via Blitzbewerbung.ch</p>
         <h1 style="margin:0;font-size:20px;font-weight:700;color:white;line-height:1.3;">${subject}</h1>
       </div>
 
@@ -59,7 +59,7 @@ function buildHtml(subject: string, message: string, applicantInfo: ApplicantInf
       <div style="padding:14px 28px;background:#f9fafb;border-top:1px solid #f0f0f0;">
         <p style="margin:0;font-size:11px;color:#9ca3af;">
           Automatisch generiert und gesendet via
-          <a href="https://lehrstellensniper.ch" style="color:#7c3aed;font-weight:600;text-decoration:none;">LehrstellenSniper.ch</a>
+          <a href="https://blitzbewerbung.ch" style="color:#7c3aed;font-weight:600;text-decoration:none;">Blitzbewerbung.ch</a>
         </p>
       </div>
 
@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const emailPayload: Parameters<typeof resend.emails.send>[0] = {
-      from: `${fromName} via LehrstellenSniper <bewerbung@lehrstellensniper.ch>`,
+      from: `${fromName} via Blitzbewerbung <bewerbung@blitzbewerbung.ch>`,
       to: [toEmail],
       subject: subject ?? `Bewerbung als Lernende/r`,
       html,

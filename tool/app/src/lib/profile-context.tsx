@@ -42,8 +42,8 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
         .eq('user_id', user.id)
         .single()
 
-      const t: Tier = (['free', 'pro', 'student'].includes(profile?.subscription_tier)
-        ? profile.subscription_tier : 'free') as Tier
+      const t: Tier = (['free', 'pro', 'student'].includes(profile?.subscription_tier ?? '')
+        ? profile?.subscription_tier : 'free') as Tier
       setTier(t)
 
       const startOfDay = new Date()

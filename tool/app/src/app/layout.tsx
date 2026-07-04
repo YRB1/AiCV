@@ -8,7 +8,7 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "LehrstellenSniper",
+  title: "Blitzbewerbung",
   description: "Finde offene Lehrstellen in der Schweiz und bewirb dich mit personalisierten Schreiben.",
 };
 

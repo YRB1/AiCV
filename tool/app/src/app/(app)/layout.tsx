@@ -16,7 +16,20 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const { lang, setLang } = useLang()
   const t = useT()
-  const { tier, dailyUsed, dailyLimit, aiUsed, aiLimit } = useProfile()
+  const { tier, dailyUsed, dailyLimit } = useProfile()
+
+  const PAGE_TITLES: Record<string, string> = {
+    '/dashboard': lang === 'de' ? 'Dashboard' : 'Dashboard',
+    '/suche': lang === 'de' ? 'Suche' : 'Search',
+    '/bewerbungen': lang === 'de' ? 'Bewerbungen' : 'Applications',
+    '/interview': 'Interview',
+    '/advisor': lang === 'de' ? 'KI-Berater' : 'AI Advisor',
+    '/skript': 'Skript',
+    '/profil': lang === 'de' ? 'Profil' : 'Profile',
+    '/einstellungen': lang === 'de' ? 'Einstellungen' : 'Settings',
+    '/upgrade': 'Upgrade',
+  }
+  const pageTitle = PAGE_TITLES[pathname] ?? 'Dashboard'
 
   const navItems = [
     {
@@ -34,6 +47,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     {
       href: '/interview', label: 'Interview',
       icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    },
+    {
+      href: '/advisor', label: lang === 'de' ? 'KI-Berater' : 'AI Advisor',
+      icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
     },
     {
       href: '/skript', label: 'Skript',
@@ -82,7 +99,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       return
     }
     supabase.auth.getUser().then(({ data }) => {
-      if (!data.user) { window.location.href = 'https://yrb1.github.io/AiCV/signin.html'; return }
+      if (!data.user) { router.push('/login'); return }
       const e = data.user.email ?? ''
       setEmail(e)
       setInitials(e.slice(0, 2).toUpperCase())
@@ -101,13 +118,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const sidebarContent = (
     <>
       {/* Logo */}
-      <Link href="/dashboard" style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '20px 16px 18px', textDecoration: 'none', borderBottom: '1px solid var(--border)' }}>
-        <div style={{ width: '34px', height: '34px', borderRadius: '9px', background: 'var(--accent-glow-2)', border: '1px solid var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 0 16px var(--accent-glow)' }}>
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="var(--accent)" stroke="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      <Link href="/dashboard" style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '18px 16px', textDecoration: 'none', borderBottom: '1px solid var(--border)' }}>
+        <div style={{ width: '32px', height: '32px', borderRadius: '9px', background: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff" stroke="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
         </div>
         <div>
-          <p style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text)', lineHeight: 1.2 }}>LehrstellenSniper</p>
-          <p style={{ fontSize: '10px', color: 'var(--accent)', marginTop: '1px', fontWeight: 600, letterSpacing: '0.04em' }}>AI Platform</p>
+          <p style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text)', lineHeight: 1.3 }}>Blitzbewerbung</p>
+          <p style={{ fontSize: '10px', color: 'var(--muted)', marginTop: '0px', fontWeight: 500, letterSpacing: '0.03em' }}>AI Platform</p>
         </div>
       </Link>
 
@@ -119,13 +136,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <Link key={item.href} href={item.href} style={{
               display: 'flex', alignItems: 'center', gap: '10px',
               padding: '9px 10px', borderRadius: '8px',
-              fontSize: '13px', fontWeight: 500, textDecoration: 'none',
-              background: active ? 'var(--accent-glow-2)' : 'transparent',
-              color: active ? 'var(--accent-light)' : 'var(--muted)',
-              borderLeft: active ? '2px solid var(--accent)' : '2px solid transparent',
+              fontSize: '13px', fontWeight: active ? 600 : 500, textDecoration: 'none',
+              background: active ? 'rgba(255,255,255,0.07)' : 'transparent',
+              color: active ? 'var(--text)' : 'var(--muted)',
+              border: 'none',
               transition: 'all 0.15s',
             }}>
-              <span style={{ color: active ? 'var(--accent)' : 'var(--muted-2)', flexShrink: 0 }}>{item.icon}</span>
+              <span style={{ color: active ? 'var(--text)' : 'var(--muted-2)', flexShrink: 0 }}>{item.icon}</span>
               {item.label}
               {item.href === '/suche' && (
                 <span style={{ marginLeft: 'auto', fontSize: '9px', fontWeight: 700, padding: '2px 6px', borderRadius: '4px', background: 'var(--accent)', color: '#000', letterSpacing: '0.04em' }}>NEW</span>
@@ -202,24 +219,39 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <div style={{ width: '26px', height: '26px', borderRadius: '7px', background: 'var(--accent-glow-2)', border: '1px solid var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--accent)" stroke="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
             </div>
-            LehrstellenSniper
+            Blitzbewerbung
           </Link>
 
-          {/* Desktop: usage stats */}
-          <div className="ls-desktop" style={{ gap: '8px', marginLeft: 'auto' }}>
+          {/* Desktop title — left-aligned, in normal flow */}
+          <span className="ls-desktop" style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-2)', whiteSpace: 'nowrap' }}>
+            Blitzbewerbung — {pageTitle}
+          </span>
+
+          {/* Spacer */}
+          <div className="ls-desktop" style={{ flex: 1 }} />
+
+          {/* Desktop: Live + usage stats */}
+          <div className="ls-desktop" style={{ gap: '12px' }}>
+            {/* Live indicator */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12px', color: 'var(--green)', fontWeight: 600 }}>
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--green)', display: 'inline-block', boxShadow: '0 0 6px var(--green)' }} />
+              Live
+            </div>
+
+            <div style={{ width: '1px', height: '16px', background: 'var(--border)' }} />
+
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', color: 'var(--muted)' }}>
-              <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: tier === 'free' ? 'var(--yellow)' : 'var(--accent)', display: 'inline-block' }} />
               <span style={{ fontWeight: 600, color: tier === 'free' ? 'var(--muted)' : 'var(--accent-light)' }}>
-                {tier === 'student' ? 'Student' : tier === 'pro' ? 'Pro' : 'Free'}
+                {tier === 'student' ? '🎓 Student' : tier === 'pro' ? '⚡ Pro' : 'Free'}
               </span>
               {dailyLimit !== null && (
-                <span style={{ padding: '2px 8px', borderRadius: '4px', background: 'var(--surface-2)', fontSize: '11px', color: dailyUsed >= dailyLimit ? 'var(--red)' : 'var(--muted)' }}>
+                <span style={{ padding: '2px 8px', borderRadius: '4px', background: 'var(--surface-3)', fontSize: '11px', color: dailyUsed >= dailyLimit ? 'var(--red)' : 'var(--muted)' }}>
                   {dailyUsed}/{dailyLimit}
                 </span>
               )}
             </div>
             {tier === 'free' && (
-              <Link href="/upgrade" style={{ padding: '5px 14px', borderRadius: '6px', fontSize: '12px', fontWeight: 600, background: 'var(--accent-glow-2)', color: 'var(--accent-light)', border: '1px solid var(--accent)', textDecoration: 'none' }}>
+              <Link href="/upgrade" style={{ padding: '5px 14px', borderRadius: '6px', fontSize: '12px', fontWeight: 600, background: 'var(--accent)', color: '#fff', textDecoration: 'none' }}>
                 Upgrade ↑
               </Link>
             )}
@@ -233,7 +265,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               </span>
             )}
             {tier === 'free' && (
-              <Link href="/upgrade" style={{ padding: '5px 10px', borderRadius: '6px', fontSize: '11px', fontWeight: 700, background: 'var(--accent)', color: '#000', textDecoration: 'none' }}>
+              <Link href="/upgrade" style={{ padding: '5px 10px', borderRadius: '6px', fontSize: '11px', fontWeight: 700, background: 'var(--accent)', color: '#fff', textDecoration: 'none' }}>
                 Pro ↑
               </Link>
             )}

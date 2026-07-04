@@ -103,10 +103,10 @@ export default function Einstellungen() {
         {/* ── Mode ──────────────────────────────────────────────────── */}
         <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '14px', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
           <div style={{ padding: '14px 18px', borderBottom: '1px solid var(--border)' }}>
-            <p style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)' }}>Brightness Mode</p>
-            <p style={{ fontSize: '12px', color: 'var(--muted)', marginTop: '2px' }}>Choose between dark, light, or follow system preference</p>
+            <p style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)' }}>{t.settings_mode_title}</p>
+            <p style={{ fontSize: '12px', color: 'var(--muted)', marginTop: '2px' }}>{t.settings_mode_sub}</p>
           </div>
-          <div style={{ padding: '12px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
+          <div className="ls-mode-grid">
             {MODES.map(mode => {
               const active = activeMode === mode.id
               return (
@@ -168,8 +168,8 @@ export default function Einstellungen() {
         {/* ── Preview ───────────────────────────────────────────────── */}
         <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '14px', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
           <div style={{ padding: '14px 18px', borderBottom: '1px solid var(--border)' }}>
-            <p style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)' }}>Preview</p>
-            <p style={{ fontSize: '12px', color: 'var(--muted)', marginTop: '2px' }}>Live preview of your current theme</p>
+            <p style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)' }}>{t.settings_preview_title}</p>
+            <p style={{ fontSize: '12px', color: 'var(--muted)', marginTop: '2px' }}>{t.settings_preview_sub}</p>
           </div>
           <div style={{ padding: '18px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {/* Fake card */}

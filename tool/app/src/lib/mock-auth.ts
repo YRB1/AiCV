@@ -1,8 +1,8 @@
-// Demo-Modus: funktioniert ohne echte Supabase-Keys
+﻿// Demo-Modus: funktioniert ohne echte Supabase-Keys
 
 const DEMO_USER = {
   id: 'demo-user-123',
-  email: 'demo@lehrstellensniper.ch',
+  email: 'demo@blitzbewerbung.ch',
   created_at: new Date().toISOString(),
 }
 
@@ -15,7 +15,7 @@ const DEMO_PROFILE = {
   wunschberuf: 'Polymechaniker EFZ',
   wohnort: 'Zürich',
   telefon: '+41 79 123 45 67',
-  email: 'demo@lehrstellensniper.ch',
+  email: 'demo@blitzbewerbung.ch',
   demo_script: '',
   subscription_tier: 'basic',
 }

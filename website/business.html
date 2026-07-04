@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Business & API Use — Blitzbewerbung</title>
+<meta name="description" content="How Blitzbewerbung uses third-party APIs, our business model, compliance posture, and partnership information for API providers and data partners.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#080808;--surface:rgba(13,13,13,0.85);--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);
+    --text:#f5f5f5;--text2:rgba(255,255,255,0.62);--text3:rgba(255,255,255,0.35);
+    --blue:#5b7fff;--blue-glow:rgba(91,127,255,0.3);
+    --grad:linear-gradient(135deg,#5b7fff 0%,#7c5cfc 100%);
+    --font-body:'Inter',sans-serif;--font-head:'Sora',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+  /* NAV */
+  #navbar{position:sticky;top:0;z-index:100;padding:0 32px;height:60px;display:flex;align-items:center;background:rgba(8,8,8,0.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+  .nav-inner{max-width:1100px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between}
+  .nav-logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:17px;color:var(--text);text-decoration:none;font-family:var(--font-head)}
+  .logo-icon{width:32px;height:32px;border-radius:8px;background:var(--grad);display:flex;align-items:center;justify-content:center}
+  .logo-icon svg{fill:white;width:16px;height:16px}
+  .nav-back{font-size:13px;color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color .2s}
+  .nav-back:hover{color:var(--text)}
+  .nav-back svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+
+  /* LAYOUT */
+  .page-wrap{max-width:860px;margin:0 auto;padding:72px 32px 120px}
+  .page-hero{margin-bottom:64px}
+  .page-tag{font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--blue);margin-bottom:14px}
+  .page-title{font-family:var(--font-head);font-size:clamp(32px,5vw,52px);font-weight:800;line-height:1.1;margin-bottom:18px}
+  .page-sub{font-size:17px;color:var(--text2);line-height:1.7;max-width:600px}
+
+  /* SECTIONS */
+  .biz-section{margin-bottom:60px}
+  .biz-section h2{font-family:var(--font-head);font-size:22px;font-weight:700;margin-bottom:6px}
+  .biz-section .sec-sub{font-size:14px;color:var(--text3);margin-bottom:24px}
+  .biz-section p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:14px}
+  .biz-section p:last-child{margin-bottom:0}
+
+  /* DIVIDER */
+  .divider{height:1px;background:var(--border);margin:48px 0}
+
+  /* INFO GRID */
+  .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+  .info-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px 24px}
+  .info-card .label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+  .info-card .value{font-size:15px;font-weight:600;color:var(--text)}
+  .info-card .note{font-size:12px;color:var(--text3);margin-top:4px}
+
+  /* API USE TABLE */
+  .api-table{width:100%;border-collapse:collapse;margin-top:24px}
+  .api-table th{text-align:left;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text3);padding:0 16px 12px;border-bottom:1px solid var(--border)}
+  .api-table td{padding:16px;font-size:14px;color:var(--text2);border-bottom:1px solid var(--border);vertical-align:top}
+  .api-table tr:last-child td{border-bottom:none}
+  .api-table td:first-child{font-weight:600;color:var(--text);width:160px}
+  .badge{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:100px;margin-bottom:4px}
+  .badge.green{background:rgba(74,222,128,0.1);color:#4ade80;border:1px solid rgba(74,222,128,0.2)}
+  .badge.blue{background:rgba(91,127,255,0.1);color:#7b9fff;border:1px solid rgba(91,127,255,0.2)}
+  .badge.gray{background:rgba(255,255,255,0.05);color:var(--text3);border:1px solid var(--border2)}
+
+  /* DATA FLOW */
+  .flow{display:flex;flex-direction:column;gap:0;margin-top:24px}
+  .flow-step{display:flex;gap:20px;padding:20px 0;border-bottom:1px solid var(--border)}
+  .flow-step:last-child{border-bottom:none}
+  .flow-num{width:28px;height:28px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px}
+  .flow-body h4{font-size:14px;font-weight:600;margin-bottom:4px}
+  .flow-body p{font-size:13px;color:var(--text2);line-height:1.6}
+
+  /* METRICS */
+  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+  .metric-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;text-align:center}
+  .metric-val{font-family:var(--font-head);font-size:32px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+  .metric-label{font-size:12px;color:var(--text3)}
+
+  /* COMPLIANCE */
+  .checklist{display:flex;flex-direction:column;gap:12px;margin-top:24px}
+  .check-item{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text2)}
+  .check-icon{width:20px;height:20px;border-radius:50%;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+  .check-icon svg{width:10px;height:10px;stroke:#4ade80;fill:none;stroke-width:3}
+
+  /* CONTACT */
+  .contact-box{background:var(--surface);border:1px solid var(--border2);border-radius:20px;padding:36px;margin-top:24px;text-align:center}
+  .contact-box h3{font-family:var(--font-head);font-size:22px;font-weight:700;margin-bottom:10px}
+  .contact-box p{font-size:15px;color:var(--text2);margin-bottom:24px}
+  .contact-email{display:inline-flex;align-items:center;gap:8px;background:var(--grad);color:white;text-decoration:none;padding:12px 28px;border-radius:11px;font-weight:600;font-size:15px;transition:opacity .2s}
+  .contact-email:hover{opacity:.88}
+
+  @media(max-width:640px){
+    .page-wrap{padding:48px 20px 80px}
+    .info-grid{grid-template-columns:1fr}
+    .metrics{grid-template-columns:1fr 1fr}
+    .api-table td:first-child{width:120px}
+  }
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-icon"><svg viewBox="0 0 18 18"><path d="M9 1l2.5 5.5L17 7.5l-4 4 1 5.5L9 14l-5 3 1-5.5-4-4 5.5-1L9 1z"/></svg></div>
+      Blitzbewerbung
+    </a>
+    <a href="index.html" class="nav-back">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to site
+    </a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <div class="page-hero">
+    <div class="page-tag">Business &amp; API Use</div>
+    <h1 class="page-title">Blitzbewerbung — Business Overview &amp; API Partner Information</h1>
+    <p class="page-sub">This page is intended for API providers, data partners, and platform operators evaluating Blitzbewerbung's use of their services. It covers our product, business model, technical integration, and compliance posture.</p>
+  </div>
+
+  <!-- WHO WE ARE -->
+  <div class="biz-section">
+    <h2>Who We Are</h2>
+    <div class="sec-sub">Product, mission, and market</div>
+    <p>Blitzbewerbung is a B2C SaaS platform designed to help students and young people in Switzerland find and apply for apprenticeships (Lehrstellen) faster and more effectively. The Swiss vocational training system places roughly 60,000 apprenticeship contracts each year — nearly two-thirds of all school leavers. Despite this volume, the application process remains fragmented, manual, and time-consuming for applicants.</p>
+    <p>Our platform aggregates listings from 40+ Swiss job portals, generates personalised AI cover letters for each role, finds the hiring contact's email address, and sends the application on behalf of the user — all from a single interface. Users can apply to multiple positions in minutes rather than hours.</p>
+    <p>The product is available in German and English, covers all 26 Swiss cantons, and serves users from school age through early career. Pricing follows a freemium model: a free tier with limited daily applications, and Pro/Student paid tiers.</p>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="label">Company</div>
+        <div class="value">Blitzbewerbung</div>
+        <div class="note">Operated by YRB Nova</div>
+      </div>
+      <div class="info-card">
+        <div class="label">Primary Market</div>
+        <div class="value">Switzerland</div>
+        <div class="note">All 26 cantons · DE + EN</div>
+      </div>
+      <div class="info-card">
+        <div class="label">Product Type</div>
+        <div class="value">B2C SaaS</div>
+        <div class="note">Freemium → subscription</div>
+      </div>
+      <div class="info-card">
+        <div class="label">Target Users</div>
+        <div class="value">15–22 year-olds</div>
+        <div class="note">Students seeking apprenticeships</div>
+      </div>
+      <div class="info-card">
+        <div class="label">Contact</div>
+        <div class="value">hallo@blitzbewerbung.ch</div>
+        <div class="note">Business &amp; partnerships</div>
+      </div>
+      <div class="info-card">
+        <div class="label">Website</div>
+        <div class="value">blitzbewerbung.ch</div>
+        <div class="note">Live since 2025</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- BUSINESS MODEL -->
+  <div class="biz-section">
+    <h2>Business Model</h2>
+    <div class="sec-sub">How the product is monetised</div>
+    <p>Blitzbewerbung operates a freemium subscription model. All users start on the Free tier. Conversion to paid plans is the primary revenue driver.</p>
+
+    <table class="api-table">
+      <thead>
+        <tr><th>Plan</th><th>Price</th><th>Limits</th><th>Revenue signal</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Free</td>
+          <td>£0 / CHF 0</td>
+          <td>5 AI applications/month, basic search</td>
+          <td><span class="badge gray">Acquisition</span></td>
+        </tr>
+        <tr>
+          <td>Pro</td>
+          <td>£20/mo · £16/mo annual<br>CHF 25/mo · CHF 20/mo annual</td>
+          <td>Unlimited applications, auto-apply, interview prep</td>
+          <td><span class="badge green">Primary revenue</span></td>
+        </tr>
+        <tr>
+          <td>Student</td>
+          <td>£15/mo · £12/mo annual<br>CHF 19/mo · CHF 15/mo annual</td>
+          <td>Everything in Pro — verified students only</td>
+          <td><span class="badge blue">Verified cohort</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:20px">Payments are processed via Stripe. Student verification is handled via institutional email confirmation. No API provider data is resold or used for any purpose other than delivering the described user-facing functionality.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PROJECTED SCALE -->
+  <div class="biz-section">
+    <h2>Projected Scale</h2>
+    <div class="sec-sub">Expected API usage volume at different growth stages</div>
+
+    <div class="metrics">
+      <div class="metric-card">
+        <div class="metric-val">500</div>
+        <div class="metric-label">Target monthly active users at launch</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">15k</div>
+        <div class="metric-label">Estimated API calls/month at 500 MAU</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">5–10×</div>
+        <div class="metric-label">Expected growth multiplier in year 1</div>
+      </div>
+    </div>
+
+    <p style="margin-top:20px">Usage is concentrated in the Swiss apprenticeship application season (October–March). Peak daily usage is expected during weekday evenings. All API calls originate from authenticated, registered users — there is no anonymous scraping or bulk harvesting.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- HOW WE USE APIS -->
+  <div class="biz-section">
+    <h2>How We Use Third-Party APIs</h2>
+    <div class="sec-sub">Integration purpose, data handling, and mutual benefit for each service</div>
+
+    <table class="api-table" style="margin-bottom:32px">
+      <thead>
+        <tr><th>Service</th><th>Purpose</th><th>Data sent</th><th>Data received</th><th>User benefit</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>SerpAPI / Google Jobs</td>
+          <td>Retrieve live apprenticeship listings from Google Jobs and Swiss portals</td>
+          <td>Search query (job title + canton), language</td>
+          <td>Job listings: title, company, location, URL, description snippet</td>
+          <td>Access to 40+ job boards in one search</td>
+        </tr>
+        <tr>
+          <td>Anthropic (Claude)</td>
+          <td>Generate personalised cover letters tailored to each specific job listing</td>
+          <td>Job listing details, user's personal pitch (stored in their profile), applicant name/school</td>
+          <td>Generated cover letter text (plain text, DE/EN)</td>
+          <td>Professional, non-generic application letters in &lt;60 seconds</td>
+        </tr>
+        <tr>
+          <td>Resend</td>
+          <td>Deliver application emails from the user's perspective to employers</td>
+          <td>Recipient email, applicant name, generated cover letter, sender display name</td>
+          <td>Delivery confirmation, message ID</td>
+          <td>One-click application send to employer</td>
+        </tr>
+        <tr>
+          <td>Supabase</td>
+          <td>User authentication, profile storage, application tracking</td>
+          <td>User credentials (hashed), profile fields, application status updates</td>
+          <td>Auth tokens, user records, lead/application records</td>
+          <td>Persistent account, application history, dashboard</td>
+        </tr>
+        <tr>
+          <td>Stripe</td>
+          <td>Subscription billing for Pro and Student plans</td>
+          <td>Email address, plan selection</td>
+          <td>Subscription status, payment confirmation</td>
+          <td>Secure plan management with cancel-anytime</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- DATA FLOW -->
+  <div class="biz-section">
+    <h2>End-to-End Data Flow</h2>
+    <div class="sec-sub">What happens from search to sent application</div>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-body">
+          <h4>User searches for apprenticeships</h4>
+          <p>User enters job title (e.g. "Informatiker EFZ") and canton. The platform queries SerpAPI / Google Jobs with these terms. Results are cached for 24 hours per (query, canton) pair to avoid redundant API calls.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-body">
+          <h4>Contact email lookup</h4>
+          <p>For each result, the platform attempts to find a direct hiring contact email by scanning the company's public website. No login-protected or private data is accessed. Results are cached per company domain.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-body">
+          <h4>AI cover letter generation</h4>
+          <p>User clicks Apply or Auto-Apply. The platform sends the job listing description, company name, role, and the user's own personal pitch (written by the user in their profile) to the Claude API. The response is a single cover letter. No data from other users is included or cross-referenced.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">4</div>
+        <div class="flow-body">
+          <h4>Review (optional) and send</h4>
+          <p>With standard Apply, the user reviews the letter before sending. With Auto-Apply (Pro only), it is sent directly. The email is dispatched via Resend from a verified sending domain. The application is logged in Supabase under the user's account.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">5</div>
+        <div class="flow-body">
+          <h4>Application tracking</h4>
+          <p>Status (sent → replied → interview → offer/rejection) is tracked in the user's dashboard. All data is owned by the user and can be exported or deleted on request.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- COMPLIANCE -->
+  <div class="biz-section">
+    <h2>Compliance &amp; Data Handling</h2>
+    <div class="sec-sub">Our obligations and how we meet them</div>
+
+    <div class="checklist">
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <span><strong>nDSG (Swiss Data Protection Act) compliant.</strong> Data processing follows the revised Swiss Federal Act on Data Protection, effective 2023. Users are informed of what data is collected and why.</span>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <span><strong>GDPR-aligned.</strong> Although operating primarily in Switzerland, we follow GDPR principles for all EU/EEA users: lawful basis, data minimisation, right to access, right to erasure.</span>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <span><strong>No data resale.</strong> User data and API responses are never sold, shared with third parties beyond what is documented here, or used to train AI models.</span>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <span><strong>Encryption at rest and in transit.</strong> All user data stored in Supabase (PostgreSQL) is encrypted. All traffic is served over TLS 1.2+.</span>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <span><strong>User-controlled data.</strong> Users can export their application history and personal data, or request full account deletion, from their account settings.</span>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <span><strong>Rate-limiting and caching.</strong> API calls are rate-limited per user account and results are cached where appropriate to minimise volume and cost for all parties.</span>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <span><strong>No anonymous scraping.</strong> Every API call is tied to an authenticated, registered user. There is no anonymous bulk access or crawling of third-party platforms.</span>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <span><strong>Minors (under 16).</strong> Where a user is under 16, parental consent is collected during registration in accordance with applicable law.</span>
+      </div>
+    </div>
+
+    <p style="margin-top:24px">Full privacy policy: <a href="privacy.html" style="color:var(--blue);text-decoration:none">blitzbewerbung.ch/privacy.html</a> · Terms of service: <a href="terms.html" style="color:var(--blue);text-decoration:none">blitzbewerbung.ch/terms.html</a></p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- WHY IT BENEFITS API PROVIDERS -->
+  <div class="biz-section">
+    <h2>Why This Benefits API Providers</h2>
+    <div class="sec-sub">The mutual value of this integration</div>
+
+    <table class="api-table">
+      <thead>
+        <tr><th>Provider</th><th>What they get from this integration</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Search / Job API</td>
+          <td>Consistent, high-quality, authenticated query volume from a real-use product. Each search represents a genuine user looking for employment — not bot traffic or content scraping. Swiss-market usage that demonstrates regional demand. Attribution and referral traffic to listed employers and portals.</td>
+        </tr>
+        <tr>
+          <td>AI API (Claude)</td>
+          <td>A well-defined, professional use case (cover letter generation) that showcases responsible, high-value AI deployment. Each generation is tied to a real user action with real-world outcome. Positive brand association with youth employment outcomes in Switzerland.</td>
+        </tr>
+        <tr>
+          <td>Email delivery (Resend)</td>
+          <td>Clean, transactional email volume with low spam risk — emails are personalised, user-initiated, sent to employer addresses confirmed via public records. Each send represents a genuine job application. Volume scales predictably with user growth.</td>
+        </tr>
+        <tr>
+          <td>Database / auth (Supabase)</td>
+          <td>A clear, schema-driven use case with structured tables (users, profiles, applications, cache). Long-term retained data with predictable query patterns. Good reference architecture for a European-market SaaS.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <div class="biz-section">
+    <h2>Get in Touch</h2>
+    <div class="sec-sub">For API providers, data partners, and platform operators</div>
+    <p>If you are an API provider evaluating our use case, a job portal interested in a formal data partnership, or a platform operator with questions about our integration — please reach out directly. We are happy to provide additional technical documentation, API usage logs, or a call with the founding team.</p>
+
+    <div class="contact-box">
+      <h3>Business &amp; Partnership Enquiries</h3>
+      <p>We respond to all partnership and API review requests within 1–2 business days.</p>
+      <a href="mailto:hallo@blitzbewerbung.ch" class="contact-email">
+        <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:white;fill:none;stroke-width:2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+        hallo@blitzbewerbung.ch
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script src="lang.js"></script>
+</body>
+</html>

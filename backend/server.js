@@ -290,6 +290,61 @@ app.get('/api/health', (req, res) => {
   })
 })
 
+// ── CONTACT FORM ─────────────────────────────────────────────────────────────
+app.post('/api/contact', async (req, res) => {
+  const { firstname, lastname, email, subject, message } = req.body
+  if (!firstname || !email || !message) {
+    return res.status(400).json({ error: 'Missing required fields' })
+  }
+
+  if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+    return res.status(500).json({ error: 'Email not configured' })
+  }
+
+  try {
+    const nodemailer = require('nodemailer')
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+    })
+
+    await transporter.sendMail({
+      from: `"Blitzbewerbung Contact" <${process.env.SMTP_USER}>`,
+      to: process.env.SMTP_USER,
+      replyTo: email,
+      subject: `[Contact] ${subject || 'New message'} — ${firstname} ${lastname}`,
+      html: `
+        <div style="font-family:Inter,sans-serif;max-width:560px;margin:0 auto;background:#f9fafb;padding:32px 16px">
+          <div style="background:white;border-radius:14px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,0.08)">
+            <div style="background:linear-gradient(135deg,#7b9fff,#3a5ce0);padding:22px 28px">
+              <p style="margin:0 0 4px;font-size:11px;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:.06em">Blitzbewerbung Contact Form</p>
+              <h1 style="margin:0;font-size:18px;font-weight:700;color:white">${subject || 'New message'}</h1>
+            </div>
+            <div style="padding:22px 28px;border-bottom:1px solid #f0f0f0">
+              <table style="border-collapse:collapse;width:100%">
+                <tr><td style="padding:5px 16px 5px 0;font-size:12px;color:#6b7280;white-space:nowrap">Name</td><td style="font-size:13px;color:#111">${firstname} ${lastname}</td></tr>
+                <tr><td style="padding:5px 16px 5px 0;font-size:12px;color:#6b7280;white-space:nowrap">Email</td><td style="font-size:13px"><a href="mailto:${email}" style="color:#5b7fff">${email}</a></td></tr>
+                <tr><td style="padding:5px 16px 5px 0;font-size:12px;color:#6b7280;white-space:nowrap">Topic</td><td style="font-size:13px;color:#111">${subject || '—'}</td></tr>
+              </table>
+            </div>
+            <div style="padding:22px 28px">
+              <p style="margin:0 0 10px;font-size:11px;font-weight:600;letter-spacing:.07em;color:#9ca3af;text-transform:uppercase">Message</p>
+              <p style="font-size:14px;line-height:1.8;color:#374151;white-space:pre-line">${message}</p>
+            </div>
+            <div style="padding:14px 28px;background:#f9fafb;border-top:1px solid #f0f0f0;font-size:11px;color:#9ca3af">
+              Reply directly to <a href="mailto:${email}" style="color:#5b7fff">${email}</a>
+            </div>
+          </div>
+        </div>`,
+    })
+
+    res.json({ success: true })
+  } catch (err) {
+    console.error('Contact email error:', err)
+    res.status(500).json({ error: 'Failed to send email' })
+  }
+})
+
 // ── SPA FALLBACK: send index.html for unknown routes ─────────────────────────
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../website/index.html'))

@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Warum Yousty allein nicht reicht — und bessere Alternativen | LehrstellenSniper</title>
+<title>Warum Yousty allein nicht reicht — und bessere Alternativen | Blitzbewerbung</title>
 <meta name="description" content="Yousty.ch zeigt nur einen Bruchteil aller Lehrstellen. Welche besseren Alternativen es gibt und wie du versteckte Stellen findest."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -18,14 +18,14 @@
   <div class="nav-inner">
     <a class="nav-logo" href="../index.html">
       <div class="logo-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-      LehrstellenSniper
+      Blitzbewerbung
     </a>
     <div class="nav-links">
       <a href="../index.html#features">Features</a>
       <a href="../index.html#pricing">Pricing</a>
       <a href="index.html">Blog</a>
       <a href="../community.html">Community</a>
-      <a href="../help.html">Help</a>
+      <a href="../help.html"><span class="de">Hilfe</span><span class="en" style="display:none">Help</span></a>
     </div>
     <div class="nav-right">
       <div class="lang-toggle">
@@ -45,7 +45,7 @@
   <a href="../index.html#pricing">Pricing</a>
   <a href="index.html">Blog</a>
   <a href="../community.html">Community</a>
-  <a href="../help.html">Help</a>
+  <a href="../help.html"><span class="de">Hilfe</span><span class="en" style="display:none">Help</span></a>
   <div class="mobile-ctas">
     <a href="../signin.html"><button class="btn-ghost-sm">Sign in</button></a>
     <a href="../signup.html" class="btn-nav-cta" style="justify-content:center">Sign up</a>
@@ -54,7 +54,13 @@
 
 <!-- GERMAN -->
 <div class="page"><div class="post-outer de">
-  <div class="post-header">
+    <div class="back-btn-wrap">
+    <a href="index.html" class="back-btn">
+      <span class="de">← Alle Artikel</span>
+      <span class="en" style="display:none">← All Articles</span>
+    </a>
+  </div>
+<div class="post-header">
     <span class="post-tag-lg">Strategie</span>
     <h1>Warum Yousty allein nicht reicht — und was du stattdessen tun solltest</h1>
     <div class="post-meta-bar">
@@ -87,8 +93,8 @@
     <img class="post-img-inline" src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=900&h=400&q=80&auto=format&fit=crop" alt="Person sucht Lehrstellen auf verschiedenen Wegen" loading="lazy"/>
     <p class="img-caption">Wer alle Kanäle gleichzeitig absucht, findet Stellen, die die meisten nie sehen.</p>
 
-    <h2>Wie LehrstellenSniper dieses Problem löst</h2>
-    <p>LehrstellenSniper durchsucht gleichzeitig:</p>
+    <h2>Wie Blitzbewerbung dieses Problem löst</h2>
+    <p>Blitzbewerbung durchsucht gleichzeitig:</p>
     <ul>
       <li>Google Jobs (Schweiz)</li>
       <li>Direkte Firmenwebsites</li>
@@ -103,8 +109,8 @@
 
     <div class="cta-box">
       <h2>Alle Quellen gleichzeitig durchsuchen</h2>
-      <p>LehrstellenSniper sucht überall gleichzeitig — Yousty, Google Jobs, Firmenwebsites — und zeigt dir Stellen mit direkten Kontakten. Keine Plattform macht das so umfassend.</p>
-      <a href="https://ai-cv-red.vercel.app">Jetzt alle Stellen finden</a>
+      <p>Blitzbewerbung sucht überall gleichzeitig — Yousty, Google Jobs, Firmenwebsites — und zeigt dir Stellen mit direkten Kontakten. Keine Plattform macht das so umfassend.</p>
+      <a href="https://app.blitzbewerbung.ch">Jetzt alle Stellen finden</a>
     </div>
   </div>
 </div>
@@ -144,15 +150,15 @@
 
     <div class="cta-box">
       <h2>Search All Sources Simultaneously</h2>
-      <p>LehrstellenSniper searches everywhere at once — Yousty, Google Jobs, company websites — and shows you positions with direct contacts. No platform does this as comprehensively.</p>
-      <a href="https://ai-cv-red.vercel.app">Find all positions now</a>
+      <p>Blitzbewerbung searches everywhere at once — Yousty, Google Jobs, company websites — and shows you positions with direct contacts. No platform does this as comprehensively.</p>
+      <a href="https://app.blitzbewerbung.ch">Find all positions now</a>
     </div>
   </div>
 </div></div>
 
 <footer class="site-footer">
-  <span class="de">© 2025 LehrstellenSniper · <a href="index.html">← Alle Artikel</a></span>
-  <span class="en" style="display:none">© 2025 LehrstellenSniper · <a href="index.html">← All posts</a></span>
+  <span class="de">© 2025 Blitzbewerbung · <a href="index.html">← Alle Artikel</a></span>
+  <span class="en" style="display:none">© 2025 Blitzbewerbung · <a href="index.html">← All posts</a></span>
 </footer>
 <script>
 function setLang(l){
@@ -161,6 +167,8 @@ function setLang(l){
   document.getElementById('btn-de').classList.toggle('active',l==='de')
   document.getElementById('btn-en').classList.toggle('active',l==='en')
   localStorage.setItem('blog-lang',l)
+  localStorage.setItem('site-lang',l)
+  if(window._cb&&window._cb.syncLang)window._cb.syncLang()
 }
 const saved=localStorage.getItem('blog-lang')||'de'
 setLang(saved)

@@ -87,11 +87,30 @@ export const translations = {
     script_saved: '✓ Gespeichert',
     script_auto: 'Wird automatisch für jede Bewerbung angepasst',
 
+    // Profile tabs & misc
+    profile_tab_info: 'Persönliche Info',
+    profile_tab_cv: 'Lebenslauf',
+    profile_tab_skills: 'Fähigkeiten',
+    profile_about_me: 'ÜBER MICH',
+    profile_hobbies: 'HOBBYS & INTERESSEN',
+    profile_completeness: 'Profil-Vollständigkeit',
+    profile_completeness_done: '✓ Profil komplett — KI-Bewerbungen werden top personalisiert',
+    profile_completeness_cta: 'Vervollständige dein Profil für bessere KI-Bewerbungen',
+    profile_no_skills: 'Noch keine Fähigkeiten',
+    profile_no_langs: 'Noch keine Sprachen',
+    profile_add: 'Hinzufügen',
+    profile_skill_placeholder: 'Fähigkeit hinzufügen (z.B. Microsoft Excel)...',
+    profile_lang_placeholder: 'Sprache hinzufügen (z.B. Deutsch — C1)...',
+
     // Settings page
     settings_title: 'Einstellungen',
     settings_subtitle: 'Passe das Erscheinungsbild an',
     settings_color_title: 'Farbschema',
     settings_color_sub: 'Wähle deine bevorzugte Akzentfarbe',
+    settings_mode_title: 'Helligkeit',
+    settings_mode_sub: 'Dunkel, hell oder automatisch',
+    settings_preview_title: 'Vorschau',
+    settings_preview_sub: 'Live-Vorschau deines Themes',
   },
 
   en: {
@@ -180,11 +199,30 @@ export const translations = {
     script_saved: '✓ Saved',
     script_auto: 'Automatically adapted for every application',
 
+    // Profile tabs & misc
+    profile_tab_info: 'Personal Info',
+    profile_tab_cv: 'CV',
+    profile_tab_skills: 'Skills',
+    profile_about_me: 'ABOUT ME',
+    profile_hobbies: 'HOBBIES & INTERESTS',
+    profile_completeness: 'Profile completeness',
+    profile_completeness_done: '✓ Profile complete — AI cover letters will be highly personalised',
+    profile_completeness_cta: 'Complete your profile to get better AI cover letters',
+    profile_no_skills: 'No skills added yet',
+    profile_no_langs: 'No languages added yet',
+    profile_add: 'Add',
+    profile_skill_placeholder: 'Add a skill (e.g. Microsoft Excel)...',
+    profile_lang_placeholder: 'Add a language (e.g. German — C1)...',
+
     // Settings page
     settings_title: 'Settings',
     settings_subtitle: 'Customise appearance',
     settings_color_title: 'Colour Scheme',
     settings_color_sub: 'Choose your preferred accent colour',
+    settings_mode_title: 'Brightness Mode',
+    settings_mode_sub: 'Choose between dark, light, or follow system preference',
+    settings_preview_title: 'Preview',
+    settings_preview_sub: 'Live preview of your current theme',
   },
 } as const
 

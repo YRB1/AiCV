@@ -82,7 +82,7 @@ function UpgradeContent() {
       </div>
 
       {/* Plan cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '24px' }}>
+      <div className="ls-plan-grid">
         {tiers.map((tier) => {
           const plan = PLANS[tier]
           const isCurrent = tier === currentTier
@@ -148,7 +148,7 @@ function UpgradeContent() {
                 style={{
                   width: '100%', padding: '10px', borderRadius: '9px', fontSize: '13px', fontWeight: 600,
                   cursor: isCurrent || tier === 'free' ? 'default' : 'pointer',
-                  fontFamily: 'inherit', border: 'none', transition: 'all 0.15s',
+                  fontFamily: 'inherit', transition: 'all 0.15s',
                   background: isCurrent || tier === 'free' ? 'var(--surface-2)' : isPopular ? 'var(--accent)' : 'var(--surface-3)',
                   color: isCurrent || tier === 'free' ? 'var(--muted)' : isPopular ? 'white' : 'var(--accent-light)',
                   opacity: loading !== null && loading !== tier ? 0.5 : 1,

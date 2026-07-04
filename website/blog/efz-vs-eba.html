@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>EFZ vs. EBA — Was ist der Unterschied und was lohnt sich? | LehrstellenSniper</title>
+<title>EFZ vs. EBA — Was ist der Unterschied und was lohnt sich? | Blitzbewerbung</title>
 <meta name="description" content="EFZ oder EBA Lehre? Unterschiede in Dauer, Anforderungen, Lohn und Karrierechancen — der komplette Vergleich für Jugendliche und Eltern."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -18,14 +18,14 @@
   <div class="nav-inner">
     <a class="nav-logo" href="../index.html">
       <div class="logo-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-      LehrstellenSniper
+      Blitzbewerbung
     </a>
     <div class="nav-links">
       <a href="../index.html#features">Features</a>
       <a href="../index.html#pricing">Pricing</a>
       <a href="index.html">Blog</a>
       <a href="../community.html">Community</a>
-      <a href="../help.html">Help</a>
+      <a href="../help.html"><span class="de">Hilfe</span><span class="en" style="display:none">Help</span></a>
     </div>
     <div class="nav-right">
       <div class="lang-toggle">
@@ -45,7 +45,7 @@
   <a href="../index.html#pricing">Pricing</a>
   <a href="index.html">Blog</a>
   <a href="../community.html">Community</a>
-  <a href="../help.html">Help</a>
+  <a href="../help.html"><span class="de">Hilfe</span><span class="en" style="display:none">Help</span></a>
   <div class="mobile-ctas">
     <a href="../signin.html"><button class="btn-ghost-sm">Sign in</button></a>
     <a href="../signup.html" class="btn-nav-cta" style="justify-content:center">Sign up</a>
@@ -54,7 +54,13 @@
 
 <!-- GERMAN -->
 <div class="page"><div class="post-outer de">
-  <div class="post-header">
+    <div class="back-btn-wrap">
+    <a href="index.html" class="back-btn">
+      <span class="de">← Alle Artikel</span>
+      <span class="en" style="display:none">← All Articles</span>
+    </a>
+  </div>
+<div class="post-header">
     <span class="post-tag-lg">Bildungssystem</span>
     <h1>EFZ vs. EBA — Was ist der Unterschied und was lohnt sich?</h1>
     <div class="post-meta-bar">
@@ -103,8 +109,8 @@
 
     <div class="cta-box">
       <h2>EFZ und EBA Lehrstellen finden</h2>
-      <p>LehrstellenSniper zeigt dir aktuelle EFZ- und EBA-Stellen in deiner Region. Egal welchen Weg du wählst — wir helfen dir, die richtige Firma zu finden und dich optimal zu bewerben.</p>
-      <a href="https://ai-cv-red.vercel.app">Jetzt Stellen suchen</a>
+      <p>Blitzbewerbung zeigt dir aktuelle EFZ- und EBA-Stellen in deiner Region. Egal welchen Weg du wählst — wir helfen dir, die richtige Firma zu finden und dich optimal zu bewerben.</p>
+      <a href="https://app.blitzbewerbung.ch">Jetzt Stellen suchen</a>
     </div>
   </div>
 </div>
@@ -143,15 +149,15 @@
 
     <div class="cta-box">
       <h2>Find EFZ and EBA Apprenticeships</h2>
-      <p>LehrstellenSniper shows you current EFZ and EBA positions in your region. Whatever path you choose — we help you find the right company and apply optimally.</p>
-      <a href="https://ai-cv-red.vercel.app">Search positions now</a>
+      <p>Blitzbewerbung shows you current EFZ and EBA positions in your region. Whatever path you choose — we help you find the right company and apply optimally.</p>
+      <a href="https://app.blitzbewerbung.ch">Search positions now</a>
     </div>
   </div>
 </div></div>
 
 <footer class="site-footer">
-  <span class="de">© 2025 LehrstellenSniper · <a href="index.html">← Alle Artikel</a></span>
-  <span class="en" style="display:none">© 2025 LehrstellenSniper · <a href="index.html">← All posts</a></span>
+  <span class="de">© 2025 Blitzbewerbung · <a href="index.html">← Alle Artikel</a></span>
+  <span class="en" style="display:none">© 2025 Blitzbewerbung · <a href="index.html">← All posts</a></span>
 </footer>
 <script>
 function setLang(l){
@@ -160,6 +166,8 @@ function setLang(l){
   document.getElementById('btn-de').classList.toggle('active',l==='de')
   document.getElementById('btn-en').classList.toggle('active',l==='en')
   localStorage.setItem('blog-lang',l)
+  localStorage.setItem('site-lang',l)
+  if(window._cb&&window._cb.syncLang)window._cb.syncLang()
 }
 const saved=localStorage.getItem('blog-lang')||'de'
 setLang(saved)

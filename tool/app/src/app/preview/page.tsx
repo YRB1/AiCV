@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
@@ -10,7 +10,7 @@ export default function PreviewPage() {
     localStorage.setItem('ls_preview_mode', '1')
     localStorage.setItem('ls_demo_session', JSON.stringify({
       id: 'demo-user-123',
-      email: 'demo@lehrstellensniper.ch',
+      email: 'demo@blitzbewerbung.ch',
       created_at: new Date().toISOString(),
     }))
     router.replace('/dashboard')

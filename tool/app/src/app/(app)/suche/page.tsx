@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { Lehrstelle } from '@/types'
 import { useT, useLang } from '@/lib/lang-context'
@@ -31,7 +32,7 @@ const BERUFE = [
   'Automobilfachmann EFZ', 'Automobilfachfrau EFZ',
   'Detailhandelsfachmann EFZ', 'Detailhandelsfachfrau EFZ',
   'Detailhandelsassistent EBA', 'Detailhandelsassistentin EBA',
-  'Mediamatiker EFZ', 'Mediamatikerein EFZ',
+  'Mediamatiker EFZ', 'Mediamatikerin EFZ',
   'Koch EFZ', 'Köchin EFZ',
   'Elektroinstallateur EFZ', 'Elektroinstallateurin EFZ',
   'Elektroplaner EFZ', 'Elektroplanerin EFZ',
@@ -73,6 +74,7 @@ function Avatar({ name }: { name: string }) {
 export default function SuchePage() {
   const t = useT()
   const { lang } = useLang()
+  const searchParams = useSearchParams()
   const { canApply, canUseAi, dailyUsed, dailyLimit, aiUsed, aiLimit, refresh: refreshProfile } = useProfile()
   const [beruf, setBeruf] = useState('')
   const [kanton, setKanton] = useState('Alle')
@@ -88,6 +90,7 @@ export default function SuchePage() {
   // apply status: null | 'generating' | 'review' | 'sending' | 'sent' | 'no-email' | 'error'
   const [applyStatus, setApplyStatus] = useState<'generating'|'review'|'sending'|'sent'|'no-email'|'error'|null>(null)
   const [applyError, setApplyError] = useState('')
+  const [isAutoApply, setIsAutoApply] = useState(false)
   const [applyProfile, setApplyProfile] = useState<{ vorname: string; nachname: string; email: string; telefon: string; wohnort: string; schule: string; wunschberuf: string } | null>(null)
   const [profileLoading, setProfileLoading] = useState(false)
   const [reviewEdits, setReviewEdits] = useState<{ coverLetter: string; toEmail: string } | null>(null)
@@ -111,6 +114,26 @@ export default function SuchePage() {
     document.addEventListener('mousedown', onDown)
     return () => document.removeEventListener('mousedown', onDown)
   }, [])
+
+  // Auto-fill and search from ?q= URL param (used by dashboard trending links)
+  useEffect(() => {
+    const q = searchParams.get('q')
+    if (!q) return
+    setBeruf(q)
+    setLoading(true); setError(''); setResults([])
+    const run = async () => {
+      if (IS_DEMO) {
+        await new Promise(r => setTimeout(r, 800))
+        setResults(getMockResults(q, 'Alle')); setLoading(false); return
+      }
+      const res = await fetch(`/api/lehrstellen?beruf=${encodeURIComponent(q)}`)
+      const data = await res.json()
+      if (!res.ok) { setError(data.error ?? 'Search error') } else { setResults(data.results ?? []) }
+      setLoading(false)
+    }
+    run()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams])
 
   useEffect(() => {
     if (IS_DEMO || results.length === 0) return
@@ -183,12 +206,16 @@ export default function SuchePage() {
     if (kanton !== 'Alle') params.set('kanton', kanton)
     const res = await fetch(`/api/lehrstellen?${params}`)
     const data = await res.json()
-    if (!res.ok) setError(data.error ?? 'Search error')
-    else setResults(data.results ?? [])
+    if (!res.ok) {
+      setError(data.error ?? 'Search error')
+    } else {
+      setResults(data.results ?? [])
+      if (data.warning) setError(data.warning)
+    }
     setLoading(false)
   }
 
-  async function handleGenerate(stelle: Lehrstelle) {
+  async function handleGenerate(stelle: Lehrstelle, autoSend = false) {
     if (!canApply) { setError(t.error_daily_limit(dailyUsed ?? 0, dailyLimit ?? 0)); return }
     if (!canUseAi) { setError(t.error_ai_limit(aiUsed ?? 0, aiLimit ?? 0)); return }
 
@@ -199,6 +226,7 @@ export default function SuchePage() {
     setApplyError('')
     setApplyStatus('generating')
     setApplyProfile(null)
+    setIsAutoApply(autoSend)
 
     // Load profile data concurrently with AI generation
     if (!IS_DEMO) {
@@ -253,8 +281,49 @@ export default function SuchePage() {
 
     setGenerated(generatedData)
 
-    // ── Step 2: Go to review ────────────────────────────────────────────
     const emailToUse = generatedData?.email ?? stelle.email
+
+    // ── Step 2a: Auto-apply — skip review and send immediately ──────────
+    if (autoSend && emailToUse) {
+      setApplyStatus('sending')
+      if (IS_DEMO) {
+        await new Promise(r => setTimeout(r, 900))
+        setApplyStatus('sent'); setSent(true); return
+      }
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) throw new Error('Not signed in')
+        await new Promise(r => setTimeout(r, 200)) // wait for profile state
+        const prof = applyProfile
+        const name = prof ? `${prof.vorname} ${prof.nachname}`.trim() : ''
+        const res = await fetch('/api/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId: user.id,
+            toEmail: emailToUse,
+            subject: lang === 'de'
+              ? `Bewerbung als ${stelle.beruf}${name ? ` – ${name}` : ''}`
+              : `Application as ${stelle.beruf}${name ? ` – ${name}` : ''}`,
+            message: generatedData!.message,
+            vonName: name || 'Bewerber/in',
+            replyTo: prof?.email || undefined,
+            applicantInfo: prof ?? {},
+          }),
+        })
+        if (res.ok) {
+          setApplyStatus('sent'); setSent(true); refreshProfile()
+        } else {
+          const err = await res.json()
+          setApplyStatus('error'); setApplyError(err.error ?? 'Send failed')
+        }
+      } catch (err) {
+        setApplyStatus('error'); setApplyError(err instanceof Error ? err.message : 'Send failed')
+      }
+      return
+    }
+
+    // ── Step 2b: Manual review ──────────────────────────────────────────
     setReviewEdits({ coverLetter: generatedData!.message, toEmail: emailToUse ?? '' })
     setApplyStatus('review')
   }
@@ -467,7 +536,7 @@ export default function SuchePage() {
           {/* ── Desktop table view ─────────────────────────────────── */}
           <div className="ls-table-view" style={{ borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border)' }}>
             <div style={{ display: 'grid', gridTemplateColumns: '2fr 1.8fr 0.4fr 1.6fr auto auto', fontSize: '11px', fontWeight: 600, letterSpacing: '0.07em', padding: '10px 16px', color: 'var(--muted)', background: 'var(--surface-2)', borderBottom: '1px solid var(--border)' }}>
-              <span>{t.search_col_company}</span><span>{t.search_col_position}</span><span>CT</span><span>EMAIL</span><span/>
+              <span>{t.search_col_company}</span><span>{t.search_col_position}</span><span>CT</span><span>EMAIL</span><span/><span/>
             </div>
             {filteredResults.map((stelle) => (
               <div key={stelle.id} style={{ display: 'grid', gridTemplateColumns: '2fr 1.8fr 0.4fr 1.6fr auto auto', alignItems: 'center', padding: '11px 16px', borderBottom: '1px solid var(--border)', background: selected?.id === stelle.id ? 'var(--accent-glow)' : 'var(--surface)', transition: 'background 0.15s', gap: '4px' }}>
@@ -488,9 +557,14 @@ export default function SuchePage() {
                 <button onClick={() => toggleSave(stelle.id)} style={{ width: '28px', height: '28px', borderRadius: '7px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: savedJobs.has(stelle.id) ? 'rgba(245,158,11,0.15)' : 'transparent', border: 'none', cursor: 'pointer', color: savedJobs.has(stelle.id) ? '#fbbf24' : 'var(--muted-2)', flexShrink: 0, transition: 'all 0.15s' }}>
                   <svg width="13" height="13" viewBox="0 0 24 24" fill={savedJobs.has(stelle.id) ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
                 </button>
-                <button onClick={() => handleGenerate(stelle)} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', padding: '6px 12px', borderRadius: '7px', fontWeight: 600, cursor: canApply && canUseAi ? 'pointer' : 'not-allowed', whiteSpace: 'nowrap', background: canApply && canUseAi ? 'var(--accent-glow-2)' : 'var(--surface-2)', color: canApply && canUseAi ? 'var(--accent-light)' : 'var(--muted)', border: `1px solid ${canApply && canUseAi ? 'var(--accent)' : 'var(--border)'}`, fontFamily: 'inherit', opacity: canApply && canUseAi ? 1 : 0.5, flexShrink: 0 }}>
-                  ✦ {t.search_apply}
-                </button>
+                <div style={{ display: 'flex', gap: '5px', flexShrink: 0 }}>
+                  <button onClick={() => handleGenerate(stelle)} style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12px', padding: '6px 10px', borderRadius: '7px', fontWeight: 600, cursor: canApply && canUseAi ? 'pointer' : 'not-allowed', whiteSpace: 'nowrap', background: canApply && canUseAi ? 'var(--accent-glow-2)' : 'var(--surface-2)', color: canApply && canUseAi ? 'var(--accent-light)' : 'var(--muted)', border: `1px solid ${canApply && canUseAi ? 'var(--accent)' : 'var(--border)'}`, fontFamily: 'inherit', opacity: canApply && canUseAi ? 1 : 0.5 }}>
+                    ✦ {t.search_apply}
+                  </button>
+                  <button onClick={() => handleGenerate(stelle, true)} title={lang === 'de' ? 'Automatisch bewerben – generiert und sendet sofort' : 'Auto-apply – generates and sends instantly'} style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12px', padding: '6px 10px', borderRadius: '7px', fontWeight: 700, cursor: canApply && canUseAi ? 'pointer' : 'not-allowed', whiteSpace: 'nowrap', background: canApply && canUseAi ? 'linear-gradient(135deg, #7c3aed, #6366f1)' : 'var(--surface-2)', color: canApply && canUseAi ? '#fff' : 'var(--muted)', border: 'none', fontFamily: 'inherit', opacity: canApply && canUseAi ? 1 : 0.5 }}>
+                    ⚡ Auto
+                  </button>
+                </div>
               </div>
             ))}
           </div>
@@ -517,9 +591,14 @@ export default function SuchePage() {
                       ? <span style={{ fontSize: '11px', color: 'var(--muted-2)' }}>No email found</span>
                       : <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}><span className="spinner" style={{ width: '9px', height: '9px', borderWidth: '1.5px' }} /><span style={{ fontSize: '11px', color: 'var(--muted)' }}>{lang === 'de' ? 'Email wird gesucht…' : 'Searching email…'}</span></span>}
                 </div>
-                <button onClick={() => handleGenerate(stelle)} disabled={!(canApply && canUseAi)} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', borderRadius: '10px', fontSize: '13px', fontWeight: 700, background: canApply && canUseAi ? 'var(--accent)' : 'var(--surface-2)', color: canApply && canUseAi ? '#000' : 'var(--muted)', border: 'none', cursor: canApply && canUseAi ? 'pointer' : 'not-allowed', fontFamily: 'inherit', opacity: canApply && canUseAi ? 1 : 0.5 }}>
-                  ✦ {lang === 'de' ? 'Jetzt bewerben' : 'Quick Apply'}
-                </button>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                  <button onClick={() => handleGenerate(stelle)} disabled={!(canApply && canUseAi)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', borderRadius: '10px', fontSize: '13px', fontWeight: 700, background: canApply && canUseAi ? 'var(--surface-2)' : 'var(--surface-2)', color: canApply && canUseAi ? 'var(--accent-light)' : 'var(--muted)', border: `1px solid ${canApply && canUseAi ? 'var(--accent)' : 'var(--border)'}`, cursor: canApply && canUseAi ? 'pointer' : 'not-allowed', fontFamily: 'inherit', opacity: canApply && canUseAi ? 1 : 0.5 }}>
+                    ✦ {lang === 'de' ? 'Bewerben' : 'Apply'}
+                  </button>
+                  <button onClick={() => handleGenerate(stelle, true)} disabled={!(canApply && canUseAi)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', borderRadius: '10px', fontSize: '13px', fontWeight: 700, background: canApply && canUseAi ? 'linear-gradient(135deg, #7c3aed, #6366f1)' : 'var(--surface-2)', color: canApply && canUseAi ? '#fff' : 'var(--muted)', border: 'none', cursor: canApply && canUseAi ? 'pointer' : 'not-allowed', fontFamily: 'inherit', opacity: canApply && canUseAi ? 1 : 0.5 }}>
+                    ⚡ Auto-Apply
+                  </button>
+                </div>
               </div>
             ))}
           </div>
@@ -597,11 +676,18 @@ export default function SuchePage() {
                   <span className="spinner" style={{ width: '28px', height: '28px', borderWidth: '3px' }} />
                   <div style={{ textAlign: 'center' }}>
                     <p style={{ fontSize: '14px', fontWeight: 600, color: 'var(--accent-light)', marginBottom: '4px' }}>
-                      {lang === 'de' ? '✦ KI schreibt deine Bewerbung…' : '✦ AI is writing your application…'}
+                      {isAutoApply
+                        ? (lang === 'de' ? '⚡ KI schreibt & sendet automatisch…' : '⚡ AI writing & sending automatically…')
+                        : (lang === 'de' ? '✦ KI schreibt deine Bewerbung…' : '✦ AI is writing your application…')}
                     </p>
                     <p style={{ fontSize: '12px', color: 'var(--muted)' }}>
                       {lang === 'de' ? 'Personalisiert für ' : 'Personalised for '}<strong style={{ color: 'var(--text-2)' }}>{selected.firma}</strong>
                     </p>
+                    {isAutoApply && (
+                      <p style={{ fontSize: '11px', color: 'var(--muted-2)', marginTop: '6px' }}>
+                        {lang === 'de' ? 'Kein Review nötig — wird direkt gesendet' : 'No review needed — sends directly'}
+                      </p>
+                    )}
                   </div>
                 </div>
               )}

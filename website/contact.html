@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Kontakt | Blitzbewerbung</title>
+<meta name="description" content="Kontaktiere das Blitzbewerbung-Team. Wir helfen dir bei Fragen zu deinem Konto, zur Nutzung des Tools oder zu Partnerschaften."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060609;--surface:#0f0f18;--surface2:#15151f;
+  --border:rgba(100,130,255,0.12);--border2:rgba(100,130,255,0.22);
+  --text:#f0f0fa;--text2:#8888aa;--text3:#4a4a66;--indigo:#a0b0ff;
+  --blue:#5b7fff;--blue-glow:rgba(91,127,255,0.25);
+  --grad:linear-gradient(135deg,#7b9fff,#3a5ce0);
+  --green:#4ade80;
+  --font-head:'Bricolage Grotesque',sans-serif;--font-body:'Inter',sans-serif;
+}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:rgba(6,6,9,0.8)}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,rgba(123,159,255,0.45),rgba(58,92,224,0.3));border-radius:10px}
+*{scrollbar-width:thin;scrollbar-color:rgba(91,127,255,0.35) rgba(6,6,9,0.8)}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:15px;line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+
+/* BG */
+.bg-glass{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 10% 15%,rgba(60,90,255,0.07) 0%,transparent 65%),radial-gradient(ellipse 50% 70% at 90% 80%,rgba(40,70,220,0.05) 0%,transparent 65%)}
+.blob{position:fixed;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0;animation:blobFloat 14s ease-in-out infinite}
+.blob1{width:600px;height:600px;background:rgba(60,90,255,0.07);top:-200px;right:-150px}
+.blob2{width:500px;height:500px;background:rgba(40,70,200,0.05);bottom:-150px;left:-100px;animation-delay:-7s}
+@keyframes blobFloat{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-15px) scale(1.04)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+/* NAV */
+#navbar{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 32px;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+#navbar.scrolled{background:rgba(0,0,0,0.85);border-color:var(--border);backdrop-filter:blur(20px)}
+.nav-inner{max-width:1180px;margin:0 auto;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:var(--font-head);font-size:18px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:flex;align-items:center;gap:8px}
+.logo-icon{width:32px;height:32px;background:linear-gradient(135deg,#7b9fff,#3a5ce0);border-radius:8px;display:flex;align-items:center;justify-content:center;-webkit-text-fill-color:initial;flex-shrink:0;box-shadow:0 0 14px rgba(91,127,255,0.35)}
+.logo-icon svg{width:17px;height:17px;fill:white}
+.nav-links{display:flex;align-items:center;gap:24px;font-size:13px;color:var(--text2)}
+.nav-links a{transition:color .2s}.nav-links a:hover{color:var(--text)}.nav-links a.active{color:var(--indigo)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.lang-toggle{display:flex;gap:2px;background:rgba(255,255,255,0.06);border:1px solid rgba(100,130,255,0.2);border-radius:8px;padding:3px}
+.lang-btn{padding:3px 10px;border-radius:5px;border:none;background:transparent;color:var(--text2);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;font-family:var(--font-body)}
+.lang-btn.active{background:rgba(91,127,255,0.22);color:var(--text)}
+.btn-ghost-sm{padding:7px 16px;border-radius:8px;font-size:13px;font-weight:500;border:1px solid var(--border2);color:var(--text2);background:transparent;cursor:pointer;font-family:var(--font-body);transition:all .2s}
+.btn-ghost-sm:hover{color:var(--text);border-color:rgba(255,255,255,0.28);background:rgba(255,255,255,0.05)}
+.btn-nav-cta{padding:8px 18px;border-radius:8px;font-size:13px;font-weight:600;background:var(--grad);color:#fff;border:none;cursor:pointer;font-family:var(--font-body);transition:all .2s;box-shadow:0 0 20px var(--blue-glow);display:inline-flex;align-items:center;gap:6px}
+.btn-nav-cta:hover{transform:translateY(-1px);box-shadow:0 0 32px rgba(91,127,255,0.4)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--text2)}
+.hamburger svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2}
+#mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;z-index:99;background:rgba(0,0,0,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:20px 24px;flex-direction:column;gap:4px}
+#mobile-menu.open{display:flex}
+#mobile-menu a{padding:12px 0;font-size:15px;color:var(--text2);border-bottom:1px solid var(--border);transition:color .2s}
+.mobile-ctas{display:flex;gap:10px;margin-top:12px}
+.mobile-ctas .btn-ghost-sm,.mobile-ctas .btn-nav-cta{flex:1;text-align:center;justify-content:center;padding:11px}
+
+/* PAGE */
+.page{position:relative;z-index:1;padding-top:64px}
+
+/* HERO */
+.contact-hero{max-width:760px;margin:0 auto;padding:72px 24px 56px;text-align:center;animation:fadeUp .7s .1s ease both;opacity:0}
+.contact-hero h1{font-family:var(--font-head);font-size:clamp(2rem,5vw,3.2rem);font-weight:800;letter-spacing:-1px;margin-bottom:14px}
+.contact-hero h1 .grad{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.contact-hero p{color:var(--text2);font-size:1.05rem;max-width:480px;margin:0 auto}
+
+/* MAIN GRID */
+.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:28px;max-width:1080px;margin:0 auto;padding:0 24px 80px;animation:fadeUp .7s .2s ease both;opacity:0}
+
+/* INFO CARDS */
+.info-col{display:flex;flex-direction:column;gap:16px}
+.info-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 26px;transition:border-color .2s}
+.info-card:hover{border-color:var(--border2)}
+.info-card-icon{width:40px;height:40px;border-radius:10px;background:rgba(91,127,255,0.1);border:1px solid rgba(91,127,255,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.info-card-icon svg{width:18px;height:18px;stroke:var(--indigo);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.info-card-title{font-family:var(--font-head);font-size:15px;font-weight:700;margin-bottom:6px}
+.info-card-val{font-size:14px;color:var(--text2);line-height:1.6}
+.info-card-val a{color:var(--indigo);transition:color .2s}
+.info-card-val a:hover{color:var(--text)}
+.response-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600;background:rgba(74,222,128,0.1);color:var(--green);border:1px solid rgba(74,222,128,0.2);margin-top:8px}
+.response-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--green);animation:livePulse 1.5s ease-in-out infinite;flex-shrink:0}
+@keyframes livePulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(74,222,128,0.5)}50%{opacity:.7;box-shadow:0 0 0 4px rgba(74,222,128,0)}}
+
+/* MAP */
+.map-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:0}
+.map-card iframe{width:100%;height:220px;display:block;border:none;filter:invert(90%) hue-rotate(180deg) saturate(0.6) brightness(0.85)}
+.map-label{padding:16px 20px;font-size:13px;color:var(--text2);display:flex;align-items:center;gap:8px}
+.map-label svg{width:14px;height:14px;stroke:var(--indigo);fill:none;stroke-width:2;flex-shrink:0}
+
+/* FORM */
+.form-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:36px 40px}
+.form-card h2{font-family:var(--font-head);font-size:1.4rem;font-weight:800;margin-bottom:6px}
+.form-card .form-sub{font-size:14px;color:var(--text2);margin-bottom:28px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.form-group label{font-size:12px;font-weight:600;color:var(--text2);letter-spacing:.3px;text-transform:uppercase}
+.form-group input,.form-group textarea,.form-group select{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-size:14px;color:var(--text);font-family:var(--font-body);transition:border-color .2s,background .2s;outline:none;width:100%;resize:none}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--border2);background:rgba(255,255,255,0.06)}
+.form-group input::placeholder,.form-group textarea::placeholder{color:var(--text3)}
+.form-group select option{background:#111;color:var(--text)}
+.form-group textarea{min-height:130px;line-height:1.6}
+.btn-submit{width:100%;padding:14px;border-radius:11px;font-size:15px;font-weight:600;font-family:var(--font-body);background:var(--grad);color:#fff;border:none;cursor:pointer;transition:all .25s;box-shadow:0 0 32px var(--blue-glow);display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 0 48px rgba(91,127,255,0.45)}
+.btn-submit svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.5}
+.form-note{text-align:center;font-size:12px;color:var(--text3);margin-top:12px}
+
+/* SUCCESS STATE */
+.form-success{display:none;text-align:center;padding:40px 20px}
+.form-success.show{display:block}
+.success-icon{width:56px;height:56px;border-radius:50%;background:rgba(74,222,128,0.12);border:1px solid rgba(74,222,128,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.success-icon svg{width:26px;height:26px;stroke:var(--green);fill:none;stroke-width:2}
+.form-success h3{font-family:var(--font-head);font-size:1.2rem;font-weight:700;margin-bottom:8px}
+.form-success p{font-size:14px;color:var(--text2)}
+
+/* FOOTER */
+footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28px 32px;text-align:center;color:var(--text3);font-size:13px}
+footer a{color:var(--indigo);transition:color .2s}
+footer a:hover{color:var(--text)}
+
+/* LANG */
+.en{display:none}
+
+@media(max-width:900px){
+  .contact-grid{grid-template-columns:1fr}
+  .info-col{order:2}
+  .form-card{order:1}
+}
+@media(max-width:600px){
+  #navbar{padding:0 16px}.nav-links{display:none}.hamburger{display:flex}
+  .form-card{padding:24px 20px}
+  .form-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="bg-glass"></div>
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <div class="logo-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+      Blitzbewerbung
+    </a>
+    <div class="nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="blog/index.html">Blog</a>
+      <a href="community.html">Community</a>
+      <a href="contact.html" class="active">Kontakt</a>
+    </div>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btn-de" onclick="setLang('de')">DE</button>
+        <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+      </div>
+      <a href="signin.html"><button class="btn-ghost-sm">Sign in</button></a>
+      <a href="signup.html" class="btn-nav-cta">
+        <svg viewBox="0 0 24 24" width="13" height="13"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Sign up
+      </a>
+      <button class="hamburger" id="hamburger-btn">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+<div id="mobile-menu">
+  <a href="index.html#features">Features</a>
+  <a href="index.html#pricing">Pricing</a>
+  <a href="blog/index.html">Blog</a>
+  <a href="community.html">Community</a>
+  <a href="contact.html">Kontakt / Contact</a>
+  <div class="mobile-ctas">
+    <a href="signin.html"><button class="btn-ghost-sm">Sign in</button></a>
+    <a href="signup.html" class="btn-nav-cta" style="justify-content:center">Sign up</a>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="contact-hero">
+    <h1 class="de">Wir sind <span class="grad">für dich da</span></h1>
+    <h1 class="en" style="display:none">We're <span class="grad">here for you</span></h1>
+    <p class="de">Frage zu deinem Konto, Feedback zum Tool oder Interesse an einer Partnerschaft? Schreib uns — wir antworten schnell.</p>
+    <p class="en" style="display:none">Question about your account, feedback on the tool, or interested in a partnership? Write to us — we reply fast.</p>
+  </div>
+
+  <!-- GRID -->
+  <div class="contact-grid">
+
+    <!-- LEFT: INFO + MAP -->
+    <div class="info-col">
+
+      <div class="info-card">
+        <div class="info-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div class="info-card-title de">E-Mail</div>
+        <div class="info-card-title en" style="display:none">Email</div>
+        <div class="info-card-val">
+          <a href="mailto:hallo@blitzbewerbung.ch">hallo@blitzbewerbung.ch</a>
+        </div>
+        <div class="response-badge de">Antwort innerhalb von 24 Std.</div>
+        <div class="response-badge en" style="display:none">Reply within 24 hours</div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="info-card-title de">Standort</div>
+        <div class="info-card-title en" style="display:none">Location</div>
+        <div class="info-card-val">
+          Blitzbewerbung GmbH<br>
+          Bahnhofstrasse 10<br>
+          8001 Zürich, Schweiz
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.68A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.16 6.16l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <div class="info-card-title de">Telefon</div>
+        <div class="info-card-title en" style="display:none">Phone</div>
+        <div class="info-card-val">
+          <a href="tel:+41441234567">+41 44 123 45 67</a><br>
+          <span style="font-size:13px;color:var(--text3)" class="de">Mo–Fr, 9:00–17:00 Uhr</span>
+          <span style="font-size:13px;color:var(--text3)" class="en">Mon–Fri, 9am–5pm</span>
+        </div>
+      </div>
+
+      <!-- MAP -->
+      <div class="map-card">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2701.899!2d8.5396!3d47.3769!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47900a08cc0e6e41%3A0x2!2sBahnhofstrasse%2010%2C%208001%20Z%C3%BCrich!5e0!3m2!1sde!2sch!4v1700000000000"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Blitzbewerbung Standort Zürich">
+        </iframe>
+        <div class="map-label">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Bahnhofstrasse 10, 8001 Zürich
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: FORM -->
+    <div class="form-card">
+      <div id="formWrap">
+        <h2 class="de">Nachricht schreiben</h2>
+        <h2 class="en" style="display:none">Send a message</h2>
+        <p class="form-sub de">Füll das Formular aus — wir melden uns so schnell wie möglich.</p>
+        <p class="form-sub en" style="display:none">Fill out the form — we'll get back to you as soon as possible.</p>
+
+        <form id="contactForm" onsubmit="submitForm(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="de">Vorname</label>
+              <label class="en" style="display:none">First name</label>
+              <input type="text" name="firstname" placeholder="Alex" required/>
+            </div>
+            <div class="form-group">
+              <label class="de">Nachname</label>
+              <label class="en" style="display:none">Last name</label>
+              <input type="text" name="lastname" placeholder="Müller" required/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>E-Mail</label>
+            <input type="email" name="email" placeholder="alex@beispiel.ch" required/>
+          </div>
+
+          <div class="form-group">
+            <label class="de">Betreff</label>
+            <label class="en" style="display:none">Subject</label>
+            <select name="subject" required>
+              <option value="" disabled selected class="de">Thema auswählen…</option>
+              <option value="" disabled selected class="en" style="display:none">Select a topic…</option>
+              <option value="account" class="de">Konto & Abonnement</option>
+              <option value="account" class="en" style="display:none">Account & Subscription</option>
+              <option value="tool" class="de">Frage zum Tool</option>
+              <option value="tool" class="en" style="display:none">Question about the tool</option>
+              <option value="bug" class="de">Fehler melden</option>
+              <option value="bug" class="en" style="display:none">Report a bug</option>
+              <option value="partner" class="de">Partnerschaft / Schule</option>
+              <option value="partner" class="en" style="display:none">Partnership / School</option>
+              <option value="press" class="de">Presse & Medien</option>
+              <option value="press" class="en" style="display:none">Press & Media</option>
+              <option value="other" class="de">Sonstiges</option>
+              <option value="other" class="en" style="display:none">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="de">Nachricht</label>
+            <label class="en" style="display:none">Message</label>
+            <textarea name="message" placeholder="Deine Nachricht…" required></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit">
+            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            <span class="de">Nachricht senden</span>
+            <span class="en" style="display:none">Send message</span>
+          </button>
+          <p class="form-note de">Wir antworten innerhalb von 24 Stunden · hallo@blitzbewerbung.ch</p>
+          <p class="form-note en" style="display:none">We reply within 24 hours · hallo@blitzbewerbung.ch</p>
+        </form>
+      </div>
+
+      <!-- SUCCESS -->
+      <div class="form-success" id="formSuccess">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3 class="de">Nachricht gesendet!</h3>
+        <h3 class="en" style="display:none">Message sent!</h3>
+        <p class="de">Danke — wir melden uns innerhalb von 24 Stunden bei dir unter der angegebenen E-Mail-Adresse.</p>
+        <p class="en" style="display:none">Thank you — we'll get back to you within 24 hours at the email address you provided.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  © 2025 Blitzbewerbung · <a href="index.html">Home</a> · <a href="blog/index.html">Blog</a> · <a href="community.html">Community</a> · <a href="help.html">Help</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a>
+</footer>
+
+<script>
+function setLang(l) {
+  document.querySelectorAll('.de').forEach(e => e.style.display = l === 'de' ? '' : 'none');
+  document.querySelectorAll('.en').forEach(e => e.style.display = l === 'en' ? '' : 'none');
+  document.getElementById('btn-de').classList.toggle('active', l === 'de');
+  document.getElementById('btn-en').classList.toggle('active', l === 'en');
+  localStorage.setItem('site-lang', l);
+}
+const saved = localStorage.getItem('site-lang') || 'de';
+setLang(saved);
+
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+});
+document.getElementById('hamburger-btn').addEventListener('click', () => {
+  document.getElementById('mobile-menu').classList.toggle('open');
+});
+
+async function submitForm(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('.btn-submit');
+  const data = new FormData(form);
+
+  btn.disabled = true;
+  btn.style.opacity = '0.7';
+
+  try {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        firstname: data.get('firstname'),
+        lastname:  data.get('lastname'),
+        email:     data.get('email'),
+        subject:   data.get('subject'),
+        message:   data.get('message'),
+      }),
+    });
+
+    if (!res.ok) throw new Error('Server error');
+
+    document.getElementById('formWrap').style.display = 'none';
+    document.getElementById('formSuccess').classList.add('show');
+  } catch {
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    alert('Something went wrong — please email us directly at hallo@blitzbewerbung.ch');
+  }
+}
+</script>
+<script src="chatbot.js"></script>
+</body>
+</html>

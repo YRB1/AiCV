@@ -186,9 +186,9 @@ export default function ProfilPage() {
   }
 
   const tabs: { id: Tab; label: string; icon: string }[] = [
-    { id: 'info',   label: 'Personal Info', icon: '👤' },
-    { id: 'cv',     label: 'CV',            icon: '📄' },
-    { id: 'skills', label: 'Skills',        icon: '⚡' },
+    { id: 'info',   label: t.profile_tab_info,   icon: '👤' },
+    { id: 'cv',     label: t.profile_tab_cv,     icon: '📄' },
+    { id: 'skills', label: t.profile_tab_skills, icon: '⚡' },
   ]
 
   return (
@@ -229,13 +229,13 @@ export default function ProfilPage() {
           </div>
           {/* About me */}
           <div style={{ marginBottom: '12px' }}>
-            <p style={{ fontSize: '11px', fontWeight: 600, color: 'var(--muted)', letterSpacing: '0.06em', marginBottom: '6px' }}>ABOUT ME</p>
+            <p style={{ fontSize: '11px', fontWeight: 600, color: 'var(--muted)', letterSpacing: '0.06em', marginBottom: '6px' }}>{t.profile_about_me}</p>
             <textarea value={profile.about_me} onChange={e => set('about_me', e.target.value)} rows={3}
               placeholder="A short intro about yourself, your interests and goals..."
               style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', fontSize: '13px', outline: 'none', resize: 'vertical', background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text)', fontFamily: 'inherit', lineHeight: 1.6 }} />
           </div>
           <div style={{ marginBottom: '12px' }}>
-            <p style={{ fontSize: '11px', fontWeight: 600, color: 'var(--muted)', letterSpacing: '0.06em', marginBottom: '6px' }}>HOBBIES & INTERESTS</p>
+            <p style={{ fontSize: '11px', fontWeight: 600, color: 'var(--muted)', letterSpacing: '0.06em', marginBottom: '6px' }}>{t.profile_hobbies}</p>
             <input value={profile.hobbies} onChange={e => set('hobbies', e.target.value)}
               placeholder="Football, Photography, Coding..."
               style={{ width: '100%', padding: '11px 14px', borderRadius: '10px', fontSize: '13px', outline: 'none', background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text)', fontFamily: 'inherit' }} />
@@ -406,14 +406,14 @@ export default function ProfilPage() {
                   <button onClick={() => removeSkill(s)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--accent)', fontSize: '12px', padding: '0', lineHeight: 1 }}>×</button>
                 </span>
               ))}
-              {profile.skills.length === 0 && <span style={{ fontSize: '12px', color: 'var(--muted)' }}>No skills added yet</span>}
+              {profile.skills.length === 0 && <span style={{ fontSize: '12px', color: 'var(--muted)' }}>{t.profile_no_skills}</span>}
             </div>
             <div style={{ display: 'flex', gap: '8px' }}>
               <input value={skillInput} onChange={e => setSkillInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && addSkill()}
-                placeholder="Add a skill (e.g. Microsoft Excel)..."
+                placeholder={t.profile_skill_placeholder}
                 style={{ flex: 1, padding: '9px 12px', borderRadius: '8px', fontSize: '12px', outline: 'none', background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text)', fontFamily: 'inherit' }} />
-              <button onClick={addSkill} style={{ padding: '9px 16px', borderRadius: '8px', fontSize: '12px', fontWeight: 600, background: 'var(--accent)', color: 'white', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>Add</button>
+              <button onClick={addSkill} style={{ padding: '9px 16px', borderRadius: '8px', fontSize: '12px', fontWeight: 600, background: 'var(--accent)', color: 'white', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>{t.profile_add}</button>
             </div>
           </div>
 
@@ -427,14 +427,14 @@ export default function ProfilPage() {
                   <button onClick={() => removeLang(l)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#a5b4fc', fontSize: '12px', padding: '0', lineHeight: 1 }}>×</button>
                 </span>
               ))}
-              {profile.languages.length === 0 && <span style={{ fontSize: '12px', color: 'var(--muted)' }}>No languages added yet</span>}
+              {profile.languages.length === 0 && <span style={{ fontSize: '12px', color: 'var(--muted)' }}>{t.profile_no_langs}</span>}
             </div>
             <div style={{ display: 'flex', gap: '8px' }}>
               <input value={langInput} onChange={e => setLangInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && addLang()}
-                placeholder="Add a language (e.g. German — C1)..."
+                placeholder={t.profile_lang_placeholder}
                 style={{ flex: 1, padding: '9px 12px', borderRadius: '8px', fontSize: '12px', outline: 'none', background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text)', fontFamily: 'inherit' }} />
-              <button onClick={addLang} style={{ padding: '9px 16px', borderRadius: '8px', fontSize: '12px', fontWeight: 600, background: '#6366f1', color: 'white', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>Add</button>
+              <button onClick={addLang} style={{ padding: '9px 16px', borderRadius: '8px', fontSize: '12px', fontWeight: 600, background: '#6366f1', color: 'white', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>{t.profile_add}</button>
             </div>
           </div>
 
@@ -445,14 +445,14 @@ export default function ProfilPage() {
             return (
               <div style={{ padding: '14px 16px', borderRadius: '10px', background: 'var(--surface)', border: '1px solid var(--border)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                  <p style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text)' }}>Profile completeness</p>
+                  <p style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text)' }}>{t.profile_completeness}</p>
                   <p style={{ fontSize: '12px', fontWeight: 700, color: pct >= 80 ? 'var(--green)' : 'var(--accent)' }}>{pct}%</p>
                 </div>
                 <div style={{ height: '6px', background: 'var(--surface-2)', borderRadius: '3px', overflow: 'hidden' }}>
                   <div style={{ height: '100%', width: `${pct}%`, borderRadius: '3px', background: pct >= 80 ? 'var(--green)' : 'var(--accent)', transition: 'width 0.5s ease' }} />
                 </div>
                 <p style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '6px' }}>
-                  {pct < 100 ? 'Complete your profile to get better AI cover letters' : '✓ Profile complete — AI cover letters will be highly personalised'}
+                  {pct < 100 ? t.profile_completeness_cta : t.profile_completeness_done}
                 </p>
               </div>
             )

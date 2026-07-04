@@ -3,14 +3,15 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { Lead } from '@/types'
-import { useT } from '@/lib/lang-context'
+import { useT, useLang } from '@/lib/lang-context'
+import { isDemoMode, demoGetLeads } from '@/lib/mock-auth'
 
-const STATUS_COLORS: Record<string, { bg: string; color: string; label: string }> = {
-  neu:         { bg: 'rgba(99,102,241,0.12)',  color: '#a5b4fc', label: 'New' },
-  kontaktiert: { bg: 'rgba(6,182,212,0.12)',   color: '#67e8f9', label: 'Contacted' },
-  antwort:     { bg: 'rgba(245,158,11,0.12)',  color: '#fbbf24', label: 'Reply' },
-  absage:      { bg: 'rgba(239,68,68,0.12)',   color: '#fca5a5', label: 'Rejected' },
-  zusage:      { bg: 'rgba(16,185,129,0.12)',  color: '#6ee7b7', label: 'Offer!' },
+const STATUS_COLORS: Record<string, { bg: string; color: string }> = {
+  neu:         { bg: 'rgba(99,102,241,0.12)',  color: '#a5b4fc' },
+  kontaktiert: { bg: 'rgba(6,182,212,0.12)',   color: '#67e8f9' },
+  antwort:     { bg: 'rgba(245,158,11,0.12)',  color: '#fbbf24' },
+  absage:      { bg: 'rgba(239,68,68,0.12)',   color: '#fca5a5' },
+  zusage:      { bg: 'rgba(16,185,129,0.12)',  color: '#6ee7b7' },
 }
 
 function timeAgo(dateStr: string) {
@@ -37,17 +38,31 @@ const STATUSES = ['neu', 'kontaktiert', 'antwort', 'absage', 'zusage'] as const
 
 export default function BewerbungenPage() {
   const t = useT()
+  const { lang } = useLang()
   const [leads, setLeads] = useState<Lead[]>([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState<string>('all')
   const [selected, setSelected] = useState<Lead | null>(null)
   const [updatingId, setUpdatingId] = useState<string | null>(null)
 
+  const STATUS_LABELS: Record<string, string> = {
+    neu:         lang === 'de' ? 'Neu' : 'New',
+    kontaktiert: lang === 'de' ? 'Gesendet' : 'Sent',
+    antwort:     lang === 'de' ? 'Antwort' : 'Reply',
+    absage:      lang === 'de' ? 'Absage' : 'Rejected',
+    zusage:      lang === 'de' ? 'Zusage!' : 'Offer!',
+  }
+
   useEffect(() => {
     load()
   }, [])
 
   async function load() {
+    if (isDemoMode()) {
+      setLeads(demoGetLeads() as Lead[])
+      setLoading(false)
+      return
+    }
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
     const { data } = await supabase
@@ -78,7 +93,7 @@ export default function BewerbungenPage() {
     <div style={{ padding: '28px 32px', minHeight: '100%' }} className="fade-in">
       <div style={{ marginBottom: '22px' }}>
         <h1 style={{ fontSize: '20px', fontWeight: 700, color: 'var(--text)', marginBottom: '3px' }}>{t.nav_applications}</h1>
-        <p style={{ fontSize: '13px', color: 'var(--muted)' }}>{leads.length} total · track your application pipeline</p>
+        <p style={{ fontSize: '13px', color: 'var(--muted)' }}>{leads.length} {lang === 'de' ? 'total · verfolge deine Bewerbungen' : 'total · track your application pipeline'}</p>
       </div>
 
       {/* Filter tabs */}
@@ -90,7 +105,7 @@ export default function BewerbungenPage() {
           border: `1px solid ${filter === 'all' ? 'var(--accent)' : 'var(--border)'}`,
           cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s',
         }}>
-          All ({leads.length})
+          {lang === 'de' ? `Alle (${leads.length})` : `All (${leads.length})`}
         </button>
         {STATUSES.map(s => {
           const st = STATUS_COLORS[s]
@@ -102,7 +117,7 @@ export default function BewerbungenPage() {
               border: `1px solid ${filter === s ? st.color + '60' : 'var(--border)'}`,
               cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s',
             }}>
-              {st.label} {counts[s] > 0 ? `(${counts[s]})` : ''}
+              {STATUS_LABELS[s]} {counts[s] > 0 ? `(${counts[s]})` : ''}
             </button>
           )
         })}
@@ -118,10 +133,14 @@ export default function BewerbungenPage() {
         <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--muted)' }}>
           <p style={{ fontSize: '36px', marginBottom: '10px' }}>📋</p>
           <p style={{ fontSize: '14px', fontWeight: 500, color: 'var(--text-2)', marginBottom: '4px' }}>
-            {leads.length === 0 ? 'No applications yet' : 'No applications match this filter'}
+            {leads.length === 0
+            ? (lang === 'de' ? 'Noch keine Bewerbungen' : 'No applications yet')
+            : (lang === 'de' ? 'Keine Bewerbungen für diesen Filter' : 'No applications match this filter')}
           </p>
           <p style={{ fontSize: '13px' }}>
-            {leads.length === 0 ? 'Search for jobs and apply to see them here' : 'Try a different filter'}
+            {leads.length === 0
+              ? (lang === 'de' ? 'Suche Stellen und bewirb dich, um sie hier zu sehen' : 'Search for jobs and apply to see them here')
+              : (lang === 'de' ? 'Anderen Filter versuchen' : 'Try a different filter')}
           </p>
         </div>
       ) : (
@@ -146,7 +165,7 @@ export default function BewerbungenPage() {
                   <span style={{ fontSize: '11px', color: 'var(--green)', whiteSpace: 'nowrap' }}>✓ {lead.email}</span>
                 )}
                 <span style={{ padding: '3px 10px', borderRadius: '20px', fontSize: '11px', fontWeight: 600, background: st.bg, color: st.color, whiteSpace: 'nowrap' }}>
-                  {st.label}
+                  {STATUS_LABELS[lead.status]}
                 </span>
               </div>
             )
@@ -174,11 +193,11 @@ export default function BewerbungenPage() {
               <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', flexWrap: 'wrap' }}>
                 {selected.email && <div style={{ fontSize: '12px', padding: '5px 10px', borderRadius: '7px', background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.25)', color: 'var(--green)' }}>✉ {selected.email}</div>}
                 {selected.telefon && <div style={{ fontSize: '12px', padding: '5px 10px', borderRadius: '7px', background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.25)', color: 'var(--blue)' }}>📞 {selected.telefon}</div>}
-                {selected.url && <a href={selected.url} target="_blank" rel="noreferrer" style={{ fontSize: '12px', padding: '5px 10px', borderRadius: '7px', background: 'var(--surface-2)', border: '1px solid var(--border)', color: 'var(--muted)', textDecoration: 'none' }}>🔗 View listing</a>}
+                {selected.url && <a href={selected.url} target="_blank" rel="noreferrer" style={{ fontSize: '12px', padding: '5px 10px', borderRadius: '7px', background: 'var(--surface-2)', border: '1px solid var(--border)', color: 'var(--muted)', textDecoration: 'none' }}>🔗 {lang === 'de' ? 'Inserat anzeigen' : 'View listing'}</a>}
               </div>
 
               {/* Status update */}
-              <p style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.07em', color: 'var(--muted)', marginBottom: '8px' }}>UPDATE STATUS</p>
+              <p style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.07em', color: 'var(--muted)', marginBottom: '8px' }}>{lang === 'de' ? 'STATUS AKTUALISIEREN' : 'UPDATE STATUS'}</p>
               <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '16px' }}>
                 {STATUSES.map(s => {
                   const st = STATUS_COLORS[s]
@@ -193,7 +212,7 @@ export default function BewerbungenPage() {
                         cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s',
                         opacity: updatingId === selected.id ? 0.5 : 1,
                       }}>
-                      {st.label}
+                      {STATUS_LABELS[s]}
                     </button>
                   )
                 })}
@@ -202,7 +221,7 @@ export default function BewerbungenPage() {
               {/* Cover letter */}
               {selected.generated_message && (
                 <>
-                  <p style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.07em', color: 'var(--muted)', marginBottom: '8px' }}>COVER LETTER</p>
+                  <p style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.07em', color: 'var(--muted)', marginBottom: '8px' }}>{lang === 'de' ? 'BEWERBUNGSSCHREIBEN' : 'COVER LETTER'}</p>
                   <div style={{ padding: '12px 14px', borderRadius: '10px', background: 'var(--surface-2)', border: '1px solid var(--border)', fontSize: '12px', color: 'var(--text-2)', lineHeight: 1.7, whiteSpace: 'pre-wrap', maxHeight: '220px', overflowY: 'auto', fontFamily: 'var(--font-geist-mono, monospace)' }}>
                     {selected.generated_message}
                   </div>
