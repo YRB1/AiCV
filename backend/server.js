@@ -350,14 +350,18 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../website/index.html'))
 })
 
-// ── START ─────────────────────────────────────────────────────────────────────
-app.listen(PORT, () => {
-  console.log(`\n  ApplyFlow AI backend → http://localhost:${PORT}`)
-  console.log(`  Stripe:   ${stripe   ? '✓ configured' : '✗ add STRIPE_SECRET_KEY'}`)
-  console.log(`  Supabase: ${supabase ? '✓ configured' : '✗ add SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY'}`)
-  console.log(`  Resend:   ${process.env.RESEND_API_KEY ? '✓ configured' : '✗ add RESEND_API_KEY (optional)'}`)
-  console.log()
-})
+// ── START (local dev only — Vercel uses module.exports instead) ───────────────
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`\n  ApplyFlow AI backend → http://localhost:${PORT}`)
+    console.log(`  Stripe:   ${stripe   ? '✓ configured' : '✗ add STRIPE_SECRET_KEY'}`)
+    console.log(`  Supabase: ${supabase ? '✓ configured' : '✗ add SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY'}`)
+    console.log(`  Resend:   ${process.env.RESEND_API_KEY ? '✓ configured' : '✗ add RESEND_API_KEY (optional)'}`)
+    console.log()
+  })
+}
+
+module.exports = app
 
 // ── HTML ERROR PAGE HELPER ────────────────────────────────────────────────────
 function errorPage(title, message) {
