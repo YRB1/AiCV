@@ -150,10 +150,14 @@ footer a:hover{color:var(--text)}
     </a>
     <div class="nav-links">
       <a href="index.html#features">Features</a>
+      <a href="index.html#why" class="de">Warum Blitzbewerbung</a>
+      <a href="index.html#why" class="en" style="display:none">Why Blitzbewerbung</a>
+      <a href="index.html#how" class="de">So funktioniert's</a>
+      <a href="index.html#how" class="en" style="display:none">How it works</a>
       <a href="index.html#pricing">Pricing</a>
       <a href="blog/index.html">Blog</a>
-      <a href="community.html">Community</a>
-      <a href="contact.html" class="active">Kontakt</a>
+      <a href="contact.html" class="active de">Kontakt</a>
+      <a href="contact.html" class="active en" style="display:none">Contact</a>
     </div>
     <div class="nav-right">
       <div class="lang-toggle">
@@ -173,10 +177,14 @@ footer a:hover{color:var(--text)}
 </nav>
 <div id="mobile-menu">
   <a href="index.html#features">Features</a>
+  <a href="index.html#why" class="de">Warum Blitzbewerbung</a>
+  <a href="index.html#why" class="en" style="display:none">Why Blitzbewerbung</a>
+  <a href="index.html#how" class="de">So funktioniert's</a>
+  <a href="index.html#how" class="en" style="display:none">How it works</a>
   <a href="index.html#pricing">Pricing</a>
   <a href="blog/index.html">Blog</a>
-  <a href="community.html">Community</a>
-  <a href="contact.html">Kontakt / Contact</a>
+  <a href="contact.html" class="de">Kontakt</a>
+  <a href="contact.html" class="en" style="display:none">Contact</a>
   <div class="mobile-ctas">
     <a href="signin.html"><button class="btn-ghost-sm">Sign in</button></a>
     <a href="signup.html" class="btn-nav-cta" style="justify-content:center">Sign up</a>
@@ -283,30 +291,21 @@ footer a:hover{color:var(--text)}
           </div>
 
           <div class="form-group">
-            <label class="de">Betreff</label>
-            <label class="en" style="display:none">Subject</label>
-            <select name="subject" required>
-              <option value="" disabled selected class="de">Thema auswählen…</option>
-              <option value="" disabled selected class="en" style="display:none">Select a topic…</option>
-              <option value="account" class="de">Konto & Abonnement</option>
-              <option value="account" class="en" style="display:none">Account & Subscription</option>
-              <option value="tool" class="de">Frage zum Tool</option>
-              <option value="tool" class="en" style="display:none">Question about the tool</option>
-              <option value="bug" class="de">Fehler melden</option>
-              <option value="bug" class="en" style="display:none">Report a bug</option>
-              <option value="partner" class="de">Partnerschaft / Schule</option>
-              <option value="partner" class="en" style="display:none">Partnership / School</option>
-              <option value="press" class="de">Presse & Medien</option>
-              <option value="press" class="en" style="display:none">Press & Media</option>
-              <option value="other" class="de">Sonstiges</option>
-              <option value="other" class="en" style="display:none">Other</option>
+            <label id="label-subject">Betreff</label>
+            <select name="subject" id="select-subject" required>
+              <option value="" disabled selected>Thema auswählen…</option>
+              <option value="account">Konto &amp; Abonnement</option>
+              <option value="tool">Frage zum Tool</option>
+              <option value="bug">Fehler melden</option>
+              <option value="partner">Partnerschaft / Schule</option>
+              <option value="press">Presse &amp; Medien</option>
+              <option value="other">Sonstiges</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label class="de">Nachricht</label>
-            <label class="en" style="display:none">Message</label>
-            <textarea name="message" placeholder="Deine Nachricht…" required></textarea>
+            <label id="label-message">Nachricht</label>
+            <textarea name="message" id="textarea-message" placeholder="Deine Nachricht…" required></textarea>
           </div>
 
           <button type="submit" class="btn-submit">
@@ -339,11 +338,62 @@ footer a:hover{color:var(--text)}
 </footer>
 
 <script>
+const selectOptions = {
+  de: [
+    { value: '', label: 'Thema auswählen…', disabled: true },
+    { value: 'account', label: 'Konto & Abonnement' },
+    { value: 'tool',    label: 'Frage zum Tool' },
+    { value: 'bug',     label: 'Fehler melden' },
+    { value: 'partner', label: 'Partnerschaft / Schule' },
+    { value: 'press',   label: 'Presse & Medien' },
+    { value: 'other',   label: 'Sonstiges' },
+  ],
+  en: [
+    { value: '', label: 'Select a topic…', disabled: true },
+    { value: 'account', label: 'Account & Subscription' },
+    { value: 'tool',    label: 'Question about the tool' },
+    { value: 'bug',     label: 'Report a bug' },
+    { value: 'partner', label: 'Partnership / School' },
+    { value: 'press',   label: 'Press & Media' },
+    { value: 'other',   label: 'Other' },
+  ],
+};
+
 function setLang(l) {
   document.querySelectorAll('.de').forEach(e => e.style.display = l === 'de' ? '' : 'none');
   document.querySelectorAll('.en').forEach(e => e.style.display = l === 'en' ? '' : 'none');
   document.getElementById('btn-de').classList.toggle('active', l === 'de');
   document.getElementById('btn-en').classList.toggle('active', l === 'en');
+
+  // Swap select options
+  const sel = document.getElementById('select-subject');
+  if (sel) {
+    const cur = sel.value;
+    sel.innerHTML = '';
+    selectOptions[l].forEach(o => {
+      const opt = document.createElement('option');
+      opt.value = o.value;
+      opt.textContent = o.label;
+      if (o.disabled) { opt.disabled = true; opt.selected = !cur; }
+      sel.appendChild(opt);
+    });
+    if (cur) sel.value = cur;
+  }
+
+  // Swap textarea placeholder
+  const ta = document.getElementById('textarea-message');
+  if (ta) ta.placeholder = l === 'en' ? 'Your message…' : 'Deine Nachricht…';
+
+  // Swap label text
+  const ls = document.getElementById('label-subject');
+  if (ls) ls.textContent = l === 'en' ? 'Subject' : 'Betreff';
+  const lm = document.getElementById('label-message');
+  if (lm) lm.textContent = l === 'en' ? 'Message' : 'Nachricht';
+
+  // Swap email placeholder
+  const emailInput = document.querySelector('input[name="email"]');
+  if (emailInput) emailInput.placeholder = l === 'en' ? 'alex@example.com' : 'alex@beispiel.ch';
+
   localStorage.setItem('site-lang', l);
 }
 const saved = localStorage.getItem('site-lang') || 'de';
